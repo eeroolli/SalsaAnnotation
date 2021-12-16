@@ -26,6 +26,7 @@ A machine learning model depents on a number of packages.   You have two choices
 
 ```bash
 # This script will install the needed packages:
+# TODO: make the script.
 bash inside_env_install_packages.sh
 ``` 
 or
@@ -37,7 +38,7 @@ conda install -c conda-forge jupyterlab
 conda install -c anaconda ipykernel
 conda install plotly
 # some people need: sudo apt install python3-pip
-python -m ipykernel install --user --name Team3 --display-name Team3
+python -m ipykernel install --user --name Salsa --display-name Salsa
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
