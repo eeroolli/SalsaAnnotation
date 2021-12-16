@@ -40,6 +40,9 @@ conda install plotly
 # some people need: sudo apt install python3-pip
 python -m ipykernel install --user --name Salsa --display-name Salsa
 pip install --upgrade pip
+pip install matplotlib
+pip install tensorflow
+pip install pandas
 pip install -r requirements.txt
 ```
 
