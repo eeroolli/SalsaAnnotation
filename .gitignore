@@ -1,3 +1,6 @@
+#Eero
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -106,6 +109,7 @@ celerybeat.pid
 .env
 .venv
 env/
+env/salsa-env/
 venv/
 ENV/
 env.bak/
