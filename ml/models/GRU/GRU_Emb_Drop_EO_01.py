@@ -34,6 +34,8 @@ BATCH_SIZE = 8
 EPOCHS = 100
 MAX_SEQ_LENGTH = 40   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
+DROPOUT_1 = 0.4       # Drop out rate after first GRU
+DROPOUT_2 = 0.1      # Drop out rate after second GRU
 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
@@ -114,13 +116,17 @@ logging.info(f"Parameters of the model BATCH_SIZE {BATCH_SIZE}")
 logging.info(f"Parameters of the model EPOCHS {EPOCHS}")
 logging.info(f"Parameters of the model MAX_SEQ_LENGTH {MAX_SEQ_LENGTH}")
 logging.info(f"Parameters of the model NUM_FEATURES {NUM_FEATURES}")
+logging.info(f"Parameters of the model DROPOUT_1 {DROPOUT_1}")
+logging.info(f"Parameters of the model DROPOUT_2 {DROPOUT_2}")
+
 
 # Build the model (This section can be modified to a diferent model)
 model = models.Sequential()
 model.add(layers.InputLayer(input_shape=(MAX_SEQ_LENGTH, NUM_FEATURES)))
 model.add(layers.GRU(64, return_sequences=True))
-model.add(layers.Dropout(0.4))
+model.add(layers.Dropout(DROPOUT_1))
 model.add(layers.GRU(32))
+model.add(layers.Dropout(DROPOUT_2))
 model.add(layers.Dense(16, activation="relu"))
 model.add(layers.Dense(5, activation="softmax"))
 model.summary(print_fn=logging.info)
