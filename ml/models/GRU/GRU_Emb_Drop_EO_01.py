@@ -24,8 +24,8 @@ for filePath in file_to_delete:
 logging.basicConfig(filename='temp/' + Sim_ID + '.log', level='INFO')
 
 # Load the data
-PATH_DATA_TRAIN = "../Data_train_validate/Data_train_norm.csv"
-PATH_DATA_VAL = "../Data_train_validate/Data_val_norm.csv"
+PATH_DATA_TRAIN = "../Data_train_validate/Data_train_norm_1.csv"
+PATH_DATA_VAL = "../Data_train_validate/Data_val_norm_1.csv"
 data_train = pd.read_csv(PATH_DATA_TRAIN)
 data_val = pd.read_csv(PATH_DATA_VAL)
 
@@ -110,10 +110,10 @@ X_train, y_train, info_train = transf_data(data_train)
 X_val, y_val, info_val = transf_data(data_val)
 
 # print parameters to file
-logging.info(f"Paramters of the model BATCH_SIZE {BATCH_SIZE}")
-logging.info(f"Paramters of the model EPOCHS {EPOCHS}")
-logging.info(f"Paramters of the model MAX_SEQ_LENGTH {MAX_SEQ_LENGTH}")
-logging.info(f"Paramters of the model NUM_FEATURES {NUM_FEATURES}")
+logging.info(f"Parameters of the model BATCH_SIZE {BATCH_SIZE}")
+logging.info(f"Parameters of the model EPOCHS {EPOCHS}")
+logging.info(f"Parameters of the model MAX_SEQ_LENGTH {MAX_SEQ_LENGTH}")
+logging.info(f"Parameters of the model NUM_FEATURES {NUM_FEATURES}")
 
 # Build the model (This section can be modified to a diferent model)
 model = models.Sequential()
