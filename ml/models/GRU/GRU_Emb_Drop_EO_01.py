@@ -10,7 +10,7 @@ if not os.path.exists('temp'):
     os.makedirs('temp')
 
 ##TODO: define Sim_ID as external parameter
-Sim_ID = "GRU-64-drop-32-Dense-16"
+Sim_ID = "GRU64-drop-GRU32-drop-Dense16"
 
 file_to_delete = glob.glob('temp/' + Sim_ID + '*')
 
@@ -24,18 +24,20 @@ for filePath in file_to_delete:
 logging.basicConfig(filename='temp/' + Sim_ID + '.log', level='INFO')
 
 # Load the data
-PATH_DATA_TRAIN = "../Data_train_validate/Data_train_norm_1.csv"
+PATH_DATA_TRAIN = "../Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
 PATH_DATA_VAL = "../Data_train_validate/Data_val_norm_1.csv"
 data_train = pd.read_csv(PATH_DATA_TRAIN)
 data_val = pd.read_csv(PATH_DATA_VAL)
 
+print(data_train.shape)
+
 # Define hyperparameters
-BATCH_SIZE = 8
-EPOCHS = 100
+BATCH_SIZE = 32
+EPOCHS = 80
 MAX_SEQ_LENGTH = 40   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
 DROPOUT_1 = 0.4       # Drop out rate after first GRU
-DROPOUT_2 = 0.1      # Drop out rate after second GRU
+DROPOUT_2 = 0.2    # Drop out rate after second GRU
 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
