@@ -1,12 +1,21 @@
-from tensorflow.keras import models, layers
-#TODO: implement EarlyStopping
+# There are lots of changes in tensorflow 1.15 to 2. lots of syntax is different, and I do not 
+# see an implementation of GRU, so even if it is possible to run directML and use non-cuda GPU
+# it seems to be a futile operation.
+
+import tensorflow as tf 
+tf.test.is_built_with_gpu_support()
+print("Using TensorFlow version %s" % tf.__version__)
+import tensorflow.experimental.numpy as tnp
+from tf.keras.applications import layers
+#TODO: implement EarlyStoppingpip 
 from tensorflow.keras.callbacks import CSVLogger, EarlyStopping 
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import logging
 import os
-import glob 
+import glob
 
 # from tensorflow.keras import callbacks
 # import csv
@@ -20,15 +29,15 @@ if not os.path.exists(model_path + 'temp'):
     os.makedirs(model_path + 'temp')
 
 # Define hyperparameters
-BATCH_SIZE = 16
+BATCH_SIZE = 32
 EPOCHS = 100
 MAX_SEQ_LENGTH = 40   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
 DROPOUT_1 = 0.30       # Drop out rate after first GRU
-DROPOUT_2 = 0.10      # Drop out rate after second GRU
+DROPOUT_2 = 0.10    # Drop out rate after second GRU
 
 ##TODO: define Sim_ID as external parameter
-Sim_ID = "GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dense16"
+Sim_ID = "directml-GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dense16"
 
 file_to_delete = glob.glob(model_path + 'temp/' + Sim_ID + '*')
 
@@ -42,8 +51,7 @@ for filePath in file_to_delete:
 logging.basicConfig(filename = model_path + 'temp/' + Sim_ID + '.log', level='INFO')
 
 # Load the data   
-#PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
-PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_norm_1.csv"
+PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
 PATH_DATA_VAL = root_path + "Data_train_validate/Data_val_norm_1.csv"
 data_train = pd.read_csv(PATH_DATA_TRAIN)
 data_val = pd.read_csv(PATH_DATA_VAL)
@@ -115,7 +123,6 @@ def transf_data(data):
     X = [x.loc[ind_samp[ind], :].to_numpy() for (ind, x) in enumerate(X)]
     X = np.array(X)
     X = X.reshape(len(ind_start) - 1, MAX_SEQ_LENGTH, NUM_FEATURES).astype("float32")
-    X = tf.Tensor.from_tensor_
     y = [enc_label(x) for x in y]
     y = np.array(y).astype("float32")
 
@@ -124,13 +131,6 @@ def transf_data(data):
 # Training and validation sets
 X_train, y_train, info_train = transf_data(data_train)
 X_val, y_val, info_val = transf_data(data_val)
-
-print(X_train.shape)
-print(y_train.shape)
-print(X_val.shape)
-print(y_val.shape)
-
-
 
 # print parameters to file
 logging.info(f"Parameters of the model BATCH_SIZE {BATCH_SIZE}")
@@ -142,7 +142,7 @@ logging.info(f"Parameters of the model DROPOUT_2 {DROPOUT_2}")
 
 
 # Build the model (This section can be modified to a diferent model)
-model = models.Sequential()
+model = tf.keras.Model.Sequential()
 model.add(layers.InputLayer(input_shape=(MAX_SEQ_LENGTH, NUM_FEATURES)))
 model.add(layers.GRU(64, return_sequences=True))
 model.add(layers.Dropout(DROPOUT_1))

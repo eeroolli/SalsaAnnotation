@@ -1,12 +1,23 @@
-from tensorflow.keras import models, layers
+# There are lots of changes in tensorflow 1.15 to 2. lots of syntax is different, and I do not 
+# see an implementation of GRU, so even if it is possible to run directML and use non-cuda GPU
+# it seems to be a futile operation.
+# EO This runs on conda: salsaTF i wsl.  CPU only. 
+
+from unicodedata import name
+import tensorflow as tf 
+tf.test.is_built_with_gpu_support()
+
 #TODO: implement EarlyStopping
 from tensorflow.keras.callbacks import CSVLogger, EarlyStopping 
+from tensorflow import keras
+from tensorflow.keras import layers
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import logging
 import os
-import glob 
+import glob
 
 # from tensorflow.keras import callbacks
 # import csv
@@ -20,15 +31,15 @@ if not os.path.exists(model_path + 'temp'):
     os.makedirs(model_path + 'temp')
 
 # Define hyperparameters
-BATCH_SIZE = 16
-EPOCHS = 100
+BATCH_SIZE = 128
+EPOCHS = 200
 MAX_SEQ_LENGTH = 40   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
 DROPOUT_1 = 0.30       # Drop out rate after first GRU
-DROPOUT_2 = 0.10      # Drop out rate after second GRU
+DROPOUT_2 = 0.10    # Drop out rate after second GRU
 
 ##TODO: define Sim_ID as external parameter
-Sim_ID = "GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dense16"
+Sim_ID = "6_cat_SalsaTF_" + str(BATCH_SIZE) + "-GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dense16"
 
 file_to_delete = glob.glob(model_path + 'temp/' + Sim_ID + '*')
 
@@ -42,13 +53,17 @@ for filePath in file_to_delete:
 logging.basicConfig(filename = model_path + 'temp/' + Sim_ID + '.log', level='INFO')
 
 # Load the data   
-#PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
-PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_norm_1.csv"
+PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
 PATH_DATA_VAL = root_path + "Data_train_validate/Data_val_norm_1.csv"
 data_train = pd.read_csv(PATH_DATA_TRAIN)
 data_val = pd.read_csv(PATH_DATA_VAL)
 
 print(data_train.shape)
+print("n of labels in training data \n", data_train["label"].value_counts())
+print("n of frames in training data ", data_train["label"].count())
+
+print("n of labels in validation data \n", data_val["label"].value_counts())
+print("n of frames in validation data ", data_val["label"].count())
 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
@@ -78,6 +93,8 @@ def enc_label(label):
         code = 3
     if label == "suzie-q":
         code = 4
+    if label == "basic":
+        code = 5            
     return code
 
 # Function to select a number of frames per figure and right in the correct format for the mdoel
@@ -115,24 +132,28 @@ def transf_data(data):
     X = [x.loc[ind_samp[ind], :].to_numpy() for (ind, x) in enumerate(X)]
     X = np.array(X)
     X = X.reshape(len(ind_start) - 1, MAX_SEQ_LENGTH, NUM_FEATURES).astype("float32")
-    X = tf.Tensor.from_tensor_
+    X = tf.convert_to_tensor(X)
     y = [enc_label(x) for x in y]
     y = np.array(y).astype("float32")
-
+    y = tf.convert_to_tensor(y)
     return X, y, info
+
+
 
 # Training and validation sets
 X_train, y_train, info_train = transf_data(data_train)
 X_val, y_val, info_val = transf_data(data_val)
 
-print(X_train.shape)
-print(y_train.shape)
-print(X_val.shape)
-print(y_val.shape)
 
+
+print("X_train: ", X_train.dtype)
+print("y_train: ", y_train.dtype)
+# print("info_train: ", info_train.shape)
 
 
 # print parameters to file
+logging.info(f"Training data: {PATH_DATA_TRAIN}")
+logging.info(f"Validation data: {PATH_DATA_VAL}")
 logging.info(f"Parameters of the model BATCH_SIZE {BATCH_SIZE}")
 logging.info(f"Parameters of the model EPOCHS {EPOCHS}")
 logging.info(f"Parameters of the model MAX_SEQ_LENGTH {MAX_SEQ_LENGTH}")
@@ -142,14 +163,15 @@ logging.info(f"Parameters of the model DROPOUT_2 {DROPOUT_2}")
 
 
 # Build the model (This section can be modified to a diferent model)
-model = models.Sequential()
+model = keras.Sequential()
 model.add(layers.InputLayer(input_shape=(MAX_SEQ_LENGTH, NUM_FEATURES)))
-model.add(layers.GRU(64, return_sequences=True))
-model.add(layers.Dropout(DROPOUT_1))
-model.add(layers.GRU(32))
-model.add(layers.Dropout(DROPOUT_2))
-model.add(layers.Dense(16, activation="relu"))
-model.add(layers.Dense(5, activation="softmax"))
+model.add(layers.GRU(64, return_sequences=True, name="1_GRU"))
+model.add(layers.Dropout(DROPOUT_1, name="1_dropout"))
+model.add(layers.GRU(64, return_sequences=True, name="2_GRU"))
+model.add(layers.Dropout(DROPOUT_2, name="2_dropout"))
+model.add(layers.GRU(32, name="3_GRU"))
+model.add(layers.Dense(16, activation="relu", name="4_Dense"))
+model.add(layers.Dense(6, activation="softmax", name="5_Dense"))
 model.summary(print_fn=logging.info)
 
 # Compile the model
