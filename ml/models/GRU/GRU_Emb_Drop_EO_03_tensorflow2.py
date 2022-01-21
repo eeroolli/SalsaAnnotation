@@ -2,6 +2,8 @@
 # see an implementation of GRU, so even if it is possible to run directML and use non-cuda GPU
 # it seems to be a futile operation.
 # EO This runs on conda: salsaTF i wsl.  CPU only. 
+# EO This runs on conda: aikit-tf i wsl.  CPU only. 
+
 
 from unicodedata import name
 import tensorflow as tf 
@@ -32,11 +34,11 @@ if not os.path.exists(model_path + 'temp'):
 
 # Define hyperparameters
 BATCH_SIZE = 128
-EPOCHS = 200
+EPOCHS = 20
 MAX_SEQ_LENGTH = 40   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
-DROPOUT_1 = 0.30       # Drop out rate after first GRU
-DROPOUT_2 = 0.10    # Drop out rate after second GRU
+DROPOUT_1 = 0.40       # Drop out rate after first GRU
+DROPOUT_2 = 0.05    # Drop out rate after second GRU
 
 ##TODO: define Sim_ID as external parameter
 Sim_ID = "6_cat_SalsaTF_" + str(BATCH_SIZE) + "-GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dense16"
@@ -64,6 +66,7 @@ print("n of frames in training data ", data_train["label"].count())
 
 print("n of labels in validation data \n", data_val["label"].value_counts())
 print("n of frames in validation data ", data_val["label"].count())
+print("\n ######################################################## \n")
 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
@@ -84,7 +87,9 @@ assert len(feat_cols) == NUM_FEATURES
 
 # Fixing format of the label
 def enc_label(label):
-    code = 0
+    code = 9
+    if label == "basic":     # preparing to use uncut version, with 9 for "other" or "unknown"
+        code = 0     
     if label == "right-turn":
         code = 1
     if label == "side":
@@ -92,9 +97,7 @@ def enc_label(label):
     if label == "cuban-basic":
         code = 3
     if label == "suzie-q":
-        code = 4
-    if label == "basic":
-        code = 5            
+        code = 4    
     return code
 
 # Function to select a number of frames per figure and right in the correct format for the mdoel
