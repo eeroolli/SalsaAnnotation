@@ -1,6 +1,7 @@
 from tensorflow.keras import models, layers
 #TODO: implement EarlyStopping
 from tensorflow.keras.callbacks import CSVLogger, EarlyStopping 
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -32,6 +33,9 @@ Sim_ID = "GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-Dens
 
 file_to_delete = glob.glob(model_path + 'temp/' + Sim_ID + '*')
 
+if not os.path.exists('temp'):
+    os.makedirs('temp')
+
 # Iterate over the list of filepaths & remove each file.
 for filePath in file_to_delete:
     try:
@@ -39,16 +43,19 @@ for filePath in file_to_delete:
     except:
         print("Error while deleting file : ", filePath)
 
+
 logging.basicConfig(filename = model_path + 'temp/' + Sim_ID + '.log', level='INFO')
 
 # Load the data   
 #PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_orig_01_aug_x_xy.csv"
 PATH_DATA_TRAIN = root_path + "Data_train_validate/Data_train_norm_1.csv"
 PATH_DATA_VAL = root_path + "Data_train_validate/Data_val_norm_1.csv"
-data_train = pd.read_csv(PATH_DATA_TRAIN)
-data_val = pd.read_csv(PATH_DATA_VAL)
+
+logging.basicConfig(filename='temp/' + Sim_ID + '.log', level='INFO')
+
 
 print(data_train.shape)
+
 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
@@ -116,6 +123,7 @@ def transf_data(data):
     X = np.array(X)
     X = X.reshape(len(ind_start) - 1, MAX_SEQ_LENGTH, NUM_FEATURES).astype("float32")
     X = tf.Tensor.from_tensor_
+
     y = [enc_label(x) for x in y]
     y = np.array(y).astype("float32")
 
@@ -125,10 +133,12 @@ def transf_data(data):
 X_train, y_train, info_train = transf_data(data_train)
 X_val, y_val, info_val = transf_data(data_val)
 
+
 print(X_train.shape)
 print(y_train.shape)
 print(X_val.shape)
 print(y_val.shape)
+
 
 
 
@@ -161,14 +171,17 @@ model.compile(
 
 # Check the trainning accuracy
 
+
 csv_logfile_name = os.path.join(model_path, "temp" , Sim_ID + "_log.csv")
 csv_log = CSVLogger(csv_logfile_name)
                     
+
 history = model.fit(
     X_train,
     y_train,
     epochs=EPOCHS,
     batch_size=BATCH_SIZE,
+
     validation_data=(X_val, y_val),
     callbacks=[csv_log]
 )
@@ -181,14 +194,17 @@ def render_history(history):
     plt.plot(history["val_loss"], label="val_loss")
     plt.legend()
     plt.title("Losses")
+
     plt.savefig(os.path.join( model_path, "temp",  Sim_ID + "-Loss.jpg"))
 
+ 
     plt.figure()
     plt.plot(history["accuracy"], label="accuracy")
     plt.plot(history["val_accuracy"], label="val_accuracy")
     plt.legend()
     plt.title("Accuracies")
     plt.savefig(os.path.join(model_path, "temp",  Sim_ID + "-Acc.jpg"))
+
 
 render_history(history.history)
 
