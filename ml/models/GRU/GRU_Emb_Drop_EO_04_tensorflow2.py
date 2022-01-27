@@ -34,15 +34,16 @@ if not os.path.exists(model_path + 'temp'):
     os.makedirs(model_path + 'temp')
 
 # Define hyperparameters
-BATCH_SIZE = 160
+BATCH_SIZE = 128
 EPOCHS = 200
-MAX_SEQ_LENGTH = 80   # number of frames per figure
+MAX_SEQ_LENGTH = 60   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
-DROPOUT_1 = 0.6      # Drop out rate after first GRU
-DROPOUT_2 = 0.3    # Drop out rate after second GRU
+DROPOUT_1 = 0.4       # Drop out rate after first GRU
+DROPOUT_2 = 0.2    # Drop out rate after second GRU
+DROPOUT_3 = 0.1    # Drop out rate after second GRU
 
 ##TODO: define Sim_ID as external parameter
-Sim_ID = "5_cat_SalsaTF_" + str(BATCH_SIZE) + '-'+ str(MAX_SEQ_LENGTH) + "-GRU64-drop" + str(DROPOUT_1) + "-GRU64-drop" + str(DROPOUT_2) + "-Dense16"
+Sim_ID = "5_cat_SalsaTF_" + str(BATCH_SIZE) + "-GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-GRU32-drop" + str(DROPOUT_3) +"-Dense16"
 
 file_to_delete = glob.glob(model_path + 'temp/' + Sim_ID + '*')
 
@@ -153,7 +154,6 @@ X_val, y_val, info_val = transf_data(data_val)
 print("X_train: ", X_train.dtype)
 print("y_train: ", y_train.dtype)
 # print("info_train: ", info_train.shape)
-print("\n ######################## \n")
 
 
 # print parameters to file
@@ -165,6 +165,7 @@ logging.info(f"Parameters of the model MAX_SEQ_LENGTH {MAX_SEQ_LENGTH}")
 logging.info(f"Parameters of the model NUM_FEATURES {NUM_FEATURES}")
 logging.info(f"Parameters of the model DROPOUT_1 {DROPOUT_1}")
 logging.info(f"Parameters of the model DROPOUT_2 {DROPOUT_2}")
+logging.info(f"Parameters of the model DROPOUT_3 {DROPOUT_2}")
 
 
 # Build the model (This section can be modified to a diferent model)
@@ -174,9 +175,11 @@ model.add(layers.GRU(64, return_sequences=True, name="1_GRU"))
 model.add(layers.Dropout(DROPOUT_1, name="1_dropout"))
 model.add(layers.GRU(64, return_sequences=True, name="2_GRU"))
 model.add(layers.Dropout(DROPOUT_2, name="2_dropout"))
-model.add(layers.GRU(32, name="3_GRU"))
+model.add(layers.GRU(32, return_sequences=True, name="3_GRU"))
+model.add(layers.Dropout(DROPOUT_3, name="3_dropout"))
+model.add(layers.GRU(32, name="4_GRU"))
 model.add(layers.Dense(16, activation="relu", name="4_Dense"))
-model.add(layers.Dense(5, activation="softmax", name="5_Dense"))
+model.add(layers.Dense(6, activation="softmax", name="5_Dense"))
 model.summary(print_fn=logging.info)
 
 # Compile the model
@@ -199,6 +202,7 @@ history = model.fit(
     validation_data=(X_val, y_val),
     callbacks=[csv_log]
 )
+
 
 # Checking accuracies
 def render_history(history):
