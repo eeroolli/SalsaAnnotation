@@ -16,10 +16,12 @@ In oder to have a reproducible results first you need create an environment.
 # Create environment for running the model in: 
 conda create --name SalsaAnn python=3.8
 
+conda create -c conda-forge -n SalsaML tensorflow pandas numpy plotly pip python=3.6
+
 # Use environment
 conda activate SalsaAnn
-
 ```
+# Bug fix https://github.com/tensorflow/tensorflow/issues/50545 was needed.
 
 # install packages
 A machine learning model depents on a number of packages.   You have two choices. Either run a script or manually install the packages using commands below. 
@@ -34,15 +36,14 @@ or
 ```bash
 # if you do not want to use the script you can run the following commands:
 conda config --append channels conda-forge
-conda install -c conda-forge jupyterlab
-conda install -c anaconda ipykernel
+conda install -c conda-forge jupyterlab ipykernel matplotlib
 conda install plotly
 # some people need: sudo apt install python3-pip
 python -m ipykernel install --user --name Salsa --display-name Salsa
 pip install --upgrade pip
-pip install matplotlib
-pip install tensorflow
-pip install pandas
+#pip install matplotlib
+#pip install tensorflow
+#pip install pandas
 pip install -r requirements.txt
 ```
 
