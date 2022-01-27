@@ -1,7 +1,7 @@
 #Eero
 .idea/
-ml/models/Data_train_validate/*.csv
-*/temp/*
+ml/models/*/temp/
+ml/models/*/logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
