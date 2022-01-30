@@ -1,15 +1,13 @@
+import os
 import pandas as pd
 import numpy as np
-
+from global_ import video_id, PATH_OUTPUT
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('config.ini')
 
-output_dir = cfg.get('folders', 'output_dir')  # Can we declare this variable only once?
-input_dir = cfg.get('folders', 'input_dir')
-
-PATH_OUTPUT = output_dir
-PATH_DATA = PATH_OUTPUT + "/Data_concat_cut.csv"
+file_name = cfg.get('output_data', 'json_cut_df')
+PATH_DATA = os.path.join(PATH_OUTPUT, file_name)
 data = pd.read_csv(PATH_DATA)
 
 cols = ['nose_x', 'nose_y', 'neck_x',
@@ -75,6 +73,8 @@ for i in clip_names:
 
 # In case of training the model we need to shuffle by figures
 # Saving particular example of data
-data.to_csv(PATH_OUTPUT + "/Data_norm.csv")
+file_name = cfg.get('output_data', 'norm_df')
+PATH_DATA = os.path.join(PATH_OUTPUT, file_name)
+data.to_csv(PATH_DATA)
 
 

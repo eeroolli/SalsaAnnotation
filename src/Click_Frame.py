@@ -4,22 +4,16 @@ Make the manual annotation of the video, to get star and end of a figure
 import cv2
 import pandas as pd
 import os
-import sys
-sys.path.append('../')
-import config # Make sure that this config is not in conflict with config.ini
-
+from global_ import video_id, PATH_OUTPUT
 from configparser import ConfigParser, ExtendedInterpolation
+
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('config.ini')
 
-output_dir = cfg.get('folders', 'output_dir')  # Can we declare this variable only once?
-input_dir = cfg.get('folders', 'input_dir')
-
-PATH_OUTPUT = output_dir
-video_id = config.VIDEO_ID
-video_name = video_id + ".mp4"
-FILE = os.path.join(input_dir, video_name)
-PATH_ANNOT = os.path.join(output_dir, "Data_steps.csv")
+video_name = video_id + "_h920.mp4"
+FILE = os.path.join(PATH_OUTPUT, video_name)
+file_name = cfg.get('output_data', 'click_data')
+PATH_ANNOT = os.path.join(PATH_OUTPUT, file_name)
 wait_ms = 30
 
 # Functions to get the state of the mouse
@@ -33,11 +27,11 @@ cap = cv2.VideoCapture(FILE)
 time_list = []
 frame_list = []
 
-while(cap.isOpened()):
+while (cap.isOpened()):
     ret, frame = cap.read()
     if ret == True:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        cv2.imshow('frame',gray)
+        cv2.imshow('frame', gray)
         cv2.setMouseCallback("frame", print_frame)
 
         if cv2.waitKey(wait_ms) & 0xFF == ord('q'):
@@ -54,5 +48,13 @@ data_annot = pd.DataFrame(
 )
 
 data_annot.to_csv(PATH_ANNOT, index=False)
+
+
+
+
+
+
+
+
 
 

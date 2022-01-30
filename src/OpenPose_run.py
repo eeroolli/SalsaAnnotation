@@ -3,15 +3,12 @@ import os
 import glob
 import config
 import pandas as pd
+from global_ import PATH_OUTPUT
 
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('config.ini')
 
-output_dir = cfg.get('folders', 'output_dir')  # Can we declare this variable only once?
-input_dir = cfg.get('folders', 'input_dir')
-
-PATH_OUTPUT = output_dir
 ind_coreo = "1"  #TODO it needs to be defined as external parameter
 
 # Functions
@@ -61,11 +58,9 @@ def run_openpose():
 
 run_openpose()
 rename_json()
-run_annot = "python AnnotationFile_t.py " + PATH_OUTPUT + " " + ind_coreo
-os.system(run_annot)
-Anot_file = PATH_OUTPUT + "/Annotation.json"
-run_parsing = "python Parsing-Openpose-Annotation.py " + config.VIDEO_ID + " " + PATH_OUTPUT + " " + Anot_file
-os.system(run_parsing)
+
+
+
 
 # Make a Data Frame from the current video, how to modify for several videos?
 #TODO declare all the names of the data files in the config file
