@@ -12,7 +12,7 @@ coreo = make_list_from_string(
           cfg.get("annotation", "coreo")))
 
 print(coreo)
-print(mydict)
+
 
 
 op_columns = make_list_from_string(
