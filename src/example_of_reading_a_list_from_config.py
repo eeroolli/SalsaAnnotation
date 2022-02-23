@@ -13,8 +13,6 @@ coreo = make_list_from_string(
 
 print(coreo)
 
-
-
 op_columns = make_list_from_string(
               keep_only_words(
                cfg.get("openpose", "columns")))
