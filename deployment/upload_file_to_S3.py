@@ -21,30 +21,21 @@ st.title('SalsaAnnotation')
 skeleton_video_file = None
    #three columns and their relative width
 
-st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile.
-            that contains your processed video.  
-            
-            Options:
-            +
-            Annotation:  Do you want your video to include our guesses of the names of figures?
-            Background:  Should the skeleton video have black or normal background?
-            +
-            --
-            Information about you and the video:
-            +
-            Choreography:  We can only annotate videos that contain one of the predefined choreograpies. 
-            Role: Do you dance Leader/Male or Follower/Female role?
-            Style: What style of Salsa do you dance?
-            +
-            "      
-            
-            )
+This app will allow you to upload a video and it sends you back an email with a link to a videofile.
+that contains your processed video.  
+      
+Options:
+* Annotation:  Do you want your video to include our guesses of the names of figures?
+* Background:  Should the skeleton video have black or normal background?
+Information about you and the video:
+* Choreography:  We can only annotate videos that contain one of the predefined choreograpies. 
+* Role: Do you dance Leader/Male or Follower/Female role?
+* Style: What style of Salsa do you dance?
 
 col1, col2, col3 = st.columns([2,3,3])
-
-# Allow upload video
-def save_uploaded_file(uploaded_file):
-    try:
+# Allo upload video
+def sae_uploaded_file(uploaded_file):
+    tr:
         with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
             f.write(uploaded_file.getbuffer())
         return 1
