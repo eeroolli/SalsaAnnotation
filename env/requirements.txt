@@ -1,0 +1,13 @@
+pandas
+numpy
+sklearn
+tensorboard
+tensorflow
+configparser
+jupyterlab 
+ipykernel 
+matplotlib
+argparse
+streamlit
+seaborn
+cv2
