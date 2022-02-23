@@ -130,8 +130,9 @@ dance_role = st.selectbox("Which role do you normally dance?",
                     )
 
 salsa_style = st.selectbox("Which style of Salsa do you dance?", 
-                    options("Cuban", "LA/On1", "NY/On2", "Other" )
-                    key("salsa_style"))
+                    options("Cuban", "LA/On1", "NY/On2", "Other" ),
+                    key("salsa_style")
+                    )
 
 
 if st.button("Add row"):
