@@ -22,7 +22,7 @@ st.markdown("                                                                   
 st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile that contains your processed video.  ")
 st.markdown("      ")
 st.markdown("Choreographies:")
-st.markdown("[The first choreography]: /https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing ")
+st.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing ")
 st.markdown("[The first choreography]")            
 st.markdown("The Second Choreography is not out yet")
 st.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
