@@ -21,7 +21,7 @@ st.title('SalsaAnnotation')
 skeleton_video_file = None
    #three columns and their relative width
 
-st.markdown(This app will allow you to upload a video and it sends you back an email with a link to a videofile.
+st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile.
             that contains your processed video.  
             
             Options:
@@ -36,7 +36,7 @@ st.markdown(This app will allow you to upload a video and it sends you back an e
             Role: Do you dance Leader/Male or Follower/Female role?
             Style: What style of Salsa do you dance?
             +
-                  
+            "      
             
             )
 
