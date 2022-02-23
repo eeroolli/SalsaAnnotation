@@ -19,17 +19,16 @@ st.title('SalsaAnnotation')
 skeleton_video_file = None
    #three columns and their relative width
 st.markdown("                                                                                                 ")
-st.markdown("This app will allow you to upload a video and it sends you back an email with ")
-st.markdown("a link to a videofile that contains your processed video.  ")
+st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile that contains your processed video.  ")
 st.markdown("      ")
-st.markdown("Options:")
-st.markdown("* Annotation:  Do you want your video to include our guesses of the names of figures?")
-st.markdown("* Background:  Should the skeleton video have black or normal background?")
-st.markdown("Information about you and the video:")
-st.markdown("* Choreography:  We can only annotate videos that contain one of the predefined choreograpies. ")
-st.markdown("* Role: Do you dance Leader/Male or Follower/Female role?")
-st.markdown("* Style: What style of Salsa do you dance?")
-st.markdown("")
+# st.markdown("Options:")
+# st.markdown("* Annotation:  Do you want your video to include our guesses of the names of figures?")
+# st.markdown("* Background:  Should the skeleton video have black or normal background?")
+# st.markdown("Information about you and the video:")
+# st.markdown("* Choreography:  We can only annotate videos that contain one of the predefined choreograpies. ")
+# st.markdown("* Role: Do you dance Leader/Male or Follower/Female role?")
+# st.markdown("* Style: What style of Salsa do you dance?")
+# st.markdown("")
 
 col1, col2, col3 = st.columns([3,3,2])
 
@@ -110,7 +109,6 @@ def get_data():
 
 coreo = st.selectbox("Which choreography did you dance on the video?", 
                      ("First"),
-                     index = 0, 
                      key="coreo"
                      )
 
