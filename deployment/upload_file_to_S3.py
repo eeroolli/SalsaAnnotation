@@ -111,27 +111,27 @@ def get_data():
 coreo = st.selectbox("Which choreography did you dance on the video?", 
                      ("First"),
                      index = 0, 
-                     key("coreo")
+                     key="coreo"
                      )
 
 video_background = st.radio("What kind of background should the stickfigure video have?", 
                        ("Black", "Original"),
-                       key("video_background")
+                       key="video_background"
                        )
 
 #TODO: Add validation to the email address
 email = st.text_input("To which email do you want have the link sent to?", 
-                      key("email")
+                      key="email"
                       )
 
 dance_role = st.selectbox("Which role do you normally dance?",
                     ("Follower/Female", "Leader/Male"),
-                    key("dance_role")
+                    key="dance_role"
                     )
 
 salsa_style = st.selectbox("Which style of Salsa do you dance?", 
                     ("Cuban", "LA/On1", "NY/On2", "Other" ),
-                    key("salsa_style")
+                    key="salsa_style"
                     )
 
 
