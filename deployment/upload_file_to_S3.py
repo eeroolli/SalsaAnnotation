@@ -3,10 +3,10 @@ import pandas as pd
 # from Inference import *
 import os
 # import matplotlib.pyplot as plt
-# import seaborn as sns
+import seaborn as sns
 sns.set_theme(style="darkgrid")
 sns.set()
-# from PIL import Image
+from PIL import Image
 
 # On the Salsa Backend is a environment called streamlit which has streamlit installed.
 
