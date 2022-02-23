@@ -8,10 +8,8 @@ sns.set_theme(style="darkgrid")
 sns.set()
 from PIL import Image
 
-# On the Salsa Backend is a environment called streamlit which has streamlit installed.
-
-# In terminal$ streamlit run Model_deployment.py
-# will open the webpage with the running prediction.
+# In terminal$ streamlit run upload_file_to_S3.py
+# will open the webpage with the possibility to upload a file.
 # This python script defines the webpage.
 
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
@@ -96,4 +94,41 @@ else:
         st.sidebar.button(label='Your skeleton video is soon ready')
     except:
         st.write("Something is wrong")
+
+
+##############################################
+
+@st.cache(allow_output_mutation=True)
+def get_data():
+    return []
+
+coreo = st.selectbox("Which choreography did you dance on the video?", index = 0, 
+                     options("First")
+                     key("coreo")
+                     )
+
+video_background = st.radio("What kind of background should the stickfigure video have?", 
+                       options("Black", "Original"),
+                       key("background")
+                       )
+
+#TODO: Add validation to the email address
+email = st.text_input("To which email do you want have the link sent to?", 
+                      key("email")
+                      )
+
+dance_role = st.selectbox("Which role do you normally dance?",
+                    options("Follower/Female", "Leader/Male"),
+                    key("dance_role")
+                    )
+
+salsa_style = st.selectbox("Which style of Salsa do you dance?", 
+                    options("Cuban", "LA/On1", "NY/On2", "Other" )
+                    key("salsa_style"))
+
+
+if st.button("Add row"):
+    get_data().append({"UserID": user_id, "foo": foo, "bar": bar})
+
+st.write(pd.DataFrame(get_data()))
 
