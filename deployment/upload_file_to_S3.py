@@ -4,8 +4,8 @@ import pandas as pd
 import os
 # import matplotlib.pyplot as plt
 # import seaborn as sns
-# sns.set_theme(style="darkgrid")
-# sns.set()
+sns.set_theme(style="darkgrid")
+sns.set()
 # from PIL import Image
 
 # On the Salsa Backend is a environment called streamlit which has streamlit installed.
@@ -16,10 +16,29 @@ import os
 
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
 
-st.title('SalsaClassifier')
+st.title('SalsaAnnotation')
 
 skeleton_video_file = None
    #three columns and their relative width
+
+st.markdown(This app will allow you to upload a video and it sends you back an email with a link to a videofile.
+            that contains your processed video.  
+            
+            Options:
+            +
+            Annotation:  Do you want your video to include our guesses of the names of figures?
+            Background:  Should the skeleton video have black or normal background?
+            +
+            --
+            Information about you and the video:
+            +
+            Choreography:  We can only annotate videos that contain one of the predefined choreograpies. 
+            Role: Do you dance Leader/Male or Follower/Female role?
+            Style: What style of Salsa do you dance?
+            +
+                  
+            
+            )
 
 col1, col2, col3 = st.columns([2,3,3])
 
