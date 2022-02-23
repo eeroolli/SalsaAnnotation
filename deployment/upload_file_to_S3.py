@@ -36,7 +36,7 @@ st.markdown("")
 col1, col2, col3 = st.columns([2,3,3])
 # Allo upload video
 def sae_uploaded_file(uploaded_file):
-    tr:
+    try:
         with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
             f.write(uploaded_file.getbuffer())
         return 1
