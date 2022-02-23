@@ -109,13 +109,13 @@ def get_data():
     return []
 
 coreo = st.selectbox("Which choreography did you dance on the video?", 
+                     ("First"),
                      index = 0, 
-                     options("First"),
                      key("coreo")
                      )
 
 video_background = st.radio("What kind of background should the stickfigure video have?", 
-                       options("Black", "Original"),
+                       ("Black", "Original"),
                        key("video_background")
                        )
 
@@ -125,12 +125,12 @@ email = st.text_input("To which email do you want have the link sent to?",
                       )
 
 dance_role = st.selectbox("Which role do you normally dance?",
-                    options("Follower/Female", "Leader/Male"),
+                    ("Follower/Female", "Leader/Male"),
                     key("dance_role")
                     )
 
 salsa_style = st.selectbox("Which style of Salsa do you dance?", 
-                    options("Cuban", "LA/On1", "NY/On2", "Other" ),
+                    ("Cuban", "LA/On1", "NY/On2", "Other" ),
                     key("salsa_style")
                     )
 
