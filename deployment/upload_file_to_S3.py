@@ -31,9 +31,13 @@ st.markdown("* Role: Do you dance Leader/Male or Follower/Female role?")
 st.markdown("* Style: What style of Salsa do you dance?")
 st.markdown("")
 
-col1, col2, col3 = st.columns([2,3,3])
-# Allo upload video
-def sae_uploaded_file(uploaded_file):
+col1, col2, col3 = st.columns([3,3,2])
+
+
+#TODO: first answer questions and then allow upload of video. 
+
+# Allow upload video
+def save_uploaded_file(uploaded_file):
     try:
         with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
             f.write(uploaded_file.getbuffer())
@@ -97,19 +101,22 @@ else:
 
 
 ##############################################
+# Answer questions
+# https://discuss.streamlit.io/t/save-user-input-into-a-dataframe-and-access-later/2527/3
 
 @st.cache(allow_output_mutation=True)
 def get_data():
     return []
 
-coreo = st.selectbox("Which choreography did you dance on the video?", index = 0, 
-                     options("First")
+coreo = st.selectbox("Which choreography did you dance on the video?", 
+                     index = 0, 
+                     options("First"),
                      key("coreo")
                      )
 
 video_background = st.radio("What kind of background should the stickfigure video have?", 
                        options("Black", "Original"),
-                       key("background")
+                       key("video_background")
                        )
 
 #TODO: Add validation to the email address
@@ -128,7 +135,14 @@ salsa_style = st.selectbox("Which style of Salsa do you dance?",
 
 
 if st.button("Add row"):
-    get_data().append({"UserID": user_id, "foo": foo, "bar": bar})
+    get_data().append(
+        {"video_file": uploaded_file.name, 
+         "coreo": coreo, 
+         "video_background": video_background,
+         "email": email,
+         "dance_role": dance_role,
+         "salsa_style": salsa_style         
+         })
 
 st.write(pd.DataFrame(get_data()))
 
