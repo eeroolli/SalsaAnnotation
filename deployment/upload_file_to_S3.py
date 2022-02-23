@@ -21,11 +21,11 @@ skeleton_video_file = None
 st.markdown("                                                                                                 ")
 st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile that contains your processed video.  ")
 st.markdown("      ")
-# st.markdown("Options:")
-# st.markdown("* Annotation:  Do you want your video to include our guesses of the names of figures?")
-# st.markdown("* Background:  Should the skeleton video have black or normal background?")
-# st.markdown("Information about you and the video:")
-# st.markdown("* Choreography:  We can only annotate videos that contain one of the predefined choreograpies. ")
+st.markdown("Choreographies:")
+st.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing "Choreo 1")
+            
+st.markdown("The Second Choreography is not out yet")
+st.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
 # st.markdown("* Role: Do you dance Leader/Male or Follower/Female role?")
 # st.markdown("* Style: What style of Salsa do you dance?")
 # st.markdown("")
@@ -108,9 +108,11 @@ def get_data():
     return []
 
 coreo = st.selectbox("Which choreography did you dance on the video?", 
-                     ("First"),
+                     ("First", "Second"),
                      key="coreo"
                      )
+
+
 
 video_background = st.radio("What kind of background should the stickfigure video have?", 
                        ("Black", "Original"),
