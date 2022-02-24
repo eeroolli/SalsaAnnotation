@@ -28,23 +28,22 @@ def get_data():
     return []
 
 
+
 st.title('SalsaAnnotation')
+
+col1, col2, col3 = st.columns([3, 3, 2])
 
 skeleton_video_file = None
    #three columns and their relative width
-st.markdown("                                                                                                 ")
-st.markdown("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.  ")
-st.markdown("      ")
-st.subheader("Choreographies:")
-st.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
-   
-st.markdown("The Second Choreography is not out yet")
-st.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
-# st.markdown("* Role: Do you dance Leader/Male or Follower/Female role?")
-# st.markdown("* Style: What style of Salsa do you dance?")
-# st.markdown("")
 
-col1, col2, col3 = st.columns([3,3,2])
+st.col1.markdown("                                                                                                 ")
+st.col1.markdown("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.  ")
+st.col1.markdown("      ")
+st.col1.subheader("Choreographies:")
+st.col1.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
+st.col1.markdown("The Second Choreography is not out yet")
+st.col1.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
+
 
 
 #TODO: first answer questions and then allow upload of video. 
@@ -92,36 +91,36 @@ if uploaded_file is not None:
             })
 
         st.write(pd.DataFrame(get_data()))
+        st.sidebar.write(" ")
+        st.sidebar.write(" ")
+        st.sidebar.write("Remove the video from the list above to rerun with a new video.")
 
         # # display original video
         # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
         # video_bytes = video_file.read()
         # col1.text('Original Video')
         # col1.video(video_bytes)
-
-        # show also the skeleton
-        skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
-        skel_bytestream = skeleton_video_file.read()
-        col2.text('Skeleton Video ')
-        col2.video(skel_bytestream)
-        st.sidebar.write(" ")
-        st.sidebar.write(" ")
-        st.sidebar.write("Remove the video from the list above to rerun with a new video.")
-
-            # Running the prediction
-            # col3.text('Our predictions :')
-
-            # fig, ax = plt.subplots(1, 3)
-            # for i in range(3):
-            #     prediction = check_pred(i)
-            #     ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
-            #     ax[i].set(xlabel='Confidence %')
-
-        # col3.pyplot(fig)
-        os.remove('video-test/' + uploaded_file.name)
     else:
         col1.write("Start by uploading a short salsa video of one person dancing.")
 
+# show the skeleton video as example
+skeleton_video_file = open(
+    "https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
+skel_bytestream = skeleton_video_file.read()
+col2.text('Skeleton Video ')
+col2.video(skel_bytestream)
+
+# Running the prediction
+# col3.text('Our predictions :')
+
+# fig, ax = plt.subplots(1, 3)
+# for i in range(3):
+#     prediction = check_pred(i)
+#     ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
+#     ax[i].set(xlabel='Confidence %')
+
+# col3.pyplot(fig)
+# os.remove('video-test/' + uploaded_file.name)
 
 ##############################################
 # Answer questions
