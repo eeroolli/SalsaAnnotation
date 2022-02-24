@@ -18,9 +18,11 @@ S3_folder = "salsaannotation/video/"
 
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 # skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
+# TODO: I have not managed to save a video to S3 from the sharelit cloud.  Perhaps sharelit needs to run on EC2?
+# TODO: Try using Boto3 which is the python interface to AWS.  (I think I have done that previosly)
 
-# Mounting a S3 as a filesystem.
-s3fs salsaannotation -o use_cache=/tmp -o allow_other -o uid=1001 mp_umask=002 s3://salsaannotation/video/
+# Mounting a S3 as a filesystem. Does not work the same way as in EC2 front.
+# s3fs salsaannotation -o use_cache=/tmp -o allow_other -o uid=1001 mp_umask=002 s3://salsaannotation/video/
 
 # Create connection object.
 # `anon=False` means not anonymous, i.e. it uses access keys to pull data.
@@ -93,7 +95,7 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
                                     key="salsa_style"
                                     )
 
-uploaded_file = st.sidebar.file_uploader("Upload Video")
+uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
