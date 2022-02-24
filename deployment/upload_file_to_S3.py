@@ -12,7 +12,11 @@ from PIL import Image
 # will open the webpage with the possibility to upload a file.
 # This python script defines the webpage.
 
+# parameters
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
+skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
+
+
 
 # Allow upload video
 def save_uploaded_file(uploaded_file):
@@ -31,14 +35,13 @@ def get_data():
 
 st.title('SalsaAnnotation')
 
+#three columns and their relative width
+
 col1, col2, col3 = st.columns([3, 3, 2])
 
-skeleton_video_file = None
-   #three columns and their relative width
-
-st.col1.markdown("                                                                                                 ")
+st.col1.markdown("  ")                                                                                               ")
 st.col1.markdown("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.  ")
-st.col1.markdown("      ")
+st.col1.markdown("   ")
 st.col1.subheader("Choreographies:")
 st.col1.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
 st.col1.markdown("The Second Choreography is not out yet")
@@ -46,10 +49,7 @@ st.col1.markdown("At this stage we can only annotate videos that contain one of 
 
 
 
-#TODO: first answer questions and then allow upload of video. 
-
-
-
+#TODO: consider to allow upload of video, only if questions are answered. 
 coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
                                 ("First", "Second"),
                                 key="coreo"
@@ -60,7 +60,7 @@ video_background = st.sidebar.radio("What kind of background should the stickfig
                                     key="video_background"
                                     )
 
-#TODO: Add validation to the email address
+#TODO: Add validation of the email address
 email = st.sidebar.text_input("To which email do you want have the link sent to?",
                                 key="email"
                                 )
@@ -104,10 +104,8 @@ if uploaded_file is not None:
         col1.write("Start by uploading a short salsa video of one person dancing.")
 
 # show the skeleton video as example
-skeleton_video_file = open(
-    "https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
+col2.text('Skeleton Video with black background')
 skel_bytestream = skeleton_video_file.read()
-col2.text('Skeleton Video ')
 col2.video(skel_bytestream)
 
 # Running the prediction
