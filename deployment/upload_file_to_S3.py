@@ -19,7 +19,7 @@ st.title('SalsaAnnotation')
 skeleton_video_file = None
    #three columns and their relative width
 st.markdown("                                                                                                 ")
-st.markdown("This app will allow you to upload a video and it sends you back an email with a link to a videofile that contains your processed video.  ")
+st.markdown("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.  ")
 st.markdown("      ")
 st.subheader("Choreographies:")
 st.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
@@ -83,7 +83,7 @@ if uploaded_file is not None:
         col1.video(video_bytes)
 
         # show also the skeleton
-        skeleton_video_file = open(os.path.join("static", "openpose-Gustavo.mp4"), 'rb')
+        skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4")
         skel_bytes = skeleton_video_file.read()
         col2.text('Skeleton Video ')
         col2.video(skel_bytes)
