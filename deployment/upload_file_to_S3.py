@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 # from Inference import *
+import s3fs
 import os
 # import matplotlib.pyplot as plt
 import seaborn as sns
@@ -14,14 +15,15 @@ from PIL import Image
 
 # parameters
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
-skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
 
+# TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
+# skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
 
 
 # Allow upload video
 def save_uploaded_file(uploaded_file):
     try:
-        with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
+        with open(os.path.join(S3_folder,uploaded_file.name),'wb') as f:
             f.write(uploaded_file.getbuffer())
         return 1
     except:
@@ -107,9 +109,9 @@ if uploaded_file is not None:
         col1.write("Start by uploading a short salsa video of one person dancing.")
 
 # show the skeleton video as example
-col2.text('Skeleton Video with black background')
-skel_bytestream = skeleton_video_file.read()
-col2.video(skel_bytestream)
+# col2.text('Skeleton Video with black background')
+# skel_bytestream = skeleton_video_file.read()
+# col2.video(skel_bytestream)
 
 # Running the prediction
 # col3.text('Our predictions :')
