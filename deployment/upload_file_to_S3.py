@@ -44,8 +44,6 @@ def save_uploaded_file(uploaded_file):
     except:
         return 0
 
-uploaded_file = st.sidebar.file_uploader("Upload Video")
-
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
 
@@ -81,20 +79,13 @@ if uploaded_file is not None:
 
 if skeleton_video_file is not None:
     try:
-        st.sidebar.download_button(label='Download your skeleton video',
-                                  data=skeleton_video_file ,
-                                  file_name='my_skeleton_video.mp4')
-
-        st.sidebar.button(label='Download a text file with names of figures',
-                             #     data=None,
-                             #     mime="text/plain",
-                             #     file_name='my_figures.txt'
-                         )
+        st.sidebar.text("Your video is uploaded.")
     except:
         st.write("No skeleton video, yet")
 else:
     try:
-        
+        uploaded_file = st.sidebar.file_uploader("Upload Video")
+
         coreo = st.sidebar.selectbox("Which choreography did you dance on the video?", 
                             ("First", "Second"),
                             key="coreo"
