@@ -44,6 +44,34 @@ def save_uploaded_file(uploaded_file):
     except:
         return 0
 
+coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
+                                ("First", "Second"),
+                                key="coreo"
+                                )
+
+video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
+                                    ("Black", "Original"),
+                                    key="video_background"
+                                    )
+
+#TODO: Add validation to the email address
+email = st.sidebar.text_input("To which email do you want have the link sent to?",
+                                key="email"
+                                )
+
+dance_role = st.sidebar.selectbox("Which role do you normally dance?",
+                                    ("Follower/Female", "Leader/Male"),
+                                    key="dance_role"
+                                    )
+
+salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+                                    ("Cuban", "LA/On1", "NY/On2",
+                                    "All above", "Other"),
+                                    key="salsa_style"
+                                    )
+
+uploaded_file = st.sidebar.file_uploader("Upload Video")
+
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
 
@@ -84,36 +112,6 @@ if skeleton_video_file is not None:
         st.write("No skeleton video, yet")
 else:
     try:
-        uploaded_file = st.sidebar.file_uploader("Upload Video")
-
-        coreo = st.sidebar.selectbox("Which choreography did you dance on the video?", 
-                            ("First", "Second"),
-                            key="coreo"
-                            )
-
-
-
-        video_background = st.sidebar.radio("What kind of background should the stickfigure video have?", 
-                            ("Black", "Original"),
-                            key="video_background"
-                            )
-
-        #TODO: Add validation to the email address
-        email = st.sidebar.text_input("To which email do you want have the link sent to?", 
-                            key="email"
-                            )
-
-        dance_role = st.sidebar.selectbox("Which role do you normally dance?",
-                            ("Follower/Female", "Leader/Male"),
-                            key="dance_role"
-                            )
-
-        salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?", 
-                            ("Cuban", "LA/On1", "NY/On2", "All above", "Other" ),
-                            key="salsa_style"
-                    )
-
-
         # st.sidebar.button(label='Save')
     except:
         st.write("Something is wrong")
