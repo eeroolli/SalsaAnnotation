@@ -17,7 +17,7 @@ from PIL import Image
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
 
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
-# skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
+skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
 
 
 # Allow upload video
@@ -109,9 +109,9 @@ if uploaded_file is not None:
         col1.write("Start by uploading a short salsa video of one person dancing.")
 
 # show the skeleton video as example
-# col2.text('Skeleton Video with black background')
-# skel_bytestream = skeleton_video_file.read()
-# col2.video(skel_bytestream)
+col2.text('Skeleton Video with black background')
+skel_bytestream = skeleton_video_file.read()
+col2.video(skel_bytestream)
 
 # Running the prediction
 # col3.text('Our predictions :')
