@@ -17,7 +17,7 @@ from PIL import Image
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
 
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
-skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
+# skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
 
 # Create connection object.
 # `anon=False` means not anonymous, i.e. it uses access keys to pull data.
