@@ -14,7 +14,7 @@ from PIL import Image
 # This python script defines the webpage.
 
 # parameters
-S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
+S3_folder = "salsaannotation/video/"
 
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 # skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
@@ -28,7 +28,6 @@ def read_video(filename):
     with fs.open(filename, "rb") as f:
         return f.read()
 skel_bytestream = read_video("salsaannotation/video/Ana_skeleton_with_music.mp4")
-
 
 
 # Allow upload video
@@ -52,9 +51,9 @@ st.title('SalsaAnnotation')
 
 col1, col2, col3 = st.columns([3, 3, 2])
 
-#st.col1.markdown("  ")  
-st.col1.markdown("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.  ")
-#st.col1.markdown("   ")
+# st.col1.markdown("  ")  
+st.col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
+# st.col1.markdown("   ")
 st.col1.subheader("Choreographies:")
 st.col1.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
 st.col1.markdown("The Second Choreography is not out yet")
