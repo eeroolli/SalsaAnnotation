@@ -49,16 +49,19 @@ def get_data():
 st.title('SalsaAnnotation')
 
 #three columns and their relative width
-col1, col2, col3 = st.columns([3, 3, 2])
+col1, col2 = st.columns([3, 3])
 
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
 col1.subheader("Choreographies:")
-col1.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing  [The first choreography] ")       
+col1.markdown("[The first choreography]: https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing ")
+col1.markdown([The first choreography])
+    
 col1.markdown("The Second Choreography is not out yet")
 col1.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
 col1.subheader("FAQ")
-col1.markdown("[FAQ]: https://salsa.eero.no [FAQ]") 
+col1.markdown("[FAQ]: https://salsa.eero.no")
+col1.markdown("[FAQ]") 
       
 
 #TODO: consider to allow upload of video, only if questions are answered. 
@@ -116,9 +119,9 @@ if uploaded_file is not None:
         col1.write("Start by uploading a short salsa video of one person dancing.")
 
 # show the skeleton video as example
-col2.text('Skeleton Video with black background')
+col1.text('Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
-col2.video(skel_bytestream)
+col1.video(skel_bytestream)
 
 # Running the prediction
 # col3.text('Our predictions :')
