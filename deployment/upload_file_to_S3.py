@@ -14,6 +14,20 @@ from PIL import Image
 
 S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
 
+# Allow upload video
+def save_uploaded_file(uploaded_file):
+    try:
+        with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
+            f.write(uploaded_file.getbuffer())
+        return 1
+    except:
+        return 0
+
+@st.cache(allow_output_mutation=True)
+def get_data():
+    return []
+
+
 st.title('SalsaAnnotation')
 
 skeleton_video_file = None
@@ -35,14 +49,6 @@ col1, col2, col3 = st.columns([3,3,2])
 
 #TODO: first answer questions and then allow upload of video. 
 
-# Allow upload video
-def save_uploaded_file(uploaded_file):
-    try:
-        with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
-            f.write(uploaded_file.getbuffer())
-        return 1
-    except:
-        return 0
 
 
 coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
@@ -75,6 +81,17 @@ uploaded_file = st.sidebar.file_uploader("Upload Video")
 
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
+        #TODO: This should be saved on S3. Perhaps as csv?
+        get_data().append(
+            {"video_file": uploaded_file.name, 
+            "coreo": coreo, 
+            "video_background": video_background,
+            "email": email,
+            "dance_role": dance_role,
+            "salsa_style": salsa_style         
+            })
+
+        st.write(pd.DataFrame(get_data()))
 
         # display original video
         video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
@@ -91,14 +108,14 @@ if uploaded_file is not None:
         st.sidebar.write(" ")
         st.sidebar.write("Remove the video from the list above to rerun with a new video.")
 
-        # Running the prediction
-        # col3.text('Our predictions :')
+            # Running the prediction
+            # col3.text('Our predictions :')
 
-        # fig, ax = plt.subplots(1, 3)
-        # for i in range(3):
-        #     prediction = check_pred(i)
-        #     ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
-        #     ax[i].set(xlabel='Confidence %')
+            # fig, ax = plt.subplots(1, 3)
+            # for i in range(3):
+            #     prediction = check_pred(i)
+            #     ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
+            #     ax[i].set(xlabel='Confidence %')
 
         # col3.pyplot(fig)
         os.remove('video-test/' + uploaded_file.name)
@@ -106,35 +123,7 @@ if uploaded_file is not None:
         col2.write("Start by uploading a short salsa video of one person dancing.")
 
 
-# if skeleton_video_file is not None:
-#     try:
-#         st.sidebar.text("Your video is uploaded.")
-#     except:
-#         st.write("No skeleton video, yet")
-# else:
-#     try:
-#         # st.sidebar.button(label='Save')
-#     except:
-#         st.write("Something is wrong")
-
-
 ##############################################
 # Answer questions
 # https://discuss.streamlit.io/t/save-user-input-into-a-dataframe-and-access-later/2527/3
-
-@st.cache(allow_output_mutation=True)
-def get_data():
-    return []
-
-if st.button("Save my info"):
-    get_data().append(
-        {"video_file": uploaded_file.name, 
-         "coreo": coreo, 
-         "video_background": video_background,
-         "email": email,
-         "dance_role": dance_role,
-         "salsa_style": salsa_style         
-         })
-
-st.write(pd.DataFrame(get_data()))
 
