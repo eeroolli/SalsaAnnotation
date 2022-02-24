@@ -93,17 +93,17 @@ if uploaded_file is not None:
 
         st.write(pd.DataFrame(get_data()))
 
-        # display original video
-        video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
-        video_bytes = video_file.read()
-        col1.text('Original Video')
-        col1.video(video_bytes)
+        # # display original video
+        # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
+        # video_bytes = video_file.read()
+        # col1.text('Original Video')
+        # col1.video(video_bytes)
 
         # show also the skeleton
-        skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4")
-        skel_bytes = skeleton_video_file.read()
+        skeleton_video_file = open("https://github.com/eeroolli/SalsaAnnotation/blob/dc5be4a01718e37e4db264f530c3ec8f09f49654/visualization/Ana_skeleton_with_music.mp4", "rb")
+        skel_bytestream = skeleton_video_file.read()
         col2.text('Skeleton Video ')
-        col2.video(skel_bytes)
+        col2.video(skel_bytestream)
         st.sidebar.write(" ")
         st.sidebar.write(" ")
         st.sidebar.write("Remove the video from the list above to rerun with a new video.")
@@ -120,7 +120,7 @@ if uploaded_file is not None:
         # col3.pyplot(fig)
         os.remove('video-test/' + uploaded_file.name)
     else:
-        col2.write("Start by uploading a short salsa video of one person dancing.")
+        col1.write("Start by uploading a short salsa video of one person dancing.")
 
 
 ##############################################
