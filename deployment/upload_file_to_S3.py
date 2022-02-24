@@ -44,6 +44,7 @@ def save_uploaded_file(uploaded_file):
     except:
         return 0
 
+
 coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
                                 ("First", "Second"),
                                 key="coreo"
@@ -82,8 +83,8 @@ if uploaded_file is not None:
         col1.video(video_bytes)
 
         # show also the skeleton
-        # skeleton_video_file = open(os.path.join("static", "openpose-Gustavo.mp4"), 'rb')
-        # skel_bytes = skeleton_video_file.read()
+        skeleton_video_file = open(os.path.join("static", "openpose-Gustavo.mp4"), 'rb')
+        skel_bytes = skeleton_video_file.read()
         col2.text('Skeleton Video ')
         col2.video(skel_bytes)
         st.sidebar.write(" ")
@@ -91,7 +92,7 @@ if uploaded_file is not None:
         st.sidebar.write("Remove the video from the list above to rerun with a new video.")
 
         # Running the prediction
-        col3.text('Our predictions :')
+        # col3.text('Our predictions :')
 
         # fig, ax = plt.subplots(1, 3)
         # for i in range(3):
@@ -105,16 +106,16 @@ if uploaded_file is not None:
         col2.write("Start by uploading a short salsa video of one person dancing.")
 
 
-if skeleton_video_file is not None:
-    try:
-        st.sidebar.text("Your video is uploaded.")
-    except:
-        st.write("No skeleton video, yet")
-else:
-    try:
-        # st.sidebar.button(label='Save')
-    except:
-        st.write("Something is wrong")
+# if skeleton_video_file is not None:
+#     try:
+#         st.sidebar.text("Your video is uploaded.")
+#     except:
+#         st.write("No skeleton video, yet")
+# else:
+#     try:
+#         # st.sidebar.button(label='Save')
+#     except:
+#         st.write("Something is wrong")
 
 
 ##############################################
