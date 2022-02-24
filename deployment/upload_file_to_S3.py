@@ -34,7 +34,8 @@ skel_bytestream = read_video("salsaannotation/video/Ana_skeleton_with_music.mp4"
 # Allow upload video
 def save_uploaded_file(uploaded_file):
     try:
-        with open(os.path.join(S3_folder,uploaded_file.name),'wb') as f:
+        file_path = S3_folder + "/" + uploaded_file.name
+        with open(file_path,'wb') as f:
             f.write(uploaded_file.getbuffer())
         return 1
     except:
