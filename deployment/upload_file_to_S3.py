@@ -19,6 +19,9 @@ S3_folder = "salsaannotation/video/"
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 # skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
 
+# Mounting a S3 as a filesystem.
+s3fs salsaannotation -o use_cache=/tmp -o allow_other -o uid=1001 mp_umask=002 s3://salsaannotation/video/
+
 # Create connection object.
 # `anon=False` means not anonymous, i.e. it uses access keys to pull data.
 fs = s3fs.S3FileSystem(anon=False)
