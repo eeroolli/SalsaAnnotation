@@ -19,6 +19,17 @@ S3_folder = "https://salsaannotation.s3.eu-central-1.amazonaws.com/video/"
 # TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
 
+# Create connection object.
+# `anon=False` means not anonymous, i.e. it uses access keys to pull data.
+fs = s3fs.S3FileSystem(anon=False)
+@st.cache(allow_output_mutation=True, ttl=600)
+
+def read_video(filename):
+    with fs.open(filename, "rb") as f:
+        return f.read()
+skel_bytestream = read_video("salsaannotation/video/Ana_skeleton_with_music.mp4")
+
+
 
 # Allow upload video
 def save_uploaded_file(uploaded_file):
@@ -29,7 +40,7 @@ def save_uploaded_file(uploaded_file):
     except:
         return 0
 
-@st.cache(allow_output_mutation=True)
+
 def get_data():
     return []
 
@@ -110,7 +121,7 @@ if uploaded_file is not None:
 
 # show the skeleton video as example
 col2.text('Skeleton Video with black background')
-skel_bytestream = skeleton_video_file.read()
+# skel_bytestream = skeleton_video_file.read()
 col2.video(skel_bytestream)
 
 # Running the prediction
