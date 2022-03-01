@@ -2,6 +2,8 @@
 .idea/
 ml/models/*/temp/
 ml/models/*/logs/
+secrets.toml
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

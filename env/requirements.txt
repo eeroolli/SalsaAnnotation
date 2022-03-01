@@ -10,5 +10,4 @@ matplotlib
 argparse
 streamlit
 seaborn
-opencv-python-headless
-s3fs
+cv2
