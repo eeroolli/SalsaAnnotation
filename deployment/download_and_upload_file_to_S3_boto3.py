@@ -1,11 +1,11 @@
-# import streamlit as st
-import pandas as pd
-# from Inference import *
 
 # there is a incompability with new versions of s3fs and boto3. s3fs<=0.4
 # https://towardsdatascience.com/reading-and-writing-files-from-to-amazon-s3-with-pandas-ccaf90bfe86c
 # python -m pip install boto3 pandas "s3fs<=0.4"
 # boto3 call s3fs so it does not need to be imported separately.
+
+# Based on https://towardsdatascience.com/how-to-upload-and-download-files-from-aws-s3-using-python-2022-4c9b787b15f2
+
 
 import boto3
 
