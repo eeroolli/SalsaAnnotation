@@ -10,7 +10,7 @@ matplotlib
 argparse
 streamlit
 seaborn
-opencv-python-headless
+opencv-python # the -headless version of opencv did not work with prediction
 boto3
 s3fs<=0.4   # required by streamlit
 clang~=5.0           # required by intel-tensorflow      
