@@ -23,6 +23,7 @@ def enc_label(label):
         code = 4
     return code
 
+# TODO 
 feat_cols = ['nose_x', 'nose_y',
        'neck_x', 'neck_y', 'rshoulder_x', 'rshoulder_y', 'relbow_x',
        'relbow_y', 'rwrist_x', 'rwrist_y', 'lshoulder_x', 'lshoulder_y',
@@ -81,6 +82,7 @@ def transf_data(data):
 
 # Functions to print the predictions
 # Checking the predictions for the validation set
+# TODO: Move the classes to config.ini [prediction]
 classes = {0.: "basic",
            1.: "right-turn",
            2.: "side",
@@ -104,4 +106,5 @@ def check_pred(Xdata):
     return prediction, pred_label
 
 # loading the model
+# TODO: move the model def to config.ini [prediction]
 loaded_model = pickle.load(open("../deployment/weights/GRU_64.pkl", 'rb'))

@@ -16,7 +16,7 @@ def parse_args():
 
 args = parse_args()
 global_.video_id = args.video
-global_.PATH_OUTPUT = cfg.get('folders', 'output_predict')
+global_.PATH_OUTPUT = cfg.get('folders', 'output_predict_dir')
 global_.PATH_OUTPUT = global_.PATH_OUTPUT + "_" + global_.video_id
 
 if __name__ == '__main__':
