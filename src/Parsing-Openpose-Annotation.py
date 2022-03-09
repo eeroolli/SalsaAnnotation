@@ -10,7 +10,8 @@ import sys
 # Input arguments
 video_id = sys.argv[1]
 output_op = sys.argv[2]
-Anot_file = sys.argv[3]
+output_analysis = sys.argv[3]
+Anot_file = sys.argv[4]
 
 clip_name = video_id
 
@@ -97,8 +98,21 @@ pose_df = pd.DataFrame( columns = [
              ]
 )
 
+# Function to remove frames out of the coreography
+def cut_frame(df_to_cut):
+  # Remove all empty frames at the beginning and at the end
+  index = df_to_cut.index
+  conditionS = df_to_cut["status"] == "S"
+  start_i = index[conditionS][0]
+  conditionE = df_to_cut["status"] == "E"
+  end_i = index[conditionE][len(index[conditionE])-1]
+  df_to_cut = df_to_cut.loc[start_i:end_i, :]
+
+  return df_to_cut
+
 # Parse all json files
 def json_dframe(openpose_df):
+ print(f"Parsing {output_op}")
  json_path = os.path.join(output_op, "json")
  json_files = glob.glob(json_path + '/frame*.json')
  json_files = sorted(json_files, reverse=False)
@@ -317,12 +331,16 @@ pose_df, value_0 = json_dframe(pose_df)
 with open(Anot_file) as f:
   data = json.load(f)
 
-print(pose_df)
+# TODO: move the names of the file to config init
 new_df = add_annot_1(pose_df)
-csv_file = os.path.join(output_op) + "/Data.csv"
+csv_file = os.path.join(output_analysis) + "/Data.csv"
 new_df.to_csv(csv_file , index=False)
 
-csv_file_0 = os.path.join(output_op) + "/Person0.csv"
+new_df_cut = cut_frame(new_df)
+csv_file_cut = os.path.join(output_analysis) + "/Data_concat_cut.csv"
+new_df_cut.to_csv(csv_file_cut , index=False)
+
+csv_file_0 = os.path.join(output_analysis) + "/Person0.csv"
 f = open(csv_file_0, "w")
 f.write(str(value_0))
 f.close()

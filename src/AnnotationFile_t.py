@@ -2,7 +2,6 @@ import json
 import sys
 import os
 import pandas as pd
-from global_ import ind_coreo
 from configparser import ConfigParser, ExtendedInterpolation
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
@@ -10,7 +9,7 @@ cfg.read('config.ini')
 
 PATH_DATA = sys.argv[1]
 DATA = os.path.join(PATH_DATA, cfg.get('output_data', 'click_data'))
-ind_coreo = int(ind_coreo)
+ind_coreo = int(sys.argv[2])
 
 data_t = pd.read_csv(DATA)
 frame_number = data_t["Frame"].tolist()

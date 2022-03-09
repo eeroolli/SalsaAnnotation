@@ -28,17 +28,7 @@ def rename_json():
   print("============================== ")
   print(" ")
 
-# Function to remove frames out of the coreography
-def cut_frame(df_to_cut):
-  # Remove all empty frames at the beginning and at the end
-  index = df_to_cut.index
-  conditionS = df_to_cut["status"] == "S"
-  start_i = index[conditionS][0]
-  conditionE = df_to_cut["status"] == "E"
-  end_i = index[conditionE][len(index[conditionE])-1]
-  df_to_cut = df_to_cut.loc[start_i:end_i, :]
 
-  return df_to_cut
 
 def run_openpose():
   # TODO check if open pose was built before, check folder where needs to be built

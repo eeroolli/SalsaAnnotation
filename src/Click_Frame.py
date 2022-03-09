@@ -4,17 +4,22 @@ Make the manual annotation of the video, to get star and end of a figure
 import cv2
 import pandas as pd
 import os
-from global_ import video_id, PATH_OUTPUT
+from global_ import video_id, PATH_OUTPUT, video_size, sample
 from configparser import ConfigParser, ExtendedInterpolation
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('config.ini')
+wait_ms = 30
 
-video_name = video_id + "_h920.mp4"
-FILE = os.path.join(PATH_OUTPUT, video_name)
+video_name = video_id + "_" + video_size + ".mp4"
 file_name = cfg.get('output_data', 'click_data')
 PATH_ANNOT = os.path.join(PATH_OUTPUT, file_name)
-wait_ms = 30
+FILE = ""
+
+if (sample == "True"):
+    FILE = os.path.join("../Sample-skeletonVideos", video_id,video_name)
+else:
+    FILE = os.path.join(PATH_OUTPUT, video_name)
 
 # Functions to get the state of the mouse
 def print_frame(event, x, y, flags, *userdata):

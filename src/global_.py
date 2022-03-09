@@ -1,4 +1,7 @@
 # variables that are global to all scripts
 video_id = ""
 PATH_OUTPUT = ""
-ind_coreo = "1"
+PATH_OUTPUT_OP = ""
+ind_coreo = ""
+video_size = ""
+sample = ""
