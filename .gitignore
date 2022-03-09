@@ -140,3 +140,4 @@ dmypy.json
 # Vscode
 .vscode/launch.json
 .vscode/settings.json
+.vscode/

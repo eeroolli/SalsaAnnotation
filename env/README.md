@@ -14,7 +14,7 @@ cd SalsaAnnotation
 In oder to have a reproducible results first you need create an environment.   
 ```bash
 # Create environment for running the model in: 
-conda create --name SalsaAnn python=3.8
+conda create --name SalsaAnn python=3.9
 
 conda create -c conda-forge -n SalsaML tensorflow pandas numpy plotly pip python=3.6
 
@@ -41,6 +41,7 @@ conda install plotly
 # some people need: sudo apt install python3-pip
 python -m ipykernel install --user --name Salsa --display-name Salsa
 pip install --upgrade pip
+pip install streamlit
 #pip install matplotlib
 #pip install tensorflow
 #pip install pandas
