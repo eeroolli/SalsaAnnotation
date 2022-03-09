@@ -1,7 +1,8 @@
+# Not used or needed anymore EO 09.03.2022
 # This script installs resources that are needed, and not successfully
 # installed in to the environment by the requirements.txt
 
-python3 -m venv salsa-env
+# python3 -m venv salsa-env
 source salsa-env/bin/activate
 !sudo apt install ffmpeg
 
