@@ -1,5 +1,5 @@
 pandas
-numpy
+numpy~=1.19.2
 sklearn
 tensorboard
 tensorflow
@@ -11,4 +11,12 @@ argparse
 streamlit
 seaborn
 opencv-python-headless
-s3fs
+boto3
+s3fs<=0.4   # required by streamlit
+clang~=5.0           # required by intel-tensorflow      
+absl-py~=0.10        # required by intel-tensorflow
+flatbuffers~=1.12.0  # required by intel-tensorflow
+gast==0.4.0          # required by intel-tensorflow
+h5py~=3.1.0          # required by intel-tensorflow
+six~=1.15.0          # required by intel-tensorflow
+wrapt~=1.12.1         # required by intel-tensorflow
