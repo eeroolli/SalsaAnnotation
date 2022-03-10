@@ -1,5 +1,5 @@
 pandas
-numpy~=1.19.2
+numpy
 sklearn
 tensorboard
 tensorflow
