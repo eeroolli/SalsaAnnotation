@@ -117,10 +117,11 @@ def clean(string):
     return clean_string
 
 if uploaded_file is not None:
-    success_text = f"you have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
+    success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
-    changing_video_name = f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}"
-    changing_video_name = clean(changing_video_name)
+    # dance_role = clean(dance_role)
+    # salsa_style = clean(salsa_style)
+    changing_video_name = clean(f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
         #TODO: In addition data should be saved on S3. Perhaps 
