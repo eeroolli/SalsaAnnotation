@@ -14,9 +14,6 @@ from PIL import Image
 # will open the webpage with the possibility to upload a file.
 # This python script defines the webpage.
 
-# parameters
-# S3_folder = "salsaannotation/video/"
-
 # github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 # skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
 # I have managed to save a video to S3 from the sharelit cloud.  
@@ -120,8 +117,9 @@ def clean(string):
     return clean_string
 
 if uploaded_file is not None:
+    success_text = f"you have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
+    col1.write(success_text)
     changing_video_name = f"{coreo}_{video_background}_{clean(dance_role)}_{clean(salsa_style)}_{uploaded_file.name}"
-    col1.write("you have just successfully upload ", uploaded_file.name, ", which will be renamed to:")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
         #TODO: In addition data should be saved on S3. Perhaps 
