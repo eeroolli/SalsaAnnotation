@@ -53,11 +53,10 @@ s3.download_file(
 def save_uploaded_file(uploaded_file):
     try:
         changing_video_name = f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}"
-        print(changing_video_name)
         s3.upload_file(
             Filename= uploaded_file.name,
             Bucket="salsaannotation",
-            Key = f"video/{changing_video_name}",
+            Key = "video/testing_video_upload.mov",
             ) 
         # file_path = S3_folder + "/" + uploaded_file.name
         # with open(file_path,'wb') as f:
@@ -117,8 +116,11 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
 
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
+
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
+        col1.write(uploaded_file.name)
+        col1.write(changing_video_name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
