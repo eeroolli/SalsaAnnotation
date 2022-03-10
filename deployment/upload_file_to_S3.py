@@ -118,9 +118,9 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 
 
 if uploaded_file is not None:
+    col1.write(uploaded_file.name)
+    col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
-        col1.write(uploaded_file.name)
-        col1.write(changing_video_name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
