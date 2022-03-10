@@ -1,5 +1,4 @@
-# NOT WORKING.  BOTO3 works. So this is just an example and reminder.
-
+# BOTO3 works. 
 import streamlit as st
 import pandas as pd
 # from Inference import *
@@ -16,29 +15,30 @@ from PIL import Image
 # This python script defines the webpage.
 
 # parameters
-S3_folder = "salsaannotation/video/"
+# S3_folder = "salsaannotation/video/"
 
-# TODO: github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
+# github does not allow for opening files this big. The video needs to stored in the S3 Bucket.
 # skeleton_video_file = open("https://salsaannotation.s3.eu-central-1.amazonaws.com/video/Ana_skeleton_with_music.mp4", "rb")
-# TODO: I have not managed to save a video to S3 from the sharelit cloud.  Perhaps sharelit needs to run on EC2?
-# TODO: Try using Boto3 which is the python interface to AWS.  (I think I have done that previosly)
+# I have managed to save a video to S3 from the sharelit cloud.  
+# DONE Try using Boto3 which is the python interface to AWS.  (I think I have done that previosly)
 
 
-# bucket = s3.Bucket(AWS_S3_BUCKET)
+# this deals with the upload and download of files from S3
 s3 = boto3.client('s3')
 
-# TODO : make this to a function? 
+# TODO : make this to a function? or just move to below and use variables.
 s3.download_file(
     Bucket="salsaannotation", 
     Key="video/Ana_skeleton_with_music.mp4",
     Filename="downloaded_from_s3.mp4" 
     )
 
-s3.upload_file(
-    Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
-    Bucket="salsaannotation",
-    Key = "video/testing_upload_to_s3.mp4",
-    )
+# This works also from Streamlit. 
+# s3.upload_file(
+#     Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
+#     Bucket="salsaannotation",
+#     Key = "video/testing_upload_to_s3.mp4",
+#     )
 
 @st.cache(allow_output_mutation=True, ttl=600)
 
@@ -52,9 +52,16 @@ s3.upload_file(
 # Allow upload video
 def save_uploaded_file(uploaded_file):
     try:
-        file_path = S3_folder + "/" + uploaded_file.name
-        with open(file_path,'wb') as f:
-            f.write(uploaded_file.getbuffer())
+        changing_video_name = f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}"
+        print(changing_video_name)
+        s3.upload_file(
+            Filename= uploaded_file.name,
+            Bucket="salsaannotation",
+            Key = f"video/{changing_video_name}",
+            ) 
+        # file_path = S3_folder + "/" + uploaded_file.name
+        # with open(file_path,'wb') as f:
+        #     f.write(uploaded_file.getbuffer())
         return 1
     except:
         return 0
@@ -112,7 +119,11 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 
 if uploaded_file is not None:
     if save_uploaded_file(uploaded_file):
-        #TODO: This should be saved on S3. Perhaps as csv?
+        #TODO: In addition data should be saved on S3. Perhaps 
+        # read a csv 
+        # add a line for each new video
+        # write csv  OR
+        # use a pickled dataframe
         get_data().append(
             {"video_file": uploaded_file.name, 
             "coreo": coreo, 
