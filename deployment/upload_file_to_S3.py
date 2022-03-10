@@ -113,13 +113,14 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 def clean(string):
-    clean_string = string.replace("[,/ ?@*+]", "").lower().strip()
+    clean_string = string.replace("[,/ ?@*+:]", "").lower().strip()
     return clean_string
 
 if uploaded_file is not None:
     success_text = f"you have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
-    changing_video_name = f"{coreo}_{video_background}_{clean(dance_role)}_{clean(salsa_style)}_{uploaded_file.name}"
+    changing_video_name = f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}"
+    changing_video_name = clean(changing_video_name)
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
         #TODO: In addition data should be saved on S3. Perhaps 
