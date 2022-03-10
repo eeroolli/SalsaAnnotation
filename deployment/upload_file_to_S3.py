@@ -37,18 +37,16 @@ s3.download_file(
 s3.upload_file(
     Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
     Bucket="salsaannotation",
-    Key = "video/testing_upload_to_s3_with_boto3.mp4",
+    Key = "video/testing_upload_to_s3.mp4",
     )
-
-
 
 @st.cache(allow_output_mutation=True, ttl=600)
 
-def read_video(filename):
-    with fs.open(filename, "rb") as f:
-        return f.read()
+# def read_video(filename):
+#     with fs.open(filename, "rb") as f:
+#         return f.read()
     
-skel_bytestream = read_video("downloaded_from_s3.mp4")
+# skel_bytestream = read_video("downloaded_from_s3.mp4")
 
 
 # Allow upload video
@@ -140,7 +138,7 @@ if uploaded_file is not None:
 # show the skeleton video as example
 col1.text('Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
-col1.video(skel_bytestream)
+col1.video("downloaded_from_s3.mp4")
 
 # Running the prediction
 # col3.text('Our predictions :')
