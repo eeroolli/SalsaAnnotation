@@ -1,8 +1,10 @@
+#%%    
 # There are lots of changes in tensorflow 1.15 to 2. lots of syntax is different, and I do not 
 # see an implementation of GRU, so even if it is possible to run directML and use non-cuda GPU
 # it seems to be a futile operation.
 # EO This runs on conda: salsaTF i wsl.  CPU only. 
 # EO This runs on conda: aikit-tf i wsl.  CPU only. 
+# EO This runs in testing_salsa i wsl. CPU only.
 
 
 from unicodedata import name
@@ -39,8 +41,8 @@ EPOCHS = 200
 MAX_SEQ_LENGTH = 60   # number of frames per figure
 NUM_FEATURES = 75     # number of join coordinates
 DROPOUT_1 = 0.4       # Drop out rate after first GRU
-DROPOUT_2 = 0.2    # Drop out rate after second GRU
-DROPOUT_3 = 0.1    # Drop out rate after second GRU
+DROPOUT_2 = 0.3    # Drop out rate after second GRU
+DROPOUT_3 = 0.2    # Drop out rate after second GRU
 
 ##TODO: define Sim_ID as external parameter
 Sim_ID = "5_cat_SalsaTF_" + str(BATCH_SIZE) + "-GRU64-drop" + str(DROPOUT_1) + "-GRU32-drop" + str(DROPOUT_2) + "-GRU32-drop" + str(DROPOUT_3) +"-Dense16"
@@ -101,6 +103,37 @@ def enc_label(label):
     if label == "suzie-q":
         code = 4    
     return code
+
+# Checking accuracies
+def render_history(history):
+    plt.figure()
+    plt.plot(history["loss"], label="loss")
+    plt.plot(history["val_loss"], label="val_loss")
+    plt.legend()
+    plt.title("Losses")
+    plt.savefig(os.path.join( model_path, "temp",  Sim_ID + "-Loss.jpg"))
+
+    plt.figure()
+    plt.plot(history["accuracy"], label="accuracy")
+    plt.plot(history["val_accuracy"], label="val_accuracy")
+    plt.legend()
+    plt.title("Accuracies")
+    plt.savefig(os.path.join(model_path, "temp",  Sim_ID + "-Acc.jpg"))
+
+# The next function in by Tristan. It is great in a notebook to compare different models
+# check if list exists # Small modification to not overwrite the history_list with a blank one
+try:
+    history_list
+except NameError: 
+    history_list = {}
+def compare_histories():
+    for training_name, history in history_list.items():
+        plt.plot(history["val_accuracy"], label=training_name)
+    plt.legend()
+    plt.title("Comparison of val_accuracy")
+    plt.show()
+    plt.close()
+
 
 # Function to select a number of frames per figure and right in the correct format for the mdoel
 def transf_data(data):
@@ -203,24 +236,14 @@ history = model.fit(
     callbacks=[csv_log]
 )
 
+# Give a name that will show in compare histories figure.
+history_list[f"GRU_64643232_Dr{DROPOUT_1}{DROPOUT_2}{DROPOUT_3} " ] = history.history
 
-# Checking accuracies
-def render_history(history):
-    plt.figure()
-    plt.plot(history["loss"], label="loss")
-    plt.plot(history["val_loss"], label="val_loss")
-    plt.legend()
-    plt.title("Losses")
-    plt.savefig(os.path.join( model_path, "temp",  Sim_ID + "-Loss.jpg"))
 
-    plt.figure()
-    plt.plot(history["accuracy"], label="accuracy")
-    plt.plot(history["val_accuracy"], label="val_accuracy")
-    plt.legend()
-    plt.title("Accuracies")
-    plt.savefig(os.path.join(model_path, "temp",  Sim_ID + "-Acc.jpg"))
+    
 
 render_history(history.history)
+compare_histories()
 
 _, accuracy = model.evaluate( X_val, y_val)
 print(f"Accuracy is {round(accuracy * 100, 2)}%")
