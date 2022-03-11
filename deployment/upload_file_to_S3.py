@@ -66,9 +66,11 @@ def save_uploaded_file(uploaded_file):
 
 def clean(string):
     import re
-    clean_string = string.replace("/", "-").replace(" ", "_") 
-    clean_string = re.sub("""[!();:' \,<>/?@#$%^&*~]""", "", clean_string)
+    clean_string = string.replace("/", "-")
+    clean_string = string.replace(" ", "_") 
+    clean_string = re.sub("""[/{/}!();:'/"\,<>?@#$%^&*~]""", "", clean_string)
     clean_string = clean_string.strip()
+    clean_string = clean_string.lstrip("_") #starting a name with _ leads to funny names in Markdown
     return clean_string
 
 def get_data():
@@ -93,7 +95,8 @@ col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
       
 nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
-                                key="nickname"
+                                key="nickname", 
+                                max_chars=12
                                 )
 
 #TODO: consider to allow upload of video, only if questions are answered. 
