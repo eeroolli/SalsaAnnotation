@@ -126,11 +126,11 @@ with st.sidebar.form(key="questions", clear_on_submit=True):
 
     # limiting the available types is a good for security
 
-    uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
-
     submitted = st.sidebar.form_submit_button(str="Submit")
     if submitted:
         col1.write("Your answers are sent")
+
+uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
             
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
