@@ -79,16 +79,16 @@ st.title('SalsaAnnotation')
 #three columns and their relative width
 col1, col2 = st.columns([3, 3])
 
-col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
+col2.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
-col1.subheader("Choreographies:")
-col1.markdown("The First Choreography:")
-col1.markdown("https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing")
+col2.subheader("Choreographies:")
+col2.markdown("The First Choreography:")
+col2.markdown("https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing")
     
-col1.markdown("The Second Choreography is not out yet")
-col1.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
-col1.subheader("FAQ")
-col1.markdown("[FAQ]: https://salsa.eero.no   [FAQ]") 
+col2.markdown("The Second Choreography is not out yet")
+col2.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
+col2.subheader("FAQ")
+col2.markdown("https://salsa.eero.no   ") 
       
 
 #TODO: consider to allow upload of video, only if questions are answered. 
@@ -124,7 +124,7 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
-    changing_video_name = clean(f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}")
+    changing_video_name = clean(f"{coreo}_{dance_role}_{salsa_style}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
         #TODO: In addition data should be saved on S3. Perhaps 
@@ -149,15 +149,15 @@ if uploaded_file is not None:
         # # display original video
         # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
         # video_bytes = video_file.read()
-        # col1.text('Original Video')
-        # col1.video(video_bytes)
+        # col2.text('Original Video')
+        # col2.video(video_bytes)
 else:
-    col1.write("Start by uploading a short salsa video of one person dancing.")
+    col1.write("Start by uploading a short salsa video of one person dancing a choreography.")
 
 # show the skeleton video as example
-col1.text('Skeleton Video with Black Background')
+col2.text('Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
-col1.video("downloaded_from_s3.mp4")
+col2.video("downloaded_from_s3.mp4")
 
 # Running the prediction
 # col3.text('Our predictions :')
