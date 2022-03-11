@@ -113,21 +113,21 @@ video_background = st.sidebar.radio("What kind of background should the stickfig
                                     key="video_background"
                                     )
 
-#TODO: Add validation of the email address
-email = st.sidebar.text_input("To which email do you want have the link sent to?",
-                                key="email"
-                                )
+# #TODO: Add validation of the email address
+# email = st.sidebar.text_input("To which email do you want have the link sent to?",
+#                                 key="email"
+#                                 )
 
-dance_role = st.sidebar.selectbox("Which role do you normally dance?",
-                                    ("Follower/Female", "Leader/Male"),
-                                    key="dance_role"
-                                    )
+# dance_role = st.sidebar.selectbox("Which role do you normally dance?",
+#                                     ("Follower/Female", "Leader/Male"),
+#                                     key="dance_role"
+#                                     )
 
-salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
-                                    ("Cuban", "LA/On1", "NY/On2",
-                                    "All above", "Other"),
-                                    key="salsa_style"
-                                    )
+# salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+#                                     ("Cuban", "LA/On1", "NY/On2",
+#                                     "All above", "Other"),
+#                                     key="salsa_style"
+#                                     )
 
 # limiting the available types is a good for security
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
@@ -140,22 +140,22 @@ if uploaded_file is not None:
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file_name):
         col2.write(uploaded_file_name)
-        col2.video(uploaded_file_name)
+        col2.video(uploaded_file)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
         # write csv  OR
         # use a pickled dataframe
-        get_data().append(
-            {"video_file": uploaded_file.name, 
-            "coreo": coreo, 
-            "video_background": video_background,
-            "email": email,
-            "dance_role": dance_role,
-            "salsa_style": salsa_style         
-            })
+        # get_data().append(
+        #     {"video_file": uploaded_file.name, 
+        #     "coreo": coreo, 
+        #     "video_background": video_background,
+        #     "email": email,
+        #     "dance_role": dance_role,
+        #     "salsa_style": salsa_style         
+        #     })
 
-        st.write(pd.DataFrame(get_data()))
+        # st.write(pd.DataFrame(get_data()))
         st.sidebar.write(" ")
         st.sidebar.write(" ")
         st.sidebar.write("click on the X after your video to upload a new video.")
