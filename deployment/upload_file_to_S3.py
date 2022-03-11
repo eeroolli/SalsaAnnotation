@@ -49,6 +49,7 @@ s3.download_file(
 # Allow upload video
 def save_uploaded_file(uploaded_file):
     save_as = f"video/{changing_video_name}"
+    col1.write(save_as)
     try:
         s3.upload_file(
             Filename= uploaded_file.name,
@@ -79,7 +80,7 @@ st.title('SalsaAnnotation')
 #three columns and their relative width
 col1, col2 = st.columns([3, 3])
 
-col2.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
+col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
 col2.subheader("Choreographies:")
 col2.markdown("The First Choreography:")
@@ -90,6 +91,10 @@ col2.markdown("At this stage we can only annotate videos that contain one of the
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
       
+
+nickname = st.sidebar.text_input("Give a nickname we can use for the video",
+                                key="nickname"
+                                )
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
@@ -124,7 +129,7 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
-    changing_video_name = clean(f"{coreo}_{dance_role}_{salsa_style}_{video_background}_{uploaded_file.name}")
+    changing_video_name = clean(f"{nickname}_{coreo}_{dance_role}_{salsa_style}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):
         #TODO: In addition data should be saved on S3. Perhaps 
@@ -152,7 +157,7 @@ if uploaded_file is not None:
         # col2.text('Original Video')
         # col2.video(video_bytes)
 else:
-    col1.write("Start by uploading a short salsa video of one person dancing a choreography.")
+    col1.write("Start by answering a few questions and then uploading your salsa video of one person dancing a choreography.")
 
 # show the skeleton video as example
 col2.text('Skeleton Video with Black Background')
