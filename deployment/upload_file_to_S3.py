@@ -48,12 +48,16 @@ s3.download_file(
 
 # Allow upload video
 # @st.cache(allow_output_mutation=True, ttl=600)
-def save_uploaded_file(uploaded_file):
+def save_uploaded_file(filename):
+    
+    col1.write(filename)
+    
     save_as = f"video/{changing_video_name}"
     col1.write(save_as)
+    
     try:
         s3.upload_file(
-            Filename= uploaded_file.name,
+            Filename= filename,
             Bucket="salsaannotation",
             Key = save_as,
             ) 
@@ -86,7 +90,7 @@ col1, col2 = st.columns([3, 3])
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
 col2.subheader("Choreographies:")
-col2.markdown("The First Choreography:")
+col2.markdown("The Video explaining how to do the First Choreography:")
 col2.markdown("https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing")
     
 col2.markdown("The Second Choreography is not out yet")
