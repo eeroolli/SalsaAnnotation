@@ -91,13 +91,14 @@ col2.markdown("At this stage we can only use videos that contain one of the pred
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
       
-with st.sidebar.form(key="questions", clear_on_submit=True)
+with st.sidebar.form(key="questions", clear_on_submit=True):
+
     nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
                                     key="nickname"
                                     )
 
     #TODO: consider to allow upload of video, only if questions are answered. 
-    coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
+    coreo = st.sidebar.radio("Which choreography did you dance on the video?",
                                     ("First", "Second"),
                                     key="coreo"
                                     )
@@ -113,12 +114,12 @@ with st.sidebar.form(key="questions", clear_on_submit=True)
                                     )
 
     dance_role = st.sidebar.selectbox("Which role do you normally dance?",
-                                        ("Follower/Female", "Leader/Male"),
+                                        ("", "Follower/Female", "Leader/Male"),
                                         key="dance_role"
                                         )
 
     salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
-                                        ("Cuban", "LA/On1", "NY/On2",
+                                        ("", "Cuban", "LA/On1", "NY/On2",
                                         "All above", "Other"),
                                         key="salsa_style"
                                         )
