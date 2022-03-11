@@ -47,12 +47,11 @@ s3.download_file(
 
 
 # Allow upload video
-# @st.cache(allow_output_mutation=True, ttl=600)
+@st.cache(allow_output_mutation=True, ttl=600)
 def save_uploaded_file(filename):
     
     col1.write(filename)
-    
-    save_as = f"video/{changing_video_name}"
+    save_as = f"video/uploaded_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
     try:
@@ -134,12 +133,12 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
             
 if uploaded_file is not None:
-    success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
+    success_text = f"You have just successfully uploaded {uploaded_file.name}." 
     col1.write(success_text)
     changing_video_name = clean(f"{nickname}_{coreo}_{dance_role}_{salsa_style}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file.name):
-        col2.video(uploaded_file.name)
+        col2.write(uploaded_file.name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
