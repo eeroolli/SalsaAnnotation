@@ -37,7 +37,7 @@ s3.download_file(
 #     Key = "video/testing_upload_to_s3.mp4",
 #     )
 
-@st.cache(allow_output_mutation=True, ttl=600)
+
 
 # def read_video(filename):
 #     with fs.open(filename, "rb") as f:
@@ -47,6 +47,7 @@ s3.download_file(
 
 
 # Allow upload video
+# @st.cache(allow_output_mutation=True, ttl=600)
 def save_uploaded_file(uploaded_file):
     save_as = f"video/{changing_video_name}"
     col1.write(save_as)
@@ -148,7 +149,7 @@ if uploaded_file is not None:
         st.write(pd.DataFrame(get_data()))
         st.sidebar.write(" ")
         st.sidebar.write(" ")
-        st.sidebar.write("Remove the video from the list above to rerun with a new video.")
+        st.sidebar.write("click on the X after your video to upload a new video.")
 
         # # display original video
         # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
