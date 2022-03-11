@@ -87,12 +87,12 @@ col2.markdown("The First Choreography:")
 col2.markdown("https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing")
     
 col2.markdown("The Second Choreography is not out yet")
-col2.markdown("At this stage we can only annotate videos that contain one of the predefined choreograpies. ")
+col2.markdown("At this stage we can only use videos that contain one of the predefined choreograpies. ")
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
       
 
-nickname = st.sidebar.text_input("Give a nickname we can use for the video",
+nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
                                 key="nickname"
                                 )
 
@@ -124,7 +124,8 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
                                     )
 
 # limiting the available types is a good for security
-uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
+if len(f"{nickname}{coreo}")>5:
+    uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
@@ -157,7 +158,7 @@ if uploaded_file is not None:
         # col2.text('Original Video')
         # col2.video(video_bytes)
 else:
-    col1.write("Start by answering a few questions and then uploading your salsa video of one person dancing a choreography.")
+    col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
 
 # show the skeleton video as example
 col2.text('Skeleton Video with Black Background')
