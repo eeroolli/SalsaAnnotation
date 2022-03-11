@@ -139,6 +139,7 @@ if uploaded_file is not None:
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file.name):
         col2.write(uploaded_file.name)
+        col2.video(uploaded_file.name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
