@@ -91,42 +91,46 @@ col2.markdown("At this stage we can only use videos that contain one of the pred
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
       
-
-nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
-                                key="nickname"
-                                )
-
-#TODO: consider to allow upload of video, only if questions are answered. 
-coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
-                                ("First", "Second"),
-                                key="coreo"
-                                )
-
-video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
-                                    ("Black", "Original"),
-                                    key="video_background"
+with st.sidebar.form(key="questions", clear_on_submit=True)
+    nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
+                                    key="nickname"
                                     )
 
-#TODO: Add validation of the email address
-email = st.sidebar.text_input("To which email do you want have the link sent to?",
-                                key="email"
-                                )
-
-dance_role = st.sidebar.selectbox("Which role do you normally dance?",
-                                    ("Follower/Female", "Leader/Male"),
-                                    key="dance_role"
+    #TODO: consider to allow upload of video, only if questions are answered. 
+    coreo = st.sidebar.selectbox("Which choreography did you dance on the video?",
+                                    ("First", "Second"),
+                                    key="coreo"
                                     )
 
-salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
-                                    ("Cuban", "LA/On1", "NY/On2",
-                                    "All above", "Other"),
-                                    key="salsa_style"
+    video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
+                                        ("Black", "Original"),
+                                        key="video_background"
+                                        )
+
+    #TODO: Add validation of the email address
+    email = st.sidebar.text_input("To which email do you want have the link sent to?",
+                                    key="email"
                                     )
 
-# limiting the available types is a good for security
-if len(f"{nickname}{coreo}")>5:
+    dance_role = st.sidebar.selectbox("Which role do you normally dance?",
+                                        ("Follower/Female", "Leader/Male"),
+                                        key="dance_role"
+                                        )
+
+    salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+                                        ("Cuban", "LA/On1", "NY/On2",
+                                        "All above", "Other"),
+                                        key="salsa_style"
+                                        )
+
+    # limiting the available types is a good for security
+
     uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
+    submitted = st.sidebar.form_submit_button(str="Submit")
+    if submitted:
+        col1.write("Your answers are sent")
+            
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
@@ -159,6 +163,8 @@ if uploaded_file is not None:
         # col2.video(video_bytes)
 else:
     col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
+
+
 
 # show the skeleton video as example
 col2.text('Skeleton Video with Black Background')
