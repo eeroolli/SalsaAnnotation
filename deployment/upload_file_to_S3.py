@@ -126,7 +126,7 @@ with st.sidebar.form(key="questions", clear_on_submit=True):
 
     # limiting the available types is a good for security
 
-    submitted = st.sidebar.form_submit_button(str="Submit")
+    submitted = st.form_submit_button(str="Submit")
     if submitted:
         col1.write("Your answers are sent")
 
