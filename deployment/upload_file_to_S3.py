@@ -1,4 +1,5 @@
 # BOTO3 works. 
+from functools import cache
 import streamlit as st
 import pandas as pd
 # from Inference import *
@@ -24,11 +25,18 @@ from PIL import Image
 s3 = boto3.client('s3')
 
 # TODO : make this to a function? or just move to below and use variables.
-s3.download_file(
-    Bucket="salsaannotation", 
-    Key="video/Ana_skeleton_with_music.mp4",
-    Filename="downloaded_from_s3.mp4" 
-    )
+@st.cache(ttl=600) # this is a function because when the result exist it is not run again
+def get_file_from_s3(get_file_name, save_file_name):
+    s3.download_file(
+        Bucket="salsaannotation", 
+        Key=get_file_name,
+        Filename=save_file_name 
+        )
+    
+example_video = get_file_from_s3(
+        get_file_name="video/Ana_skeleton_with_music.mp4", 
+        save_file_name="downloaded_from_s3.mp4"
+        )
 
 # This works also from Streamlit. 
 # s3.upload_file(
@@ -132,15 +140,17 @@ video_background = st.sidebar.radio("What kind of background should the stickfig
 # limiting the available types is a good for security
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
+
 if uploaded_file is not None:
     uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
     success_text = f"You have just successfully uploaded {uploaded_file_name}." 
     col1.write(success_text)
-    changing_video_name = clean(f"{nickname}_{coreo}_{dance_role}_{salsa_style}_{video_background}_{uploaded_file.name}")
+    #{dance_role}_{salsa_style}_
+    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file_name):
-        col2.write(uploaded_file_name)
-        col2.video(uploaded_file)
+        col1.write(uploaded_file_name)
+        col1.video(uploaded_file.getvalue())
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
@@ -173,7 +183,7 @@ else:
 # show the skeleton video as example
 col2.text('Example of a Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
-col2.video("downloaded_from_s3.mp4")
+col2.video(example_video)
 
 # Running the prediction
 # col3.text('Our predictions :')
