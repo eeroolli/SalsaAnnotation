@@ -48,11 +48,12 @@ s3.download_file(
 
 # Allow upload video
 def save_uploaded_file(uploaded_file):
+    save_as = f"video/{changing_video_name}"
     try:
         s3.upload_file(
             Filename= uploaded_file.name,
             Bucket="salsaannotation",
-            Key = "video/testing_video_upload.mov",
+            Key = save_as,
             ) 
         # file_path = S3_folder + "/" + uploaded_file.name
         # with open(file_path,'wb') as f:
@@ -61,6 +62,12 @@ def save_uploaded_file(uploaded_file):
     except:
         return 0
 
+def clean(string):
+    import re
+    clean_string = string.replace("/", "-").replace(" ", "_") 
+    clean_string = re.sub("""[!();:' \,<>/?@#$%^&*~]""", "", clean_string)
+    clean_string = clean_string.strip()
+    return clean_string
 
 def get_data():
     return []
@@ -110,17 +117,12 @@ salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally o
                                     key="salsa_style"
                                     )
 
+# limiting the available types is a good for security
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
-
-def clean(string):
-    clean_string = string.replace("[,/ ?@*+:]", "").lower().strip()
-    return clean_string
 
 if uploaded_file is not None:
     success_text = f"You have just successfully uploaded {uploaded_file.name}, which will be renamed to:" 
     col1.write(success_text)
-    # dance_role = clean(dance_role)
-    # salsa_style = clean(salsa_style)
     changing_video_name = clean(f"{coreo}_{video_background}_{dance_role}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file):

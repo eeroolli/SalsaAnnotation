@@ -3,7 +3,7 @@
 ml/models/*/temp/
 ml/models/*/logs/
 secrets.toml
-
+temp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -141,3 +141,5 @@ dmypy.json
 .vscode/launch.json
 .vscode/settings.json
 .vscode/
+
+
