@@ -24,7 +24,7 @@ from PIL import Image
 # this deals with the upload and download of files from S3
 s3 = boto3.client('s3')
 
-# TODO : make this to a function? or just move to below and use variables.
+ 
 @st.cache(ttl=600) # this is a function because when the result exist it is not run again
 def get_file_from_s3(get_file_name, save_file_name):
     s3.download_file(
@@ -33,9 +33,11 @@ def get_file_from_s3(get_file_name, save_file_name):
         Filename=save_file_name 
         )
     
+# the file will be downloaded only once, as it now is using a cached function.
+# earlier it was happen every time user touched/run the app.
 example_video = get_file_from_s3(
         get_file_name="video/Ana_skeleton_with_music.mp4", 
-        save_file_name="downloaded_from_s3.mp4"
+        save_file_name="ana_skeleton_with_music.mp4"
         )
 
 # This works also from Streamlit. 
@@ -145,8 +147,7 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 
 if uploaded_file is not None:
     uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
-    success_text = f"You have just successfully uploaded {uploaded_file_name}." 
-    col1.write(success_text)
+    col1.write(f"You have just successfully uploaded {uploaded_file_name}.")
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
@@ -185,7 +186,7 @@ else:
 # show the skeleton video as example
 col2.text('Example of a Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
-col2.video(example_video)
+col2.video("ana_skeleton_with_music.mp4")
 
 # Running the prediction
 # col3.text('Our predictions :')
