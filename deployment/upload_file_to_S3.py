@@ -104,22 +104,27 @@ col2.markdown("The Second Choreography is not out yet")
 col2.markdown("At this stage we can only use videos that contain one of the predefined choreograpies. ")
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
-      
-nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
-                                key="nickname", 
-                                max_chars=12
-                                )
 
-#TODO: consider to allow upload of video, only if questions are answered. 
-coreo = st.sidebar.radio("Which choreography did you dance on the video?",
-                                ("First", "Second"),
-                                key="coreo"
-                                )
 
-video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
-                                    ("Black", "Original"),
-                                    key="video_background"
+with st.form("user-info"):      
+    nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
+                                    key="nickname", 
+                                    max_chars=12
                                     )
+
+    #TODO: consider to allow upload of video, only if questions are answered. 
+    coreo = st.sidebar.radio("Which choreography did you dance on the video?",
+                                    ("First", "Second"),
+                                    key="coreo"
+                                    )
+
+    video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
+                                        ("Black", "Original"),
+                                        key="video_background"
+                                        )
+    
+    submitted = st.form_submit_button(label="Submit", 
+                          help="First, submit info. Then upload the video.")
 
 # #TODO: Add validation of the email address
 # email = st.sidebar.text_input("To which email do you want have the link sent to?",
