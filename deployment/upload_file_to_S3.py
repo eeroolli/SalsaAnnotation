@@ -152,10 +152,10 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    save_uploaded_file(uploaded_file_name):
-        col1.write(uploaded_file_name)
-        col1.video(uploaded_file_name)
-        #TODO: In addition data should be saved on S3. Perhaps 
+    save_uploaded_file(uploaded_file_name)
+    col1.write(uploaded_file_name)
+    col1.video(uploaded_file_name)
+    #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
         # write csv  OR
@@ -170,9 +170,9 @@ if uploaded_file is not None:
         #     })
 
         # st.write(pd.DataFrame(get_data()))
-        st.sidebar.write(" ")
-        st.sidebar.write(" ")
-        st.sidebar.write("click on the X after your video to upload a new video.")
+    st.sidebar.write(" ")
+    st.sidebar.write(" ")
+    st.sidebar.write("click on the X after your video to upload a new video.")
 
         # # display original video
         # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
