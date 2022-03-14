@@ -106,7 +106,7 @@ col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
 
 
-with st.form("user-info"):      
+with st.sidebar.form("user-info"):      
     nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
                                     key="nickname", 
                                     max_chars=12
