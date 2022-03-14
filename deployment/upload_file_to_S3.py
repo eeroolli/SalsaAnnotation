@@ -77,6 +77,7 @@ def save_uploaded_file(filename):
     except:
         return 0
 
+# Remove every thing that can be a problem in a file name.
 def clean(string):
     import re
     clean_string = string.replace("/", "-")
@@ -142,7 +143,7 @@ with st.sidebar:
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
-uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
+uploaded_file = st.col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 
 if uploaded_file is not None:
@@ -151,9 +152,9 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    if save_uploaded_file(uploaded_file_name):
+    save_uploaded_file(uploaded_file_name):
         col1.write(uploaded_file_name)
-        col1.video(uploaded_file.name)
+        col1.video(uploaded_file_name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
