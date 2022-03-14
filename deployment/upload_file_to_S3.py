@@ -119,13 +119,12 @@ with st.form("user-info"):
                                         ("Black", "Original"),
                                         key="video_background"
                                         )
-    #TODO: Add validation of the email address
     email = st.sidebar.text_input("To which email do you want have the link sent to?",
                                 key="email"
                                 )
-
-    submitted = st.sidebar.form_submit_button(label="Submit", 
-                          help="First, submit info. Then upload the video.")
+    submitted = st.sidebar.form_submit_button(label="Submit answers", 
+                          help="First, submit info. Then upload the video."
+                          )
 
 
 # dance_role = st.sidebar.selectbox("Which role do you normally dance?",
