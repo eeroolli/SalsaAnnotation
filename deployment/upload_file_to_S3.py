@@ -105,26 +105,26 @@ col2.markdown("At this stage we can only use videos that contain one of the pred
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
 
-
-with st.sidebar.form("user-info"):      
-    nickname = st.sidebar.text_input("What is your nickname? We use it as part of the filename.",
-                                    key="nickname", 
-                                    max_chars=12
-                                    )
-    coreo = st.sidebar.radio("Which choreography did you dance on the video?",
-                                    ("First", "Second"),
-                                    key="coreo"
-                                    )
-    video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
-                                        ("Black", "Original"),
-                                        key="video_background"
+with st.sidebar:
+    with st.form("user-info"):      
+        nickname = st.text_input("What is your nickname? We use it as part of the filename.",
+                                        key="nickname", 
+                                        max_chars=12
                                         )
-    email = st.sidebar.text_input("To which email do you want have the link sent to?",
-                                key="email"
-                                )
-    submitted = st.sidebar.form_submit_button(label="Submit answers", 
-                          help="First, submit info. Then upload the video."
-                          )
+        coreo = st.radio("Which choreography did you dance on the video?",
+                                        ("First", "Second"),
+                                        key="coreo"
+                                        )
+        video_background = st.radio("What kind of background should the stickfigure video have?",
+                                            ("Black", "Original"),
+                                            key="video_background"
+                                            )
+        email = st.text_input("To which email do you want have the link sent to?",
+                                    key="email"
+                                    )
+        submitted = st.form_submit_button(label="Submit answers", 
+                            help="Submit info before uploading the video"
+                            )
 
 
 # dance_role = st.sidebar.selectbox("Which role do you normally dance?",
