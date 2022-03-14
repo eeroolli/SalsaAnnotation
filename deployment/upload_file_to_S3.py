@@ -111,25 +111,22 @@ with st.form("user-info"):
                                     key="nickname", 
                                     max_chars=12
                                     )
-
-    #TODO: consider to allow upload of video, only if questions are answered. 
     coreo = st.sidebar.radio("Which choreography did you dance on the video?",
                                     ("First", "Second"),
                                     key="coreo"
                                     )
-
     video_background = st.sidebar.radio("What kind of background should the stickfigure video have?",
                                         ("Black", "Original"),
                                         key="video_background"
                                         )
-    
-    submitted = st.form_submit_button(label="Submit", 
+    #TODO: Add validation of the email address
+    email = st.sidebar.text_input("To which email do you want have the link sent to?",
+                                key="email"
+                                )
+
+    submitted = st.sidebar.form_submit_button(label="Submit", 
                           help="First, submit info. Then upload the video.")
 
-# #TODO: Add validation of the email address
-# email = st.sidebar.text_input("To which email do you want have the link sent to?",
-#                                 key="email"
-#                                 )
 
 # dance_role = st.sidebar.selectbox("Which role do you normally dance?",
 #                                     ("Follower/Female", "Leader/Male"),
@@ -142,6 +139,7 @@ with st.form("user-info"):
 #                                     key="salsa_style"
 #                                     )
 
+#TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
 uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
