@@ -35,7 +35,7 @@ def get_file_from_s3(get_file_name, save_file_name):
     
 # the file will be downloaded only once, as it now is using a cached function.
 # earlier it was happen every time user touched/run the app.
-example_video = get_file_from_s3(
+get_file_from_s3(
         get_file_name="video/Ana_skeleton_with_music.mp4", 
         save_file_name="ana_skeleton_with_music.mp4"
         )
@@ -89,7 +89,7 @@ def clean(string):
 def get_data():
     return []
 
-
+##################################################
 
 st.title('SalsaAnnotation')
 
@@ -147,13 +147,13 @@ uploaded_file = st.sidebar.file_uploader("Upload Video", type=["mp4","avi","mov"
 
 if uploaded_file is not None:
     uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
-    col1.write(f"You have just successfully uploaded {uploaded_file_name}.")
+    col1.write(f"You have just successfully uploaded {uploaded_file.name}.")
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_uploaded_file(uploaded_file_name):
         col1.write(uploaded_file_name)
-        col1.video(uploaded_file.getvalue())
+        col1.video(uploaded_file.name)
         #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
