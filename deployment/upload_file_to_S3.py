@@ -143,7 +143,7 @@ with st.sidebar:
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
-uploaded_file = st.col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
+uploaded_file = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 
 if uploaded_file is not None:
