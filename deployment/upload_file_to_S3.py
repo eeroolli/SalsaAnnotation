@@ -135,11 +135,11 @@ with st.sidebar:
 #                                     key="dance_role"
 #                                     )
 
-# salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
-#                                     ("Cuban", "LA/On1", "NY/On2",
-#                                     "All above", "Other"),
-#                                     key="salsa_style"
-#                                     )
+salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+                                    ("Cuban", "LA/On1", "NY/On2",
+                                    "All above", "Other"),
+                                    key="salsa_style"
+                                    )
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
@@ -150,7 +150,7 @@ if uploaded_file is not None:
     uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
     col1.write(f"You have just successfully uploaded {uploaded_file.name}.")
     #{dance_role}_{salsa_style}_
-    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{uploaded_file.name}")
+    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
     save_uploaded_file(uploaded_file_name)
     col1.write(uploaded_file_name)
