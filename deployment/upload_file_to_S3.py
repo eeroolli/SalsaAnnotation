@@ -159,9 +159,10 @@ if uploaded_file is not None:
     working_dir = os.getcwd()
     col1.write(f"The working directory is {working_dir}")
     
-    #col1.subheader("This is the file you uploaded.")
-    #col1.video(uploaded_file)
-    col1.video("./Sample-skeletonVideos/Eero/Eero_h920.mp4")
+    col1.subheader("This is the file you uploaded.")
+    col1.video(uploaded_file)
+    
+        
     #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
@@ -192,10 +193,14 @@ else:
 
 
 # show the skeleton video as example
+# downloaded from S3
 col2.text('Example of a Skeleton Video with Black Background')
 # skel_bytestream = skeleton_video_file.read()
 col2.video("ana_skeleton_with_music.mp4")
 
+# from the repo
+col2.write("Example of sceleton with original background:")
+col2.video("./visualization/Ana_h540_clip_for_Streamlit.mp4")
 # Running the prediction
 # col3.text('Our predictions :')
 
