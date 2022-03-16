@@ -61,7 +61,7 @@ get_file_from_s3(
 def save_file_to_S3(file_stream):
     
     # col1.write(filename)
-    save_as = f"video/uploaded_from_streamlit_cloud.mp4"
+    save_as = "video/uploaded_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
     try:
