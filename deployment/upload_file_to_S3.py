@@ -57,7 +57,7 @@ def save_file_to_S3(file_stream):
     
     try:
         s3.upload_file(
-            Filename= file_stream.getbuffer(),
+            Filename= file_stream,
             Bucket="salsaannotation",
             Key = save_as,
             ) 
