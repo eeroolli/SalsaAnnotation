@@ -108,6 +108,17 @@ col2.markdown("At this stage we can only use videos that contain one of the pred
 col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
 
+col2.subheader("Background Examples:")
+# show the skeleton video as example
+# downloaded from S3
+col2.text('Black Background')
+# skel_bytestream = skeleton_video_file.read()
+col2.video("ana_skeleton_with_music.mp4")
+
+# from the repo
+col2.write("Original Background:")
+col2.video("./visualization/Ana_h540_clip_for_Streamlit.mp4")
+
 with st.sidebar:
     #TODO: give user a way to clear the form. 
     with st.form("user-info"):      
@@ -191,16 +202,6 @@ else:
     col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
 
 
-
-# show the skeleton video as example
-# downloaded from S3
-col2.text('Example of a Skeleton Video with Black Background')
-# skel_bytestream = skeleton_video_file.read()
-col2.video("ana_skeleton_with_music.mp4")
-
-# from the repo
-col2.write("Example of sceleton with original background:")
-col2.video("./visualization/Ana_h540_clip_for_Streamlit.mp4")
 # Running the prediction
 # col3.text('Our predictions :')
 
