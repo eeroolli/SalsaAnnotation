@@ -152,10 +152,12 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    #save_uploaded_file(uploaded_file)
+    save_uploaded_file(uploaded_file)
+    
     working_dir = os.getcwd()
     col1.write(f"The working directory is {working_dir}")
-    col1.write("This is the file you uploaded.")
+    
+    col1.subheader("This is the file you uploaded.")
     col1.video(uploaded_file)
     #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
