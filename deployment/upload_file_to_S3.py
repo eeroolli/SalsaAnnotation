@@ -41,20 +41,18 @@ get_file_from_s3(
 
 # This works also from Streamlit cloud. 
 # both use folder from root without /
-# s3.upload_file(
-#     Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
-#     Bucket="salsaannotation",
-#     Key = "video/testing_upload_to_s3.mp4",
-#     )
+s3.upload_file(
+    Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
+    Bucket="salsaannotation",
+    Key = "video/testing_upload_to_s3.mp4",
+    )
 
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
 def save_file_to_S3(file_stream):
-    
     # col1.write(filename)
     save_as = "video/saved_from_streamlit_cloud.mp4"
     col1.write(save_as)
-    
     try:
         s3.upload_file(
             Filename= file_stream,
@@ -66,6 +64,7 @@ def save_file_to_S3(file_stream):
         #     f.write(uploaded_file.getbuffer())
         return 1
     except:
+        col1.write("Failed to save file on S3.")
         return 0
 
 # Remove every thing that can be a problem in a file name.
