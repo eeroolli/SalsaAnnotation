@@ -1,4 +1,3 @@
-# BOTO3 works. 
 # from functools import cache
 import streamlit as st
 import pandas as pd
@@ -6,9 +5,9 @@ import pandas as pd
 import boto3
 import os
 # import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_theme(style="darkgrid")
-sns.set()
+# import seaborn as sns
+# sns.set_theme(style="darkgrid")
+# sns.set()
 from PIL import Image
 
 # In terminal$ streamlit run upload_file_to_S3.py
@@ -61,7 +60,7 @@ get_file_from_s3(
 def save_file_to_S3(file_stream):
     
     # col1.write(filename)
-    save_as = "video/uploaded_from_streamlit_cloud.mp4"
+    save_as = "/video/saved_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
     try:
@@ -165,10 +164,11 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    save_file_to_S3(uploaded_file)
+    if save_file_to_S3(uploaded_file):
+        col1.write("Successfully saved to S3")
     
-    working_dir = os.getcwd()
-    col1.write(f"The working directory is {working_dir}")
+    listfiles = os.listdir()
+    col1.write(listfiles)
     
     col1.subheader("This is the file you uploaded.")
     col1.video(uploaded_file)
