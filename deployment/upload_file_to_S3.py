@@ -152,7 +152,7 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    save_uploaded_file(uploaded_file)
+    #save_uploaded_file(uploaded_file)
     col1.write(uploaded_file_name)
     col1.video(uploaded_file_name)
     #TODO: In addition data should be saved on S3. Perhaps 
