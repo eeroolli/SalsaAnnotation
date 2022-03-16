@@ -125,6 +125,11 @@ with st.sidebar:
         email = st.text_input("To which email do you want have the link sent to?",
                                     key="email"
                                     )
+        salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+                                    ("Cuban", "LA/On1", "NY/On2",
+                                    "All above", "Other"),
+                                    key="salsa_style"
+                                    )     
         submitted = st.form_submit_button(label="Submit answers", 
                             help="Submit info before uploading the video"
                             )
@@ -135,11 +140,6 @@ with st.sidebar:
 #                                     key="dance_role"
 #                                     )
 
-salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
-                                    ("Cuban", "LA/On1", "NY/On2",
-                                    "All above", "Other"),
-                                    key="salsa_style"
-                                    )
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
