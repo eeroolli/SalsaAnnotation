@@ -125,7 +125,7 @@ with st.sidebar:
         email = st.text_input("To which email do you want have the link sent to?",
                                     key="email"
                                     )
-        salsa_style = st.sidebar.selectbox("Which style of Salsa do you dance normally or best?",
+        salsa_style = st.selectbox("Which style of Salsa do you dance normally or best?",
                                     ("Cuban", "LA/On1", "NY/On2",
                                     "All above", "Other"),
                                     key="salsa_style"
