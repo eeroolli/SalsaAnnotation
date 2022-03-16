@@ -58,15 +58,15 @@ get_file_from_s3(
 
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
-def save_file_to_S3(filename):
+def save_file_to_S3(file_stream):
     
     # col1.write(filename)
-    save_as = f"/video/uploaded_from_streamlit_cloud.mp4"
+    save_as = f"video/uploaded_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
     try:
         s3.upload_file(
-            Filename= filename,
+            Filename= file_stream.getbuffer(),
             Bucket="salsaannotation",
             Key = save_as,
             ) 
@@ -109,6 +109,7 @@ col2.subheader("FAQ")
 col2.markdown("https://salsa.eero.no   ") 
 
 with st.sidebar:
+    #TODO: give user a way to clear the form. 
     with st.form("user-info"):      
         nickname = st.text_input("What is your nickname? We use it as part of the filename.",
                                         key="nickname", 
@@ -143,6 +144,7 @@ with st.sidebar:
 
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
+# object below is a stream. To get the name use uploaded_file.name 
 uploaded_file = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
 
 
@@ -157,8 +159,9 @@ if uploaded_file is not None:
     working_dir = os.getcwd()
     col1.write(f"The working directory is {working_dir}")
     
-    col1.subheader("This is the file you uploaded.")
-    col1.video(uploaded_file)
+    #col1.subheader("This is the file you uploaded.")
+    #col1.video(uploaded_file)
+    col1.video("./Sample-skeletonVideos/Eero/Eero_h920.mp4")
     #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
