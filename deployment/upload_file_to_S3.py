@@ -58,9 +58,9 @@ get_file_from_s3(
 
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
-def save_uploaded_file(filename):
+def save_file_to_S3(filename):
     
-    col1.write(filename)
+    # col1.write(filename)
     save_as = f"/video/uploaded_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
@@ -152,7 +152,7 @@ if uploaded_file is not None:
     #{dance_role}_{salsa_style}_
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    save_uploaded_file(uploaded_file_name)
+    save_file_to_S3(uploaded_file)
     
     working_dir = os.getcwd()
     col1.write(f"The working directory is {working_dir}")
