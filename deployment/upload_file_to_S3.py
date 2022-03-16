@@ -39,28 +39,20 @@ get_file_from_s3(
         save_file_name="ana_skeleton_with_music.mp4"
         )
 
-# This works also from Streamlit. 
+# This works also from Streamlit cloud. 
+# both use folder from root without /
 # s3.upload_file(
 #     Filename="visualization/1P-Ana_skeleton_subtitled.mp4",
 #     Bucket="salsaannotation",
 #     Key = "video/testing_upload_to_s3.mp4",
 #     )
 
-
-
-# def read_video(filename):
-#     with fs.open(filename, "rb") as f:
-#         return f.read()
-    
-# skel_bytestream = read_video("downloaded_from_s3.mp4")
-
-
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
 def save_file_to_S3(file_stream):
     
     # col1.write(filename)
-    save_as = "/video/saved_from_streamlit_cloud.mp4"
+    save_as = "video/saved_from_streamlit_cloud.mp4"
     col1.write(save_as)
     
     try:
@@ -94,12 +86,12 @@ def get_data():
 st.title('SalsaAnnotation')
 
 #three columns and their relative width
-col1, col2 = st.columns([3, 3])
+col1, col2 = st.columns([4, 4])
 
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
 col2.subheader("Choreographies:")
-col2.markdown("The Video explaining how to do the First Choreography:")
+col2.markdown("Play this video if you want to learn to record the first choreography:")
 col2.markdown("https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing")
     
 col2.markdown("The Second Choreography is not out yet")
@@ -146,6 +138,7 @@ with st.sidebar:
                             )
 
 
+
 # dance_role = st.sidebar.selectbox("Which role do you normally dance?",
 #                                     ("Follower/Female", "Leader/Male"),
 #                                     key="dance_role"
@@ -155,24 +148,22 @@ with st.sidebar:
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
 # object below is a stream. To get the name use uploaded_file.name 
-uploaded_file = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"])
-
-
-if uploaded_file is not None:
-    uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
-    col1.write(f"You have just successfully uploaded {uploaded_file.name}.")
-    #{dance_role}_{salsa_style}_
-    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{uploaded_file.name}")
+uploaded_files = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"],
+                                   accept_multiple_files=True)
+counter = 0
+for uploaded_file in uploaded_files:
+    counter += 1
+    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
     col1.write(changing_video_name)
     if save_file_to_S3(uploaded_file):
         col1.write("Successfully saved to S3")
-    
-    listfiles = os.listdir()
-    col1.write(listfiles)
-    
-    col1.subheader("This is the file you uploaded.")
+       
+if uploaded_file is not None:
+    uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
+    col1.write(f"You have just uploaded {uploaded_file.name}.")
     col1.video(uploaded_file)
-    
+    #{dance_role}_{salsa_style}_
+       
         
     #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
