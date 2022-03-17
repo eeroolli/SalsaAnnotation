@@ -159,15 +159,17 @@ if submitted:
     if uploaded_file is not None:
         upload_timestamp = datetime.now().strftime("%Y%m%d%H%M")
         col1.write(upload_timestamp)
+        file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
+        st.write(file_details)
         changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{upload_timestamp}_{uploaded_file.name}")
         changing_video_name = os.path.join("video/", changing_video_name)  
+        st.stop()
         
         #saving the object as a file in streamlit for saving to S3
         uploaded_file_path = os.path.join("temp",uploaded_file.name)
         with open(uploaded_file_path,"wb") as f:
             f.write(uploaded_file.getbuffer())
         
-        col1.write("If you have several videos upload them one by one.")
         col1.write("Start anew by clicking on the X after your video and fill in the form again")    
         
         col1.write(f"You have just uploaded {uploaded_file.name}.")
@@ -177,11 +179,14 @@ if submitted:
         
         if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
             col1.write("Successfully saved to S3")
-        st.stop()    
+        st.stop()
+            
 
 else:
     col1.write("Start by answering a few questions in the sidebar.")
     col1.write("You can upload up to four different videos of one person dancing the same choreography.")
+    col1.write("If you have several videos upload them one by one.")
+        
   
     
 
