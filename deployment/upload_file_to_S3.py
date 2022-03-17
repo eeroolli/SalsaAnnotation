@@ -152,7 +152,8 @@ if submitted:
     counter = 0
     for uploaded_file in uploaded_files:
         counter = counter + 1
-        changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
+        now = datetime.now().strftime("%Y%m%d%H%M")
+        changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{now}_{counter}_{uploaded_file.name}")
         changing_video_name = os.path.join("video/", changing_video_name)  
         
         # first saving the object as file in streamlit
@@ -170,7 +171,7 @@ if submitted:
             col1.write("Successfully saved to S3")
         
 else:
-    col1.write("Start by answering a few questions in the sidebar")
+    col1.write("Start by answering a few questions in the sidebar.")
     col1.write("You can upload up to four different videos of the same choreography, but only one person at a time.")
 
 
