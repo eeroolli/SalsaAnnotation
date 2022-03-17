@@ -169,10 +169,8 @@ if submitted:
         if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
             col1.write("Successfully saved to S3")
         
-
-
-        else:
-            col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
+else:
+    col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
 
 
             
