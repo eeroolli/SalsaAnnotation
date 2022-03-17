@@ -146,26 +146,38 @@ with st.sidebar:
 #TODO: consider to allow upload of video, only if questions are answered. 
 # limiting the available types is a good for security
 # object below is a stream. To get the name use uploaded_file.name 
-uploaded_files = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"],
+if submitted:
+    uploaded_files = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"],
                                    accept_multiple_files=True)
-counter = 0
-for uploaded_file in uploaded_files:
-    counter = counter + 1
-    changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
-    changing_video_name = os.path.join("video/", changing_video_name)  
-    
-    # first saving the object as file in streamlit
-    uploaded_file_path = os.path.join("temp",uploaded_file.name)
-    with open(uploaded_file_path,"wb") as f:
-         f.write(uploaded_file.getbuffer())
-    col1.write(f"You have just uploaded {uploaded_file.name}.")
-    col1.video(uploaded_file)  
-    
-    if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
-        col1.write("Successfully saved to S3")
-         
+    counter = 0
+    for uploaded_file in uploaded_files:
+        counter = counter + 1
+        changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
+        changing_video_name = os.path.join("video/", changing_video_name)  
         
-    #TODO: In addition data should be saved on S3. Perhaps 
+        # first saving the object as file in streamlit
+        uploaded_file_path = os.path.join("temp",uploaded_file.name)
+        with open(uploaded_file_path,"wb") as f:
+            f.write(uploaded_file.getbuffer())
+        col1.write("If you have several videos of one person upload them all at once.")
+        col1.write("If you have vidoes of several persons, upload them one by one")
+        col1.write("click on the X after your video and fill in the form again")    
+        
+        col1.write(f"You have just uploaded {uploaded_file.name}.")
+        col1.video(uploaded_file)  
+        
+        if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
+            col1.write("Successfully saved to S3")
+        
+
+
+        else:
+            col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
+
+
+            
+        
+        #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
         # add a line for each new video
         # write csv  OR
@@ -180,14 +192,7 @@ for uploaded_file in uploaded_files:
         #     })
 
         # st.write(pd.DataFrame(get_data()))
-    st.sidebar.write(" ")
-    st.sidebar.write(" ")
-    st.sidebar.write("click on the X after your video to upload a new video.")
-
-else:
-    col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
-
-
+ 
 # Running the prediction
 # col3.text('Our predictions :')
 
