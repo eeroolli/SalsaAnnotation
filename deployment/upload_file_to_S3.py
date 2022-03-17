@@ -47,6 +47,7 @@ s3.upload_file(
     Key = "video/testing_upload_to_s3.mp4",
     )
 
+
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
 def save_file_to_S3(file_path, save_as="video/saved_from_streamlit_cloud.mp4"):
@@ -149,30 +150,33 @@ with st.sidebar:
 if submitted:
     uploaded_files = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wmv", "mkv"],
                                    accept_multiple_files=True)
-    counter = 0
-    for uploaded_file in uploaded_files:
-        counter = counter + 1
-        now = datetime.now().strftime("%Y%m%d%H%M")
-        changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{now}_{counter}_{uploaded_file.name}")
-        changing_video_name = os.path.join("video/", changing_video_name)  
-        
-        # first saving the object as file in streamlit
-        uploaded_file_path = os.path.join("temp",uploaded_file.name)
-        with open(uploaded_file_path,"wb") as f:
-            f.write(uploaded_file.getbuffer())
-        
-        col1.write("If you have several videos of one person upload them all at once.")
-        col1.write("If you have vidoes of several persons, upload them one by one by clicking on the X after your video and then fill in the form again")    
-        
-        col1.write(f"You have just uploaded {uploaded_file.name}.")
-        col1.video(uploaded_file)  
-        
-        if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
-            col1.write("Successfully saved to S3")
-        
 else:
     col1.write("Start by answering a few questions in the sidebar.")
     col1.write("You can upload up to four different videos of the same choreography, but only one person at a time.")
+
+counter = 0
+
+for uploaded_file in uploaded_files:
+    counter = counter + 1
+    now = datetime.now().strftime("%Y%m%d%H%M")
+    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{now}_{counter}_{uploaded_file.name}")
+    changing_video_name = os.path.join("video/", changing_video_name)  
+    
+    # first saving the object as file in streamlit
+    uploaded_file_path = os.path.join("temp",uploaded_file.name)
+    with open(uploaded_file_path,"wb") as f:
+        f.write(uploaded_file.getbuffer())
+    
+    col1.write("If you have several videos of one person upload them all at once.")
+    col1.write("If you have vidoes of several persons, upload them one by one by clicking on the X after your video and then fill in the form again")    
+    
+    col1.write(f"You have just uploaded {uploaded_file.name}.")
+    col1.video(uploaded_file)  
+    
+    if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
+        col1.write("Successfully saved to S3")
+  
+    
 
 
             
