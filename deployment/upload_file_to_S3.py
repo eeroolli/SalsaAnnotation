@@ -171,7 +171,8 @@ if submitted:
         col1.write(f"You have just uploaded {uploaded_file.name}.")
         # the streamlit .video() accepts the object as it is
         col1.video(uploaded_file)  
-         
+        col1.write(f"It will be saved on S3 as {changing_video_name}.") 
+        st.stop()
         if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
             col1.write("Successfully saved to S3")
 
