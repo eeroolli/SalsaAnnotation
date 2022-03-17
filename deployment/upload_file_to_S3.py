@@ -155,7 +155,7 @@ for uploaded_file in uploaded_files:
     changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
     col1.write(changing_video_name)
     file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
-        st.write(file_details)
+    st.write(file_details)
     with open(os.path.join("temp",uploaded_file.name),"wb") as f:
          f.write(uploaded_file.getbuffer())
          
