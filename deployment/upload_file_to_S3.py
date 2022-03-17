@@ -112,7 +112,7 @@ col2.video("./visualization/Ana_h540_clip_for_Streamlit.mp4")
 
 with st.sidebar:
     #TODO: give user a way to clear the form. 
-    with st.form("user-info"):      
+    with st.form("user-info", clear_on_submit=True):      
         nickname = st.text_input("What is your nickname? We use it as part of the filename.",
                                         key="nickname", 
                                         max_chars=12
@@ -156,9 +156,7 @@ uploaded_file = col1.file_uploader("Upload Video",
                                        accept_multiple_files=False)
 if uploaded_file is not None:
     upload_timestamp = datetime.now().strftime("%Y%m%d%H%M")
-    col1.write(upload_timestamp)
-    file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
-    st.write(file_details)
+    # col1.write(f"Timestamp: {upload_timestamp})
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{upload_timestamp}_{uploaded_file.name}")
     changing_video_name = os.path.join("video/", changing_video_name)  
         
@@ -167,17 +165,18 @@ if uploaded_file is not None:
     with open(uploaded_file_path,"wb") as f:
         f.write(uploaded_file.getbuffer())
     
-    col1.write("Start anew by clicking on the X after your video and fill in the form again")    
-    
+       
     col1.write(f"You have just uploaded {uploaded_file.name}.")
     # the streamlit .video() accepts the object as it is
     col1.video(uploaded_file)  
-    col1.write(f"It will be saved on S3 as {changing_video_name}.") 
+    # col1.write(f"It will be saved on S3 as {changing_video_name}.") 
     
     if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
-        col1.write("Successfully saved to S3")
+        col1.write("Successfully Saved to S3.")
+        
+    col1.write("Start anew by clicking on the X after your video and fill in the form again")    
 
-            
+           
 
 else:
     col1.write("Start by answering a few questions in the sidebar.")
