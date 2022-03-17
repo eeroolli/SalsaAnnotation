@@ -132,8 +132,11 @@ with st.sidebar:
                                     ("Cuban", "LA/On1", "NY/On2",
                                     "All above", "Other"),
                                     key="salsa_style"
-                                    )     
-        submitted = st.form_submit_button(label="Submit answers", 
+                                    ) 
+        if nickname + email is None: 
+            st.write("You really should answer the questions.")
+        else:   
+            submitted = st.form_submit_button(label="Submit answers", 
                             help="Submit info before uploading the video"
                             )
 
@@ -174,7 +177,7 @@ if uploaded_file is not None:
     if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
         col1.write("Successfully Saved to S3.")
         
-    col1.write("Start anew by clicking on the X after your video and fill in the form again")    
+    col1.write("Start anew by clicking on the X under the "Browse files" button and fill in the form again")    
 
            
 
