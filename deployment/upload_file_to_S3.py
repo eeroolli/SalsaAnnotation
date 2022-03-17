@@ -153,16 +153,16 @@ if submitted:
     for uploaded_file in uploaded_files:
         counter = counter + 1
         now = datetime.now().strftime("%Y%m%d%H%M")
-        changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{now}_{counter}_{uploaded_file.name}")
+        changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{now}_{counter}_{uploaded_file.name}")
         changing_video_name = os.path.join("video/", changing_video_name)  
         
         # first saving the object as file in streamlit
         uploaded_file_path = os.path.join("temp",uploaded_file.name)
         with open(uploaded_file_path,"wb") as f:
             f.write(uploaded_file.getbuffer())
+        
         col1.write("If you have several videos of one person upload them all at once.")
-        col1.write("If you have vidoes of several persons, upload them one by one")
-        col1.write("click on the X after your video and fill in the form again")    
+        col1.write("If you have vidoes of several persons, upload them one by one by clicking on the X after your video and then fill in the form again")    
         
         col1.write(f"You have just uploaded {uploaded_file.name}.")
         col1.video(uploaded_file)  
