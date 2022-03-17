@@ -151,10 +151,15 @@ uploaded_files = col1.file_uploader("Upload Video", type=["mp4","avi","mov", "wm
                                    accept_multiple_files=True)
 counter = 0
 for uploaded_file in uploaded_files:
-    counter += 1
-    changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
+    counter = counter + 1
+    changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
     col1.write(changing_video_name)
-    if save_file_to_S3(uploaded_file):
+    file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
+        st.write(file_details)
+    with open(os.path.join("temp",uploaded_file.name),"wb") as f:
+         f.write(uploaded_file.getbuffer())
+         
+    if save_file_to_S3():
         col1.write("Successfully saved to S3")
        
 if uploaded_file is not None:
