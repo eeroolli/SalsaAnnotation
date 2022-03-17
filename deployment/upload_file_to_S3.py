@@ -49,9 +49,8 @@ s3.upload_file(
 
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
-def save_file_to_S3(file_path):
+def save_file_to_S3(file_path, save_as="video/saved_from_streamlit_cloud.mp4"):
     # col1.write(filename)
-    save_as = "video/saved_from_streamlit_cloud.mp4"
     col1.write(save_as)
     try:
         s3.upload_file(
@@ -64,10 +63,10 @@ def save_file_to_S3(file_path):
         #     f.write(uploaded_file.getbuffer())
         return 1
     except:
-        col1.write("Failed to save file on S3.")
+        col1.write("Failed to save the uploaded file on S3.")
         return 0
 
-# Remove every thing that can be a problem in a file name.
+# Remove every thing that can be a problem in a file name or a AWS key.
 def clean(string):
     import re
     clean_string = string.replace("/", "-")
@@ -153,22 +152,18 @@ counter = 0
 for uploaded_file in uploaded_files:
     counter = counter + 1
     changing_video_name = clean(f"video/{nickname}_{coreo}_{video_background}_{salsa_style}_{counter}_{uploaded_file.name}")
-    col1.write(changing_video_name)
-    file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
-    st.write(file_details)
+    changing_video_name = os.path.join("video/", changing_video_name)  
     
+    # first saving the object as file in streamlit
     uploaded_file_path = os.path.join("temp",uploaded_file.name)
     with open(uploaded_file_path,"wb") as f:
          f.write(uploaded_file.getbuffer())
-         
-    if save_file_to_S3(uploaded_file_path):
-        col1.write("Successfully saved to S3")
-       
-if uploaded_file is not None:
     col1.write(f"You have just uploaded {uploaded_file.name}.")
-    col1.video(uploaded_file)
-    #{dance_role}_{salsa_style}_
-       
+    col1.video(uploaded_file)  
+    
+    if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
+        col1.write("Successfully saved to S3")
+         
         
     #TODO: In addition data should be saved on S3. Perhaps 
         # read a csv 
@@ -189,11 +184,6 @@ if uploaded_file is not None:
     st.sidebar.write(" ")
     st.sidebar.write("click on the X after your video to upload a new video.")
 
-        # # display original video
-        # video_file = open( os.path.join("video-test", uploaded_file.name), 'rb' )
-        # video_bytes = video_file.read()
-        # col2.text('Original Video')
-        # col2.video(video_bytes)
 else:
     col1.write("Start by answering a few questions and then upload your salsa video of one person dancing a choreography.")
 
