@@ -177,7 +177,7 @@ if uploaded_file is not None:
     if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
         col1.write("Successfully Saved to S3.")
         
-    col1.write("Start anew by clicking on the X under the "Browse files" button and fill in the form again")    
+    col1.write("""Start anew by clicking on the X under the "Browse files" button and fill in the form again""")    
 
            
 
