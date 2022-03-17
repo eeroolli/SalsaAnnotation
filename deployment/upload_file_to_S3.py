@@ -170,8 +170,8 @@ if submitted:
             col1.write("Successfully saved to S3")
         
 else:
-    col1.write("Start by answering a few questions and then upload your salsa video of one person dancing one choreography.")
-    col1.write("You can upload up to four different videos of the same choreography.")
+    col1.write("Start by answering a few questions in the sidebar")
+    col1.write("You can upload up to four different videos of the same choreography, but only one person at a time.")
 
 
             
