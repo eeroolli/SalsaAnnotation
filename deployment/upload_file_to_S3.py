@@ -49,13 +49,13 @@ s3.upload_file(
 
 # Allow upload video
 #@st.cache(allow_output_mutation=True, ttl=600)
-def save_file_to_S3(file_stream):
+def save_file_to_S3(file_path):
     # col1.write(filename)
     save_as = "video/saved_from_streamlit_cloud.mp4"
     col1.write(save_as)
     try:
         s3.upload_file(
-            Filename= file_stream,
+            Filename= file_path,
             Bucket="salsaannotation",
             Key = save_as,
             ) 
@@ -156,14 +156,15 @@ for uploaded_file in uploaded_files:
     col1.write(changing_video_name)
     file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type}
     st.write(file_details)
-    with open(os.path.join("temp",uploaded_file.name),"wb") as f:
+    
+    uploaded_file_path = os.path.join("temp",uploaded_file.name)
+    with open(uploaded_file_path,"wb") as f:
          f.write(uploaded_file.getbuffer())
          
-    if save_file_to_S3():
+    if save_file_to_S3(uploaded_file_path):
         col1.write("Successfully saved to S3")
        
 if uploaded_file is not None:
-    uploaded_file_name = uploaded_file.name # testing if .name is a slowing everything down            
     col1.write(f"You have just uploaded {uploaded_file.name}.")
     col1.video(uploaded_file)
     #{dance_role}_{salsa_style}_
