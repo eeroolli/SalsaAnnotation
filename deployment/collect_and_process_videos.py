@@ -4,6 +4,7 @@ import pandas as pd
 # from Inference import *
 import boto3
 import os
+import sys
 from datetime import datetime
 import validators
 # import matplotlib.pyplot as plt
@@ -11,6 +12,35 @@ import validators
 # sns.set_theme(style="darkgrid")
 # sns.set()
 from PIL import Image
+
+from configparser import ConfigParser, ExtendedInterpolation
+
+cfg = ConfigParser(interpolation=ExtendedInterpolation())
+cfg.read('src/config.ini')
+cfg.read('deployment/config_streamlit.ini')
+st.write(f"config.ini has these sections:, {cfg.sections()} \n")
+
+running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
+   
+# if cfg.getboolean('installation', 'running_app_locally'):
+#     parent_path = cfg.get('installation', 'parent_path')
+#     root_path = cfg.get('installation', 'root_path')
+#     script_path = cfg.get('installation', 'script_path')
+
+if cfg.getboolean('installation', 'running_app_on_streamlit'):
+    parent_path = cfg.get('installation', 'parent_path')
+    root_path = cfg.get('installation', 'root_path')
+    script_path = cfg.get('installation', 'script_path')
+
+st.write(f"Using {root_path} as root_path")
+st.write(f"Using  {script_path}  as script_path")
+
+# this might not be necessary as one can also use .. and deal with paths during import.
+if not script_path in sys.path:  # otherwise will add anew with every run of script.
+    sys.path.append(script_path)
+    print("Added script_path to search path.")
+    print(f"sys.path is now:  {sys.path}")
+
 
 
 # In terminal$ streamlit run upload_file_to_S3.py
@@ -89,7 +119,6 @@ st.title('Send a video, get a Stick Figure')
 
 #three columns and their relative width
 col1, col2 = st.columns([4, 4])
-
 
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
@@ -210,36 +239,7 @@ from re import split              # regular expression string splitter
 # from ..src import VideoProcessing_eo as videoProcessing
  
 
-from configparser import ConfigParser, ExtendedInterpolation
 
-cfg = ConfigParser(interpolation=ExtendedInterpolation())
-cfg.read('src/config.ini')
-cfg.read('deployment/config_streamlit.ini')
-col1.write(f"config.ini has these sections:, {cfg.sections()} \n")
-
-running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
-   
-# if cfg.getboolean('installation', 'running_app_locally'):
-#     parent_path = cfg.get('installation', 'parent_path')
-#     root_path = cfg.get('installation', 'root_path')
-#     script_path = cfg.get('installation', 'script_path')
-
-if cfg.getboolean('installation', 'running_app_on_streamlit'):
-    parent_path = cfg.get('installation', 'parent_path')
-    root_path = cfg.get('installation', 'root_path')
-    script_path = cfg.get('installation', 'script_path')
-
-here = os.getcwd()
-
-col1.write(f"here is {here}")
-col1.write(f"Using {root_path} as root_path")
-col1.write(f"Using  {script_path}  as script_path")
-
-# this might not be necessary as one can also use .. and deal with paths during import.
-if not script_path in sys.path:  # otherwise will add anew with every run of script.
-    sys.path.append(script_path)
-    print("Added script_path to search path.")
-    print(f"sys.path is now:  {sys.path}")
 
 output_dir = cfg.get('folders', 'output_dir') 
 input_dir = cfg.get('folders', 'input_dir')
