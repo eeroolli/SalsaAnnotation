@@ -11,6 +11,14 @@ import validators
 # sns.set_theme(style="darkgrid")
 # sns.set()
 from PIL import Image
+from configparser import ConfigParser, ExtendedInterpolation
+cfg = ConfigParser(interpolation=ExtendedInterpolation())
+cfg.read('src/config.ini, deployment/config_streamlit.ini')
+print('config.ini has these sections:', cfg.sections(), "\n")
+
+running_app_on_colab = cfg.getboolean('installation', 'running_app_on_colab')
+running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
+
 
 # In terminal$ streamlit run upload_file_to_S3.py
 # will open the webpage with the possibility to upload a file.
@@ -89,6 +97,8 @@ st.title('Send a video, get a Stick Figure')
 #three columns and their relative width
 col1, col2 = st.columns([4, 4])
 
+col1.write(running_app_on_streamlit, running_app_on_colab)
+
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 
 col2.subheader("Choreographies:")
@@ -163,7 +173,7 @@ if uploaded_file is not None:
     # col1.write(f"Timestamp: {upload_timestamp})
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{upload_timestamp}_{uploaded_file.name}")
     changing_video_name = os.path.join("video/", changing_video_name)  
-        
+    uploaded_video_name = uploaded_file.name    
     #saving the object as a file in streamlit for saving to S3
     uploaded_file_path = os.path.join("temp",uploaded_file.name)
     with open(uploaded_file_path,"wb") as f:
