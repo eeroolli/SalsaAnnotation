@@ -16,9 +16,10 @@ cfg.read('config.ini')
 def check_path(x):
   if os.path.isdir(x):
     print("Using", x )
+    return True
   else:
     print("Problem: There was no ", x)  # No error keeps running
-
+    return False
 
 def stop_if_no_path(x):
   if os.path.isdir(x):
