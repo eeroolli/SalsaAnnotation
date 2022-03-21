@@ -153,7 +153,7 @@ with st.sidebar:
 # I tried with if submitted: but it did not work
 
 # limiting the available types is a good for security
-# object below is a stream. To get the name use uploaded_file.name 
+# uploaded_file is a stream. To get the name use uploaded_file.name 
 
 uploaded_file = col1.file_uploader("Upload Video", 
                                        type=["mp4","avi","mov", "wmv", "mkv"],
@@ -174,13 +174,14 @@ if uploaded_file is not None:
     # the streamlit .video() accepts the object as it is
     col1.video(uploaded_file)  
     # col1.write(f"It will be saved on S3 as {changing_video_name}.") 
-    
-    if validators.email(email)==False:
-        col1.write(f"Your email is not valid {email}. If you want to have the link sent to you, you need to refill the form.")
+  
     
     if save_file_to_S3(uploaded_file_path, save_as=changing_video_name):
         col1.write("Successfully Saved to S3.")
     
+    if validators.email(email)==False:
+        col1.write(f"Your email is not valid {email}. If you want to have the link sent to you, you need to refill the form.")
+
         
     col1.write("""Start anew by clicking on the X under the "Browse files" button and fill in the form again""")    
 
