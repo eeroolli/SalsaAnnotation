@@ -56,6 +56,7 @@ check_path(input_video_fullsize_dir)
 check_path(input_video_resized_dir)
 
 
+
 ### Variables that are calculated from other variables.
 video_size = cfg.get('resize_video', 'video_size')
 new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to resize
@@ -67,7 +68,9 @@ video_list = ["1p_ThomasW_16012022_choreo1.mp4"]
 # "1p_20211216_Francesca_Zeni.mp4",
 # "1p_ThomasW_girl_16012022_choreo1.mp4",
 
-
+if running_app_on_streamlit==True: 
+  video_list = [uploaded_video_name]
+  
 print("\n ################################ \n")
 
 for i in range(len(video_list)):
