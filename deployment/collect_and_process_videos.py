@@ -239,21 +239,22 @@ from re import split              # regular expression string splitter
 # from ..src import VideoProcessing_eo as videoProcessing
  
 
-
-
 output_dir = cfg.get('folders', 'output_dir') 
 input_dir = cfg.get('folders', 'input_dir')
 input_video_fullsize_dir = cfg.get('folders', 'input_video_fullsize_dir')
 input_video_resized_dir = cfg.get('folders', 'input_video_resized_dir')
 
+col1.write(f"output_dir is {output_dir}  input_dir is {input_dir} ")
+col1.write(f"input_video_fullsize_dir is {input_video_fullsize_dir} input_video_resized_dir is {input_video_resized_dir}")
+
 # check_path(input_video_fullsize_dir)
 # check_path(input_video_resized_dir)
-
-st.stop
 
 ### Variables that are calculated from other variables.
 video_size = cfg.get('resize_video', 'video_size')
 new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to resize
+
+st.stop("Rest of the code is not changed for stramlit.")
 
 
 #fourth list of videos
