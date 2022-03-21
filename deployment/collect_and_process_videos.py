@@ -36,6 +36,41 @@ if not script_path in sys.path:  # otherwise will add anew with every run of scr
     st.write("Added script_path to search path.")
     st.write(f"sys.path is now:  {sys.path}")
 
+# libraries needed from outside
+from os.path import splitext
+from re import split              # regular expression string splitter
+
+# these are saved into script_path. import first after sys.path is changed.
+from VideoProcessing_eo import check_path, stop_if_no_path 
+# check also load_video_run_openpose(), which still has some bugs.
+from VideoProcessing_eo import load_video_run_openpose
+from VideoProcessing_eo import resize_video, delete_outputs, rename_json  
+
+
+### getting some parameters
+
+output_dir = cfg.get('folders', 'output_dir') 
+input_dir = cfg.get('folders', 'input_dir')
+input_video_fullsize_dir = cfg.get('folders', 'input_video_fullsize_dir')
+input_video_resized_dir = cfg.get('folders', 'input_video_resized_dir')
+
+col1.write(f"output_dir is {output_dir}  input_dir is {input_dir} ")
+col1.write(f"input_video_fullsize_dir is {input_video_fullsize_dir} input_video_resized_dir is {input_video_resized_dir}")
+
+# check_path(input_video_fullsize_dir)
+# check_path(input_video_resized_dir)
+
+### Variables that are calculated from other variables.
+video_size = cfg.get('resize_video', 'video_size')
+new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to resize
+
+#fourth list of videos
+# video_list = [uploaded_video_name]
+# "1p_Daniele_16012022_choreo1.mp4",
+# "1p_20211216_Francesca_Zeni.mp4",
+# "1p_ThomasW_girl_16012022_choreo1.mp4",
+
+#######################
 
 
 # In terminal$ streamlit run upload_file_to_S3.py
@@ -47,10 +82,13 @@ if not script_path in sys.path:  # otherwise will add anew with every run of scr
 # I have managed to save a video to S3 from the sharelit cloud.  
 # DONE Try using Boto3 which is the python interface to AWS.  (I think I have done that previosly)
 
-
 # this deals with the upload and download of files from S3
 s3 = boto3.client('s3')
 
+
+#################################
+# Functions
+#################################
  
 @st.cache(ttl=600) # this is a function because when the result exist it is not run again
 def get_file_from_s3(get_file_name, save_file_name):
@@ -189,7 +227,8 @@ if uploaded_file is not None:
     # col1.write(f"Timestamp: {upload_timestamp})
     changing_video_name = clean(f"{nickname}_{coreo}_{video_background}_{salsa_style}_{upload_timestamp}_{uploaded_file.name}")
     changing_video_name = os.path.join("video/", changing_video_name)  
-    uploaded_video_name = uploaded_file.name    
+    uploaded_video_name = uploaded_file.name 
+    video_list = [uploaded_video_name]      # this list is parsed later, makes it possible to process one or many videos  
     #saving the object as a file in streamlit for saving to S3
     uploaded_file_path = os.path.join("temp",uploaded_file.name)
     with open(uploaded_file_path,"wb") as f:
@@ -211,58 +250,6 @@ if uploaded_file is not None:
         
     col1.write("""Start anew by clicking on the X under the "Browse files" button and fill in the form again""")    
 
-           
-
-else:
-    col1.write("Start by answering a few questions in the sidebar.")
-    col1.write("You can upload up to four different videos of one person dancing the same choreography.")
-    col1.write("If you have several videos upload them one by one.")
-        
-##############################################################################
-## Processing the video file
-##############################################################################
-
-# libraries needed from outside
-import os
-from os import mkdir
-from os.path import exists, join, basename, splitext
-import sys
-from re import split              # regular expression string splitter
-from VideoProcessing_eo import check_path, stop_if_no_path 
-# check also load_video_run_openpose(), which still has some bugs.
-from VideoProcessing_eo import load_video_run_openpose
-from VideoProcessing_eo import resize_video, delete_outputs, rename_json  
-
-# check also load_video_run_openpose(), which still has some bugs.
-# run after config.ini to get the path right
-# from ..src import VideoProcessing_eo as videoProcessing
- 
-
-output_dir = cfg.get('folders', 'output_dir') 
-input_dir = cfg.get('folders', 'input_dir')
-input_video_fullsize_dir = cfg.get('folders', 'input_video_fullsize_dir')
-input_video_resized_dir = cfg.get('folders', 'input_video_resized_dir')
-
-col1.write(f"output_dir is {output_dir}  input_dir is {input_dir} ")
-col1.write(f"input_video_fullsize_dir is {input_video_fullsize_dir} input_video_resized_dir is {input_video_resized_dir}")
-
-# check_path(input_video_fullsize_dir)
-# check_path(input_video_resized_dir)
-
-### Variables that are calculated from other variables.
-video_size = cfg.get('resize_video', 'video_size')
-new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to resize
-
-
-#fourth list of videos
-# video_list = [uploaded_video_name]
-# "1p_Daniele_16012022_choreo1.mp4",
-# "1p_20211216_Francesca_Zeni.mp4",
-# "1p_ThomasW_girl_16012022_choreo1.mp4",
-
-if running_app_on_streamlit==True: 
-  video_list = [uploaded_video_name]
-  
 print("\n ################################ \n")
 
 for i in range(len(video_list)):
@@ -301,6 +288,26 @@ for i in range(len(video_list)):
     load_video_run_openpose(video=video_resized)
   
   rename_json(video_id, root_path=root_path, output_dir=output_dir)
+           
+
+else:
+    col1.write("Start by answering a few questions in the sidebar.")
+    col1.write("You can upload up to four different videos of one person dancing the same choreography.")
+    col1.write("If you have several videos upload them one by one.")
+        
+##############################################################################
+## Processing the video file
+##############################################################################
+
+
+# check also load_video_run_openpose(), which still has some bugs.
+# run after config.ini to get the path right
+# from ..src import VideoProcessing_eo as videoProcessing
+ 
+
+
+  
+
 
   # Creating the annotation file
   # TODO: make os independent. use shutil.copy(src, dst) and os.path()
