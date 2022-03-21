@@ -7,10 +7,10 @@ import glob                       # help for finding files
 from re import split              # regular expression string splitter
 import subprocess  # subprocess wraps around regular os commands
 import shutil                     # used for copying files in the os.
-from VideoProcessing_eo import check_path, stop_if_no_path 
+from VideoProcessing import check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
-from VideoProcessing_eo import load_video_run_openpose
-from VideoProcessing_eo import resize_video, delete_outputs, rename_json  
+from VideoProcessing import load_video_run_openpose
+from VideoProcessing import resize_video, delete_outputs, rename_json  
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('config.ini')
