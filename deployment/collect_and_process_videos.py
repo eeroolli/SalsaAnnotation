@@ -176,7 +176,6 @@ col2.write("Original Background:")
 col2.video("./visualization/Ana_h540_clip_for_Streamlit.mp4")
 
 with st.sidebar:
-    #TODO: give user a way to clear the form. 
     with st.form("user-info", clear_on_submit=True):      
         nickname = st.text_input("What is your nickname? We use it as part of the filename.",
                                         key="nickname", 
@@ -204,6 +203,9 @@ with st.sidebar:
             submitted = st.form_submit_button(label="Submit answers", 
                             help="Submit info before uploading the video"
                             )
+            skeleton_on_black_background = False
+            if video_background=="Black":
+                skeleton_on_black_background = True
 
 
 
@@ -211,6 +213,7 @@ with st.sidebar:
 #                                     ("Follower/Female", "Leader/Male"),
 #                                     key="dance_role"
 #                                     )
+
 
 
 #TODO: consider to allow upload of video, only if questions are answered. 
