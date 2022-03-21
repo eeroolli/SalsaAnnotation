@@ -13,7 +13,7 @@ import validators
 from PIL import Image
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
-cfg.read('src/config.ini, deployment/config_streamlit.ini')
+cfg.read('src/config.ini') # , 'deployment/config_streamlit.ini')
 print('config.ini has these sections:', cfg.sections(), "\n")
 
 running_app_on_colab = cfg.getboolean('installation', 'running_app_on_colab')
