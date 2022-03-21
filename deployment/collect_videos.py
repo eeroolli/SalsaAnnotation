@@ -97,7 +97,7 @@ st.title('Send a video, get a Stick Figure')
 #three columns and their relative width
 col1, col2 = st.columns([4, 4])
 
-col1.write(running_app_on_streamlit, running_app_on_colab)
+col1.write(f"Running_app_on_streamlit={running_app_on_streamlit} running_app_on_colab={running_app_on_colab}")
 
 col1.write("This app will allow you to upload a video. You will in 10 minutes receive an email with a link to a videofile that contains your processed video.")
 

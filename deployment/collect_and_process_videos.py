@@ -231,11 +231,8 @@ if cfg.getboolean('installation', 'running_app_on_streamlit'):
 
 here = os.getcwd()
 
-rcol1.write(here)
-st.stop
-
+col1.write(f"here is {here}")
 col1.write(f"Using {root_path} as root_path")
-
 col1.write(f"Using  {script_path}  as script_path")
 
 # this might not be necessary as one can also use .. and deal with paths during import.
