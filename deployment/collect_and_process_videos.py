@@ -22,12 +22,7 @@ st.write(f"config.ini has these sections:, {cfg.sections()} \n")
 
 running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
    
-# if cfg.getboolean('installation', 'running_app_locally'):
-#     parent_path = cfg.get('installation', 'parent_path')
-#     root_path = cfg.get('installation', 'root_path')
-#     script_path = cfg.get('installation', 'script_path')
-
-if cfg.getboolean('installation', 'running_app_on_streamlit'):
+if running_app_on_streamlit:
     parent_path = cfg.get('installation', 'parent_path')
     root_path = cfg.get('installation', 'root_path')
     script_path = cfg.get('installation', 'script_path')
@@ -38,8 +33,8 @@ st.write(f"Using  {script_path}  as script_path")
 # this might not be necessary as one can also use .. and deal with paths during import.
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
-    print("Added script_path to search path.")
-    print(f"sys.path is now:  {sys.path}")
+    st.write("Added script_path to search path.")
+    st.write(f"sys.path is now:  {sys.path}")
 
 
 
@@ -233,6 +228,10 @@ from os import mkdir
 from os.path import exists, join, basename, splitext
 import sys
 from re import split              # regular expression string splitter
+from VideoProcessing_eo import check_path, stop_if_no_path 
+# check also load_video_run_openpose(), which still has some bugs.
+from VideoProcessing_eo import load_video_run_openpose
+from VideoProcessing_eo import resize_video, delete_outputs, rename_json  
 
 # check also load_video_run_openpose(), which still has some bugs.
 # run after config.ini to get the path right
@@ -254,11 +253,9 @@ col1.write(f"input_video_fullsize_dir is {input_video_fullsize_dir} input_video_
 video_size = cfg.get('resize_video', 'video_size')
 new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to resize
 
-st.stop("Rest of the code is not changed for stramlit.")
-
 
 #fourth list of videos
-video_list = [uploaded_video_name]
+# video_list = [uploaded_video_name]
 # "1p_Daniele_16012022_choreo1.mp4",
 # "1p_20211216_Francesca_Zeni.mp4",
 # "1p_ThomasW_girl_16012022_choreo1.mp4",
