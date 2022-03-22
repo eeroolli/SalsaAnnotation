@@ -21,6 +21,8 @@ cfg.read('deployment/config_streamlit.ini')
 st.write(f"config.ini has these sections:, {cfg.sections()} \n")
 
 running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
+
+st.write(f"running_app_on_streamlit: {running_app_on_streamlit}")
    
 if running_app_on_streamlit:
     parent_path = cfg.get('installation', 'parent_path')
