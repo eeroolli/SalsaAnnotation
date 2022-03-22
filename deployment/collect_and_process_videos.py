@@ -30,6 +30,8 @@ if running_app_on_streamlit:
 st.write(f"Using {root_path} as root_path")
 st.write(f"Using  {script_path}  as script_path")
 
+st.write(f"sys.path is now:  {sys.path}")
+
 # this might not be necessary as one can also use .. and deal with paths during import.
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
