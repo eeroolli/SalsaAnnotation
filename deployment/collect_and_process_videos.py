@@ -45,7 +45,9 @@ from os.path import splitext
 from re import split              # regular expression string splitter
 
 # these are saved into script_path. import first after sys.path is changed.
-from VideoProcessing  import  check_path, stop_if_no_path 
+# src is not in sys.path, so these should work but they dont.
+# I have tried src.VideoProcessing .src and ..src with no success.
+from src/VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
 from VideoProcessing import load_video_run_openpose
 from VideoProcessing import resize_video, delete_outputs, rename_json  
