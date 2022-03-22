@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd deployment
-streamlit run collect_and_process_videos.py 
-cd .. 
+streamlit run deployment/collect_and_process_videos.py 
+
 
  
