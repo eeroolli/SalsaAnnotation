@@ -5,3 +5,5 @@ secondaryBackgroundColor="#FAEAC4"
 textColor="#000000"
 font="sans serif"
 
+[server]
+folderWatchBlacklist = ['/data/', '/ml/', '/posedetection/', '/utils', '/temp', '/logs' ]

@@ -45,6 +45,8 @@ from os.path import splitext
 from re import split              # regular expression string splitter
 
 # these are saved into script_path. import first after sys.path is changed.
+# I have tried src. .src. and ..src.Videoprocessing but no success. 
+# since /src is in the search path it should work.
 from VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
 from VideoProcessing import load_video_run_openpose
@@ -149,9 +151,11 @@ def clean(string):
 def get_data():
     return []
 
-##################################################
 
+
+##################################################
 st.title('Send a video, get a Stick Figure')
+################################################
 
 #three columns and their relative width
 col1, col2 = st.columns([4, 4])
@@ -206,6 +210,7 @@ with st.sidebar:
             submitted = st.form_submit_button(label="Submit answers", 
                             help="Submit info before uploading the video"
                             )
+            # The streamlit implementation uses info from the form not the config.ini
             skeleton_on_black_background = False
             if video_background=="Black":
                 skeleton_on_black_background = True
@@ -256,45 +261,46 @@ if uploaded_file is not None:
         
     col1.write("""Start anew by clicking on the X under the "Browse files" button and fill in the form again""")    
 
-print("\n ################################ \n")
+    col1.write("\n ##### Processing Video ######## \n")
 
-for i in range(len(video_list)):
-  clip_name = video_list[i]
-  video_id = splitext(video_list[i])[0]
-  video_in = os.path.join(input_video_fullsize_dir, clip_name)
-  video_name, video_ext = splitext(video_in)
-  video_resized = input_video_resized_dir + "/" + \
-      video_id + '_' + video_size + video_ext
-  print("video fullsize: ", video_in)
-  print("video_resized: ", video_resized)
-  print(video_ext)
+    for i in range(len(video_list)):
+        clip_name = video_list[i]
+        video_id = splitext(video_list[i])[0]
+        video_in = os.path.join(input_video_fullsize_dir, clip_name)
+        video_name, video_ext = splitext(video_in)
+        video_resized = input_video_resized_dir + "/" + \
+            video_id + '_' + video_size + video_ext
+        col1.write("video fullsize: ", video_in)
+        col1.write("video_resized: ", video_resized)
+        col1.write(video_ext)
 
-  # Video Processing and OpenPose
-  #from pathlib import Path as P
-  output_main = os.path.join(root_path, output_dir)
-  if not os.path.isdir(output_main):
-    os.makedirs(output_main, exist_ok=True)
+        # Video Processing and OpenPose
+        #from pathlib import Path as P
+        output_main = os.path.join(root_path, output_dir)
+        if not os.path.isdir(output_main):
+            os.makedirs(output_main, exist_ok=True)
 
-  output_op_dir = os.path.join(output_main, video_id)
-  if not os.path.isdir(output_op_dir):
-    os.makedirs(output_op_dir, exist_ok=True)
+        output_op_dir = os.path.join(output_main, video_id)
+        if not os.path.isdir(output_op_dir):
+            os.makedirs(output_op_dir, exist_ok=True)
 
-  print("Processing video", clip_name)
+        col1.write("Processing video", clip_name)
 
-  video_resized = resize_video(new_height=new_height,
-                               video_in=video_in,
-                               clip_name=clip_name,
-                               src_folder=input_dir)
+        video_resized = resize_video(new_height=new_height,
+                                    video_in=video_in,
+                                    clip_name=clip_name,
+                                    src_folder=input_dir)
+        col1.video(video_resized)
 
-  
-  if cfg.getboolean('openpose', 'run_openpose') == True:
-    delete_outputs(video_id=video_id, root_path=root_path,
-                     output_dir=output_dir)
-  
-    load_video_run_openpose(video=video_resized)
-  
-  rename_json(video_id, root_path=root_path, output_dir=output_dir)
-           
+        
+        if cfg.getboolean('openpose', 'run_openpose') == True:
+            delete_outputs(video_id=video_id, root_path=root_path,
+                            output_dir=output_dir)
+        
+            load_video_run_openpose(video=video_resized)
+        
+        rename_json(video_id, root_path=root_path, output_dir=output_dir)
+                
 
 else:
     col1.write("Start by answering a few questions in the sidebar.")
