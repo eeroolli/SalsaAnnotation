@@ -50,7 +50,10 @@ def resize_video(new_height, video_in, clip_name, src_folder):
     if cfg.getboolean('installation', 'running_app_locally'):
       # in deployd version use one folder per video_id
       resize_output_dir = cfg.get('folders', 'output_dir')
-    
+    if cfg.getboolean('installation', 'running_app_on_streamlit'):
+      #TODO: is it better with separate folder for each nickname?
+      resize_output_dir = cfg.get('folders', 'output_dir')
+         
     video_out = resize_output_dir + "/" + video_name + "_h" + str(new_height) + video_ext
     print("the output video will be: ", video_out)
 
