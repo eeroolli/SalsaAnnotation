@@ -10,7 +10,8 @@ import subprocess  # subprocess wraps around regular os commands
 import shutil                     # used for copying files in the os.
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
-# cfg.read('config.ini')
+cfg.read('src/config.ini')
+cfg.read('deployment/config_streamlit.ini')
 
 
 def check_path(x):
