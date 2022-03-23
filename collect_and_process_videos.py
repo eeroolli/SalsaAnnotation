@@ -262,6 +262,7 @@ if uploaded_file is not None:
     col1.write("""Start anew by clicking on the X under the "Browse files" button and fill in the form again""")    
 
     col1.write("\n ##### Processing Video ######## \n")
+    col1.write(f"The video list consists of {video_list}")
 
     for i in range(len(video_list)):
         clip_name = video_list[i]
@@ -270,9 +271,10 @@ if uploaded_file is not None:
         video_name, video_ext = splitext(video_in)
         video_resized = input_video_resized_dir + "/" + \
             video_id + '_' + video_size + video_ext
-        col1.write("video fullsize: ", video_in)
-        col1.write("video_resized: ", video_resized)
-        col1.write(video_ext)
+        col1.write(f"")
+        col1.write(f"video fullsize: {video_in}")
+        col1.write(f"video_resized: {video_resized}")
+        col1.write(f"video_ext: {video_ext}")
 
         # Video Processing and OpenPose
         #from pathlib import Path as P
