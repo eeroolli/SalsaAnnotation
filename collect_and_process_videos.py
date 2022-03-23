@@ -286,7 +286,7 @@ if uploaded_file is not None:
         if not os.path.isdir(output_op_dir):
             os.makedirs(output_op_dir, exist_ok=True)
 
-        col1.write("Processing video", clip_name)
+        col1.write(f"Processing video  {clip_name}")
 
         video_resized = resize_video(new_height=new_height,
                                     video_in=video_in,
