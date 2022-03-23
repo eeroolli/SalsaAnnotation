@@ -47,10 +47,10 @@ from re import split              # regular expression string splitter
 # these are saved into script_path. import first after sys.path is changed.
 # I have tried src. .src. and ..src.Videoprocessing but no success. 
 # since /src is in the search path it should work.
-from VideoProcessing  import  check_path, stop_if_no_path 
+from src.VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
-from VideoProcessing import load_video_run_openpose
-from VideoProcessing import resize_video, delete_outputs, rename_json  
+from src.VideoProcessing  import load_video_run_openpose
+from src.VideoProcessing import resize_video, delete_outputs, rename_json  
 
 ### getting some parameters
 
