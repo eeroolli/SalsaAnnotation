@@ -8,9 +8,9 @@ import glob                       # help for finding files
 from re import split              # regular expression string splitter
 import subprocess  # subprocess wraps around regular os commands
 import shutil                     # used for copying files in the os.
-from configparser import ConfigParser, ExtendedInterpolation
-cfg = ConfigParser(interpolation=ExtendedInterpolation())
-cfg.read('config.ini')
+# from configparser import ConfigParser, ExtendedInterpolation
+# cfg = ConfigParser(interpolation=ExtendedInterpolation())
+# cfg.read('config.ini')
 
 
 def check_path(x):
