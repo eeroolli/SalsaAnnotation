@@ -11,7 +11,8 @@ import shutil                     # used for copying files in the os.
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
-cfg.read('deployment/config_streamlit.ini')
+if cfg.getboolean('installation', 'running_app_on_streamlit'):
+  cfg.read('deployment/config_streamlit.ini')
 
 
 def check_path(x):
