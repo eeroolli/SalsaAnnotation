@@ -29,8 +29,8 @@ if running_app_on_streamlit:
     root_path = cfg.get('installation', 'root_path')
     script_path = cfg.get('installation', 'script_path')
 
-st.write(f"Using {root_path} as root_path")
-st.write(f"Using  {script_path}  as script_path")
+st.write(f"Using {root_path}    as root_path")
+st.write(f"Using {script_path}  as script_path")
 
 st.write(f"sys.path is now:  {sys.path}")
 
@@ -45,8 +45,8 @@ from os.path import splitext
 from re import split              # regular expression string splitter
 
 # these are saved into script_path. import first after sys.path is changed.
-# I have tried src. .src. and ..src.Videoprocessing but no success. 
 # since /src is in the search path it should work.
+# Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 from src.VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
 from src.VideoProcessing  import load_video_run_openpose
@@ -59,8 +59,10 @@ input_dir = cfg.get('folders', 'input_dir')
 input_video_fullsize_dir = cfg.get('folders', 'input_video_fullsize_dir')
 input_video_resized_dir = cfg.get('folders', 'input_video_resized_dir')
 
-st.write(f"output_dir is {output_dir}  input_dir is {input_dir} ")
-st.write(f"input_video_fullsize_dir is {input_video_fullsize_dir} input_video_resized_dir is {input_video_resized_dir}")
+st.write(f"output_dir is {output_dir}") 
+st.write(f"input_dir is  {input_dir} ")
+st.write(f"input_video_fullsize_dir is {input_video_fullsize_dir}")
+st.write(f"input_video_resized_dir is  {input_video_resized_dir}")
 
 # check_path(input_video_fullsize_dir)
 # check_path(input_video_resized_dir)
