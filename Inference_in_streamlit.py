@@ -13,11 +13,11 @@ NUM_FEATURES = 75     # number of join coordinates
 
 
 # Loading the data
-PATH_DATA_VAL = "./ml/models/Data_train_validate/Data_val_norm.csv"
+PATH_DATA_VAL = "/ml/models/Data_train_validate/Data_val_norm.csv"
 data_val = pd.read_csv(PATH_DATA_VAL)
 
 # loading the model
-loaded_model = pickle.load(open("./development/weights/GRU_model.pkl", 'rb'))
+loaded_model = pickle.load(open("/development/weights/GRU_model.pkl", 'rb'))
 
 # Fixing format of the label
 def enc_label(label):
