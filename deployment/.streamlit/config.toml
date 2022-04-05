@@ -6,5 +6,4 @@ textColor="#000000"
 font="sans serif"
 
 [server]
-
-folderWatchBlacklist = ['/data/', '/ml/', '/posedetection/, '/utils', '/temp', '/logs' ]
+folderWatchBlacklist = ['/data/', '/ml/', '/utils/', '/temp/', ]
