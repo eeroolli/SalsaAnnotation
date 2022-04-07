@@ -8,7 +8,7 @@ import os
 import sys
 # from datetime import datetime
 # import validators
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
 from configparser import ConfigParser, ExtendedInterpolation
