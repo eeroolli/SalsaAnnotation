@@ -18,7 +18,7 @@ st.title('SalsaClassifier')
 skeleton_video_file = None
    #three columns and their relative width
 
-col1, col2, col3 = st.columns([2,3,3])
+col1, col2, col3 = st.columns([1,3,4])
 
 # Allow upload video
 def save_uploaded_file(uploaded_file):
@@ -59,7 +59,7 @@ if uploaded_file is not None:
             ax[i].set(xlabel='Confidence %')
 
         col3.pyplot(fig)
-        os.remove('video-test/' + uploaded_file.name)
+        #  os.remove('video-test/' + uploaded_file.name)
     else:
         col2.write("Start by uploading a short salsa video of one person dancing.")
 
