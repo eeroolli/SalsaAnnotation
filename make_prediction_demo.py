@@ -1,7 +1,7 @@
-from logging import root
+# from logging import root
 import streamlit as st
 import pandas as pd
-import pickle
+# import pickle
 # import boto3
 import os
 # from os.path import splitext
@@ -10,7 +10,7 @@ import sys
 # import validators
 import matplotlib.pyplot as plt
 import seaborn as sns
-from PIL import Image
+# from PIL import Image
 from configparser import ConfigParser, ExtendedInterpolation
 
 from src.Inference2 import enc_label, check_pred, transf_data
@@ -30,17 +30,15 @@ running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_stream
 # this script works only with Streamlit
 assert running_app_on_streamlit == True
 
-running_app_locally = cfg.getboolean('installation', 'running_app_locally')
-
-if running_app_on_streamlit==True and running_app_locally==False:
+if running_app_on_streamlit==True:
     cfg.read('deployment/config_streamlit.ini')
   
 parent_path = cfg.get('installation', 'parent_path')
 root_path = cfg.get('installation', 'root_path')
 script_path = cfg.get('installation', 'script_path')
 
-# st.write(f"Using {root_path}    as root_path")
-# st.write(f"Using {script_path}  as script_path")
+st.write(f"Using {root_path}    as root_path")
+st.write(f"Using {script_path}  as script_path")
 # st.write(f"sys.path is now:  {sys.path}")
 
 if not script_path in sys.path:  # otherwise will add anew with every run of script.

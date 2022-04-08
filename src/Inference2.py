@@ -5,6 +5,7 @@
 import pickle
 import numpy as np
 import pandas as pd
+import streamlit as st
 from configparser import ConfigParser, ExtendedInterpolation
 
 from src.utils import keep_only_words, make_list_from_string
@@ -13,7 +14,6 @@ cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
 
 running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
-
 if running_app_on_streamlit==True:
     cfg.read('deployment/config_streamlit.ini')
  
@@ -94,7 +94,11 @@ classes = {0.: "basic",
 # loading the model (moved the path to config ini)  But why is it needed here. Why does the check_pred()
 # not just use the loaded_model in make_prediction_demo
 # loaded_model = pickle.load(open("deployment/weights/GRU_model.pkl", 'rb'))
-loaded_model = pickle.load(open(cfg.get('prediction', 'model_weights'), 'rb'))
+# This avoids loading the model again, if it is already cached in Streamlit. only works with functions
+@st.cache()
+def load_saved_weights():
+    loaded_model = pickle.load(open(cfg.get('prediction', 'model_weights'), 'rb'))
+    return loaded_model
 
 def check_pred(Xdata):
     figs_labels = list( classes.values() )
