@@ -9,5 +9,5 @@ matplotlib
 argparse
 streamlit
 seaborn
-cv2
+opencv-python-headless
 boto3
