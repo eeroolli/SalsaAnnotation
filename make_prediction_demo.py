@@ -13,7 +13,7 @@ import seaborn as sns
 # from PIL import Image
 from configparser import ConfigParser, ExtendedInterpolation
 
-from src.Inference2 import enc_label, check_pred, transf_data
+from src.Inference2 import enc_label, check_pred, transf_data, load_saved_weights
 from src.utils import keep_only_words, make_list_from_string
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 from src.VideoProcessing  import  check_path, stop_if_no_path 

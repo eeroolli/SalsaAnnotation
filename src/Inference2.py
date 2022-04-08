@@ -100,6 +100,8 @@ def load_saved_weights():
     loaded_model = pickle.load(open(cfg.get('prediction', 'model_weights'), 'rb'))
     return loaded_model
 
+loaded_model = load_saved_weights()
+
 def check_pred(Xdata):
     figs_labels = list( classes.values() )
     prediction = loaded_model.predict(np.expand_dims(Xdata, axis=0)) * 100
