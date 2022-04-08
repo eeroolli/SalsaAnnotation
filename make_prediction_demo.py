@@ -113,9 +113,14 @@ if submitted is not None:
     # Running the prediction
     col3.text('Our predictions :')
     
-    data_file_name= 'Data_norm_' + person + ".csv"
-    PATH_DATA_VAL = os.path.join(root_path, "deployment", "static", data_file_name)
-    data_val = pd.read_csv(PATH_DATA_VAL)
+    @st.cache()
+    def get_csv_data(person):
+        data_file_name= 'Data_norm_' + person + ".csv"
+        PATH_DATA_VAL = os.path.join(root_path, "deployment", "static", data_file_name)
+        data_val = pd.read_csv(PATH_DATA_VAL)
+        return data_val
+    
+    data_val = get_csv_data(person=person)
     X_val, y_val, info_val = transf_data(data_val)
 
     # plt.figure()
