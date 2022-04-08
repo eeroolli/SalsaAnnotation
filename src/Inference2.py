@@ -13,9 +13,8 @@ cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
 
 running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_streamlit')
-running_app_locally = cfg.getboolean('installation', 'running_app_locally')
 
-if running_app_on_streamlit==True and running_app_locally==False:
+if running_app_on_streamlit==True:
     cfg.read('deployment/config_streamlit.ini')
  
 root_path = cfg.get('installation', 'root_path')
