@@ -34,7 +34,7 @@ running_app_on_streamlit = cfg.getboolean('installation', 'running_app_on_stream
 s3 = boto3.client('s3')
 
  
-@st.cache(ttl=600) # this is a function because when the result exist it is not run again
+@st.cache() # this is a function because when the result exist it is not run again
 def get_file_from_s3(get_file_name, save_file_name):
     s3.download_file(
         Bucket="salsaannotation", 
