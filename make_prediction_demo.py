@@ -40,6 +40,10 @@ script_path = cfg.get('installation', 'script_path')
 st.write(f"Using {root_path}    as root_path")
 st.write(f"Using {script_path}  as script_path")
 # st.write(f"sys.path is now:  {sys.path}")
+st.write(''' Streamlit cloud wants the file to be 
+         in the repo root and all other references 
+         should be relative.
+         ''')
 
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
