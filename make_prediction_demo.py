@@ -129,13 +129,12 @@ if submitted is not None:
         # ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
         # ax[i].set(xlabel='Confidence %')
         col3.write(f"Figure {i}: {label} ")
-        # target = "ax"+ str(i)
         col3.write(f"{prediction['name']} {round(prediction['values'], 2)} ")
         plt.barh(prediction['values'], prediction['name'])
         # order = prediction.sort_values('values',ascending=False).name
-        # plt.title(f"Figure {i}: {label} ")
-        # plt.xlabel('Confidence %')
-    plt.show() 
+        plt.title(f"Figure {i}: {label} ")
+        plt.xlabel('Confidence %')
+        plt.show() 
     
     # os.remove('video-test/' + uploaded_file.name)
 else:
