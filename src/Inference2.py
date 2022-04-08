@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from configparser import ConfigParser, ExtendedInterpolation
 
-from utils import keep_only_words, make_list_from_string
+from src.utils import keep_only_words, make_list_from_string
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
