@@ -3,8 +3,6 @@ numpy
 sklearn
 tensorflow
 configparser
-jupyterlab 
-ipykernel 
 matplotlib
 argparse
 streamlit
