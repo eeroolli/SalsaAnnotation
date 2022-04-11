@@ -45,12 +45,16 @@ The predictions of the model can be tested in 3 ways:
 without GPU (around 11 hours), we provide the some videos that were already preprocessed
 with OpenPose.
 
-For the first 2 methods you will need to create an appropriate working enviroment:
-* git clone https://github.com/eeroolli/SalsaAnnotation.git
-* cd SalsaAnnotation
-* conda create --name testing_salsa python=3.8
-* conda activate testing_salsa
-* pip install -r requirements.txt
+For the first 2 methods you will need to create an appropriate working enviroment. In terminal:
+```bat
+git clone https://github.com/eeroolli/SalsaAnnotation.git
+cd SalsaAnnotation
+conda create --name testing_salsa python=3.8
+conda activate testing_salsa
+pip install -r requirements.txt
+```
+
+You find a little more explanations in ./env/README.md
 
 ### From your local terminal
 From the terminal run the following command
