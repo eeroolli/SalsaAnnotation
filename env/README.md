@@ -33,4 +33,8 @@ OpenPose, which is a pretrained model that we use for posedetection, needs to be
 
 After we had the code working on Colab, we rewrote video processing, data processing, traning and validation and prediction to pure python. Some of the code is also running on Streamlit. 
 
+## Streamlit
 
+Streamlit cloud is only able to read requirements.txt if it is in the root of the repo. Therefore there are two separate requirements.txt files. 
+/env/requirements.txt is for a local installation - both python and streamlit.  
+/requirements.txt is for share.streamlit.io only.
