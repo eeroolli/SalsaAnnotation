@@ -61,12 +61,13 @@ sns.set()
 choreography = get_choreography(name_of_choreography="coreo")
 
 #########################################
-st.title('SalsaClassifier')
+st.title('Salsa Annotation')
 
-st.write('''For this demo we use an preprosessed file, 
+st.write('''For this demo uses Machine Learning to identify salsa figures. 
+         We use an preprosessed video file, 
          where the beginning of each figure is marked, without labels.  
-         The predictions are made while you are wathcing. The purpose is to see 
-         where the predictions are correct and where they are wrong.''')
+         The predictions are made while you are wathcing, using our trained model.
+         The purpose is to see where the predictions are correct and where they are wrong.''')
 
 st.write('''Because the dancers are dancing a fixed choreography, we can compare
          the predictions with what they were supposed to dance (the Facit).   
@@ -137,6 +138,7 @@ if submitted is not None:
         # col3.write(f"Figure {i}: {label} ")
         # col3.write(f"{prediction['name']} {round(prediction['values'], 2)} ")
         fig, ax = plt.subplots()
+        ax.set(ylim=(0,100))
         ax.bar(prediction['name'], prediction['values'])
         plt.title(f"Figure {i}    Prediction: {label}     Facit: {choreography[i]} ")
         plt.xlabel('Confidence in %')
@@ -146,6 +148,7 @@ if submitted is not None:
     accuracy_score = round(correct/n_of_figures*100 , ndigits=1)
     col3.write(f"Accuracy for this video is {accuracy_score}%")    
     # os.remove('video-test/' + uploaded_file.name)
+    st.close
 else:
     col2.write("Start by choosing a video.")
 
