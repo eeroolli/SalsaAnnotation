@@ -1,5 +1,5 @@
 """
-Make the manual annotation of the video, to get star and end of a figure
+Make the manual annotation of the video, to get the start and end of each figure
 """
 import cv2
 import pandas as pd
