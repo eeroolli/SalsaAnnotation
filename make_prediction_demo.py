@@ -148,7 +148,7 @@ if submitted is not None:
     accuracy_score = round(correct/n_of_figures*100 , ndigits=1)
     col3.write(f"Accuracy for this video is {accuracy_score}%")    
     # os.remove('video-test/' + uploaded_file.name)
-    st.close
+    
 else:
     col2.write("Start by choosing a video.")
 
