@@ -15,11 +15,13 @@ https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=shari
 
 There is a FAQ for people making videos at http://salsa.eero.no 
 
+## PreProcessing
+
 The input data is videos from mobile phones.  In preprossing the videos are converted to same size and speed.  
 
 Information of the dancer in the videos is simplified by capturing the key points with Openpose. 
 We use OpenPose for posedetection[[1]](#1). OpenPose gives us the x- and y-coordinates for 25 different 
-joints and their visibility. We drop the parts of the frame where the dancer is never present and normalize the results, so that we have all dancers in the same scale despite the distance to camera.
+joints and their visibility. We drop the parts of the frame where the dancer is never present and normalize the results, so that we have all dancers in the same scale despite the distance to camera. 
 
 ## The model to predict the labels
 
@@ -27,8 +29,7 @@ Here we face a supervised learning problem: giving a sequence of pose positions
 covering 123-578 (features) predict the name of the sequence (label). 5 labels are now possible:
 "basic", "cuban-basic", "right-turn", "side" and "suzie-q".
 
-The model is a deep network that consists of 2 Gate Recurrent Unit (GRU) layers of 64 and 32 units, repectively. 2 fully
-connected layers of 16 and 5 neurons are added at the end. 
+The model is a deep network that consists of 2 Gate Recurrent Unit (GRU) layers of 64 and 32 units, repectively. 2 fully connected layers of 16 and 5 neurons are added at the end. 
 
 To train the model the collected videos were splitted in 
 training and validation data. Each video was first preprocessed with OpenPose to 
@@ -40,7 +41,7 @@ After data augmentation the train and test sets have 384 and 25 instances per fi
 
 The predictions of the model can be tested in 3 ways: 
 1-From your local terminal, 2-Running Streamlit locally or 
-3-Running Streamlit in the cloud. Because OpenPose needs a large compuattional time
+3-Running Streamlit in the cloud. Because OpenPose needs a long computational time
 without GPU (around 11 hours), we provide the some videos that were already preprocessed
 with OpenPose.
 
@@ -59,8 +60,15 @@ From the terminal run the following command
 ```
 
 ### Local Streamlit
+From the terminal run the following command
+
+```bat
+./streamlit run make_prediction_demo.sh 
+```
+
 
 ### Cloud Streamlit
+just go to https://share.streamlit.io/eeroolli/salsaannotation/development/make_prediction_demo.py 
 
 ## References
 <a id="1">[1]</a> 
