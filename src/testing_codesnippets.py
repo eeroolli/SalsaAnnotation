@@ -18,12 +18,11 @@ parent_path = cfg.get('installation', 'parent_path')
 root_path = cfg.get('installation', 'root_path')
 script_path = cfg.get('installation', 'script_path')
 
-os.chdir(root_path)
 
 print(root_path)
 print(script_path)
 
-from Inference2 import enc_label, check_pred, transf_data
+# from Inference2 import enc_label, check_pred, transf_data
 
 
 # from datetime import datetime
@@ -66,14 +65,12 @@ def make_list_from_string(string):
     new_list = keep_only_words(string).split(sep=" ")
     return new_list
 
-feat_cols = make_list_from_string(cfg.get('training', 'FEATURE_COLS'))
-print(feat_cols[0])
-
-person = "Ana"
-data_file_name= 'Data_norm_' + person + ".csv"
-PATH_DATA_VAL = os.path.join(root_path, "deployment", "static", data_file_name)
-data_val = pd.read_csv(PATH_DATA_VAL)
-
-print(data_val)
-print(MAX_SEQ_LENGTH, " , " , NUM_FEATURES)
-transf_data(data_val)
+import re
+ch = cfg.get('annotation', 'coreo')
+ch = re.sub(r'\[|\]|\"|\'', '', ch)
+ch = re.sub(r'^\s|\s$', '', ch).split(sep=",")
+print(ch)
+choreography = []
+for item in ch:
+    choreography = choreography + [item, item] 
+print(choreography)

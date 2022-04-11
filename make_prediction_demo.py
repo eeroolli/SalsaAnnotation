@@ -14,7 +14,7 @@ import seaborn as sns
 from configparser import ConfigParser, ExtendedInterpolation
 
 from src.Inference2 import enc_label, check_pred, transf_data, load_saved_weights
-from src.utils import keep_only_words, make_list_from_string
+from src.utils import keep_only_words, make_list_from_string, get_choreography
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 from src.VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
@@ -37,13 +37,13 @@ parent_path = cfg.get('installation', 'parent_path')
 root_path = cfg.get('installation', 'root_path')
 script_path = cfg.get('installation', 'script_path')
 
-st.write(f"Using {root_path}    as root_path")
-st.write(f"Using {script_path}  as script_path")
+# st.write(f"Using {root_path}    as root_path")
+# st.write(f"Using {script_path}  as script_path")
 # st.write(f"sys.path is now:  {sys.path}")
-st.write(''' Streamlit cloud wants the file to be 
-         in the repo root and all other references 
-         should be relative.
-         ''')
+# st.write(''' Streamlit cloud wants the file to be 
+#          in the repo root and all other references 
+#          should be relative.
+#          ''')
 
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
@@ -58,23 +58,22 @@ skeleton_video_file = None
 sns.set_theme(style="darkgrid")
 sns.set()
 
+choreography = get_choreography(name_of_choreography="coreo")
+
 #########################################
 st.title('SalsaClassifier')
 
+st.write('''For this demo we use an preprosessed file, 
+         where the beginning of each figure is marked, without labels.  
+         The predictions are made while you are wathcing. The purpose is to see 
+         where the predictions are correct and where they are wrong.''')
+
+st.write('''Because the dancers are dancing a fixed choreography, we can compare
+         the predictions with what they were supposed to dance (the Facit).   
+         ''')
 
 #three columns and their relative width
 col1, col2, col3 = st.columns([2,1,4])
-
-# Allow upload video
-def save_uploaded_file(uploaded_file):
-    try:
-        with open(os.path.join('video-test',uploaded_file.name),'wb') as f:
-            f.write(uploaded_file.getbuffer())
-        return 1
-    except:
-        return 0
-# TODO allow use of any file, which again requires preprosessing.
-# uploaded_file = st.sidebar.file_uploader("Upload Video")
 
 with st.sidebar:
     with st.form("video-info", clear_on_submit=False):      
@@ -87,10 +86,6 @@ with st.sidebar:
                             )
         
 
-st.write('''For this demo we use an preprosessed file, 
-         where the beginning of a figure is marked, without labels.  
-         The predictions are made while you are wathcing. The purpose is to see 
-         where the predictions are correct and where they are wrong.''')
     
 
 if submitted is not None:
@@ -126,20 +121,30 @@ if submitted is not None:
     
     data_val = get_csv_data(person=person)
     X_val, y_val, info_val = transf_data(data_val)
-
+    n_of_figures = X_val.shape[0]
     # plt.figure()
-    for i in range(X_val.shape[0]): 
+
+    while n_of_figures > len(choreography):
+        choreography = choreography + choreography
+
+    col3.write(f"There are predictions for {n_of_figures} figures: ")
+    correct = 0
+    
+    for i in range(n_of_figures): 
         prediction, label = check_pred(X_val[i])
         # ax[i] = sns.barplot(y = 'name',x='values', data = prediction,order = prediction.sort_values('values',ascending=False).name)
         # ax[i].set(xlabel='Confidence %')
-        col3.write(f"Figure {i}: {label} ")
-        col3.write(f"{prediction['name']} {round(prediction['values'], 2)} ")
-        plt.barh(prediction['values'], prediction['name'])
-        # order = prediction.sort_values('values',ascending=False).name
-        plt.title(f"Figure {i}: {label} ")
-        plt.xlabel('Confidence %')
-        plt.show() 
-    
+        # col3.write(f"Figure {i}: {label} ")
+        # col3.write(f"{prediction['name']} {round(prediction['values'], 2)} ")
+        fig, ax = plt.subplots()
+        ax.bar(prediction['name'], prediction['values'])
+        plt.title(f"Figure {i}    Prediction: {label}     Facit: {choreography[i]} ")
+        plt.xlabel('Confidence in %')
+        col3.pyplot(fig=fig, clear_figure=True) 
+        if (keep_only_words(label)==keep_only_words(str(choreography[i]))):
+            correct += 1
+    accuracy_score = round(correct/n_of_figures*100 , ndigits=1)
+    col3.write(f"Accuracy for this video is {accuracy_score}%")    
     # os.remove('video-test/' + uploaded_file.name)
 else:
     col2.write("Start by choosing a video.")
