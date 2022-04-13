@@ -64,13 +64,14 @@ choreography = get_choreography(name_of_choreography="coreo")
 st.title('Salsa Annotation')
 
 st.write('''For this demo uses Machine Learning to identify salsa figures. 
-         We use an preprosessed video file, 
+         We use n preprosessed video file, 
          where the beginning of each figure is marked, without labels.  
          The predictions are made while you are wathcing, using our trained model.
          The purpose is to see where the predictions are correct and where they are wrong.''')
 
 st.write('''Because the dancers are dancing a fixed choreography, we can compare
-         the predictions with what they were supposed to dance (the Facit).   
+         the predictions with what they were supposed to dance (the ground truth) 
+         even if the data is unlabeled.   
          ''')
 
 #three columns and their relative width
@@ -100,6 +101,7 @@ if submitted is not None:
     video_bytes = video_file.read()
     col1.text('Preprocessed Video')
     col1.video(video_bytes)
+    col1.write(The code and much more information is available at https://github.com/eeroolli/SalsaAnnotation)
     
         # show also the skeleton
         # skeleton_video_file = open(os.path.join("deployment", 
