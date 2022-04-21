@@ -101,7 +101,7 @@ if submitted is not None:
     video_bytes = video_file.read()
     col1.text('Preprocessed Video')
     col1.video(video_bytes)
-    col1.write(The code and much more information is available at https://github.com/eeroolli/SalsaAnnotation)
+    col1.write("The code and much more information is available at https://github.com/eeroolli/SalsaAnnotation")
     
         # show also the skeleton
         # skeleton_video_file = open(os.path.join("deployment", 
