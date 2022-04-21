@@ -67,7 +67,7 @@ From the terminal run the following command
 From the terminal run the following command
 
 ```bat
-./streamlit run make_prediction_demo.sh 
+./streamlit run make_prediction_demo.py
 ```
 
 
