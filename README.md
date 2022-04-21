@@ -17,13 +17,16 @@ There is a FAQ for people making videos at http://salsa.eero.no
 
 The input data is videos from mobile phones.  In preprossing the videos are converted to same size and speed.  
 
-The beginning of each unit/figure is manually marked with a mouse click. We are confident that this could be fully automated, but given the purpose of the project is done first, if we go further with the project and have thousands of vidoes to process.
-
 Information of the dancer in the videos is simplified by capturing the key points with Openpose. 
 We use OpenPose for posedetection[[1]](#1). OpenPose gives us the x- and y-coordinates for 25 different 
 joints, their visibility. This temporal sequence of coordinates is used for the input of the model. 
 
 We drop the parts of the frame where the dancer is never present and normalize the results, so that we have all dancers in the same scale despite the distance to camera. 
+
+## Annotating the videos to create labels
+
+The beginning of each unit/figure and the end of each choreography is manually marked with a mouse click. We are confident that this could be fully automated, but given the purpose of the project is done first, if we go further with the project and have thousands of vidoes to process.
+ 
 
 ## The model to predict the labels
 
@@ -64,10 +67,10 @@ From the terminal run the following command
 ```
 
 ### Local Streamlit
-From the terminal run the following command
+Streamlit is a way to build frontends to Machine Learning models that can be run either locally or online. From the terminal run the following command
 
 ```bat
-./streamlit run make_prediction_demo.py
+streamlit run make_prediction_demo.py
 ```
 
 
