@@ -47,8 +47,8 @@ script_path = cfg.get('installation', 'script_path')
 
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
-    st.write("Added script_path to search path.")
-    st.write(f"sys.path is now:  {sys.path}")
+    # st.write("Added script_path to search path.")
+    # st.write(f"sys.path is now:  {sys.path}")
 
 MAX_SEQ_LENGTH = cfg.getint('training', 'MAX_SEQ_LENGTH')
 NUM_FEATURES   = cfg.getint('training', 'MAX_SEQ_LENGTH')
