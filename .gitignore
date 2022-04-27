@@ -1,3 +1,10 @@
+#Eero
+.idea/
+ml/models/*/temp/
+ml/models/*/logs/
+secrets.toml
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -76,6 +83,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+.ipynb
 
 # IPython
 profile_default/
@@ -105,6 +113,7 @@ celerybeat.pid
 .env
 .venv
 env/
+env/salsa-env/
 venv/
 ENV/
 env.bak/
@@ -127,3 +136,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Vscode
+.vscode/launch.json
+.vscode/settings.json
+.vscode/
+
+

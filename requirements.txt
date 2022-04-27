@@ -1,0 +1,11 @@
+pandas
+numpy
+sklearn
+tensorflow
+configparser
+matplotlib
+argparse
+streamlit
+seaborn
+opencv-python-headless
+boto3

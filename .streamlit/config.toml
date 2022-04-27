@@ -1,0 +1,9 @@
+[theme]
+primaryColor="#005032"
+backgroundColor="#F3950E"
+secondaryBackgroundColor="#FAEAC4"
+textColor="#000000"
+font="sans serif"
+
+[server]
+folderWatchBlacklist = ['/data/', '/ml/', '/posedetection/', '/utils', '/temp', '/logs' ]
