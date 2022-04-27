@@ -68,7 +68,8 @@ def resize_video(new_height, video_in, clip_name, src_folder):
       print("The video has been resized previously")
     else:
       print("The video is being resized, which takes often several minutes.")
-      os.system("ffmpeg -i "+video_in+" -vf scale=-2:"+new_height+" "+video_out)    # the -2 ensures that width is a even number as required
+      os.system("ffmpeg -i "+video_in+" -vf scale=-2:"+new_height+" -c:a copy "+video_out)    # the -2 ensures that width is a even number as required
+                                                                                              # -c:a copy  copies the sound file. 
     return video_out
 
 
