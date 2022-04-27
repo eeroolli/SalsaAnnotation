@@ -39,8 +39,8 @@ if running_app_on_streamlit:
 # this might not be necessary as one can also use .. and deal with paths during import.
 if not script_path in sys.path:  # otherwise will add anew with every run of script.
     sys.path.append(script_path)
-    st.write("Added script_path to search path.")
-    st.write(f"sys.path is now:  {sys.path}")
+    # st.write("Added script_path to search path.")
+    # st.write(f"sys.path is now:  {sys.path}")
 
 # libraries needed from outside
 from os.path import splitext
