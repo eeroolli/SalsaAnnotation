@@ -93,8 +93,8 @@ with st.sidebar:
 if submitted is not None:
     if person == "Ana":
         file_name = "1P-Ana.mp4"
-    if person == "Vasil":
-        file_name = "1p_Vasil_1_11122021_Choreo1.mp4"
+    # if person == "Vasil":
+    #     file_name = "1p_Vasil_1_11122021_Choreo1.mp4"
         
     video_path = os.path.join("deployment", "static", file_name)
     video_file = open(video_path,'rb' )
