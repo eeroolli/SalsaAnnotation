@@ -65,6 +65,12 @@ From the terminal run the following command
 ```bat
 ./run_prediction_in_python.sh predict Ana 4 True
 ```
+When you run this script a window with the video to be annotated will pop up.
+You must click on that window every time the dancer is in 1 and at the very end 
+of the video. The coreographies in the Sample folder cover 5 figures
+that are repeated twice each. The expeced number of clicks in this case
+is 11. If you click a different number of times you will get
+an error.
 
 ### Local Streamlit
 Streamlit is a way to build frontends to Machine Learning models that can be run either locally or online. From the terminal run the following command
