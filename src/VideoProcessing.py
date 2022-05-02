@@ -14,6 +14,11 @@ cfg.read('src/config.ini')
 if cfg.getboolean('installation', 'running_app_on_streamlit'):
   cfg.read('deployment/config_streamlit.ini')
 
+def cut_video(input_video, output_video, start_mmss, duration_s):
+  # cut the parts of video that we cannot use
+  !ffmpeg -y -loglevel info -i $input_video -ss $start_mmss -t $duration $output_video
+  return output_video
+
 
 def check_path(x):
   if os.path.isdir(x):
@@ -68,7 +73,8 @@ def resize_video(new_height, video_in, clip_name, src_folder):
       print("The video has been resized previously")
     else:
       print("The video is being resized, which takes often several minutes.")
-      os.system("ffmpeg -i "+video_in+" -vf scale=-2:"+new_height+" "+video_out)    # the -2 ensures that width is a even number as required
+      os.system("ffmpeg -i "+video_in+" -vf scale=-2:"+new_height+" -c:a copy "+video_out)    # the -2 ensures that width is a even number as required
+                                                                                              # -c:a copy  copies the sound file. 
     return video_out
 
 
