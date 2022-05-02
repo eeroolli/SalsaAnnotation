@@ -8,6 +8,8 @@ import glob                       # help for finding files
 from re import split              # regular expression string splitter
 import subprocess  # subprocess wraps around regular os commands
 import shutil                     # used for copying files in the os.
+import utils
+
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
@@ -18,22 +20,6 @@ def cut_video(input_video, output_video, start_mmss, duration_s):
   # cut the parts of video that we cannot use
   !ffmpeg -y -loglevel info -i $input_video -ss $start_mmss -t $duration $output_video
   return output_video
-
-
-def check_path(x):
-  if os.path.isdir(x):
-    print("Using", x )
-    return True
-  else:
-    print("Problem: There was no ", x)  # No error keeps running
-    return False
-
-def stop_if_no_path(x):
-  if os.path.isdir(x):
-    print("Using", x )
-  else:
-    raise Exception("Problem: There was no ", x)  # Throws an error and stops
-
 
 def resize_video(new_height, video_in, clip_name, src_folder):
     video_name, video_ext = splitext(clip_name)

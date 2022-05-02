@@ -1,5 +1,21 @@
 import streamlit as st
 
+def check_path(x):
+  if os.path.isdir(x):
+    print("Using", x )
+    return True
+  else:
+    print("Problem: There was no ", x)  # No error keeps running
+    return False
+
+def stop_if_no_path(x):
+  if os.path.isdir(x):
+    print("Using", x )
+  else:
+    raise Exception("Problem: There was no ", x)  # Throws an error and stops
+
+
+
 def keep_only_words(messy_string):
     import re
     # keep only words, dash and white space
