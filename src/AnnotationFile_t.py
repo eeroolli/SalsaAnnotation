@@ -14,8 +14,11 @@ ind_coreo = int(sys.argv[2])
 data_t = pd.read_csv(DATA)
 frame_number = data_t["Frame"].tolist()
 
+#TODO: this should use utils.get_choreography()
 coreo = ["basic", "right-turn", "side", "cuban-basic", "suzie-q"]
 
+#TODO: this check should happen when the clicks are made. not here.
+#TODO: calculate ind coreo from len(data_t) / len(coreo). better to use data than manually fed value
 if ind_coreo == 4:
     coreo = coreo * 4
     assert (data_t.shape[0] == len(coreo) * 2 + 4 or data_t.shape[0] == len(coreo) * 2 + 1), "Clicks should be 44 or 41. but found {}".format(data_t.shape[0])
