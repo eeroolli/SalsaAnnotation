@@ -69,7 +69,7 @@ video_list = ["1p_ThomasW_girl_16012022_choreo1.mp4"]
 # "1p_20211216_Francesca_Zeni.mp4",
 # "1p_ThomasW_girl_16012022_choreo1.mp4",
 
-if running_app_on_streamlit==True: 
+if cfg.getboolean('installation', 'running_app_on_streamlit')==True: 
   video_list = [uploaded_video_name]
   
 print("\n ################################ \n")
