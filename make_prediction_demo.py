@@ -18,8 +18,8 @@ from src.utils import keep_only_words, make_list_from_string, get_choreography
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 from src.VideoProcessing  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
-from src.VideoProcessing  import load_video_run_openpose
-from src.VideoProcessing import resize_video, delete_outputs, rename_json  
+# from src.VideoProcessing  import load_video_run_openpose
+# from src.VideoProcessing import resize_video, delete_outputs, rename_json  
 
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
