@@ -63,7 +63,8 @@ new_height = "".join([chr for chr in video_size if chr.isdigit()])  # used to re
 
 
 #fourth list of videos
-video_list = ["1p_ThomasW_16012022_choreo1.mp4"]
+video_list = ["1p_ThomasW_girl_16012022_choreo1.mp4"] 
+# "1p_ThomasW_16012022_choreo1.mp4"
 # "1p_Daniele_16012022_choreo1.mp4",
 # "1p_20211216_Francesca_Zeni.mp4",
 # "1p_ThomasW_girl_16012022_choreo1.mp4",
