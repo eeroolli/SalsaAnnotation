@@ -23,7 +23,7 @@ elif ind_coreo == 1:
     assert data_t.shape[0] == len(coreo) * 2 + 1, "Clicks should be 11. but found {}".format(data_t.shape[0])
 elif ind_coreo == 2:
     coreo = coreo * 2
-    assert data_t.shape[0] == len(coreo) * 2 + 1, "Clicks should be 11. but found {}".format(data_t.shape[0])
+    assert data_t.shape[0] == len(coreo) * 2 + 1, "Clicks should be 22. but found {}".format(data_t.shape[0])
 
 # Forming tuples (start, end)
 tuples_f = [(x, frame_number[frame_number.index(x) + 1]) for x in frame_number if frame_number.index(x) < len(frame_number) - 1]
