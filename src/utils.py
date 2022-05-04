@@ -92,8 +92,6 @@ def make_list_from_string(string):
     return new_list
 
 
-import streamlit as st
-@st.cache()
 def get_choreography(name_of_choreography):
     from configparser import ConfigParser, ExtendedInterpolation
     from utils import keep_only_words, make_list_from_string

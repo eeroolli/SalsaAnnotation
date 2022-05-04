@@ -10,7 +10,8 @@ import seaborn as sns
 from configparser import ConfigParser, ExtendedInterpolation
 
 from src.Inference2 import enc_label, check_pred, transf_data, load_saved_weights
-from src.utils import keep_only_words, make_list_from_string, get_choreography
+from src.utils_streamlit import get_choreography
+from src.utils import keep_only_words, make_list_from_string
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 
 # from src.utils  import  check_path, stop_if_no_path 
