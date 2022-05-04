@@ -4,21 +4,19 @@ import pandas as pd
 # import pickle
 # import boto3
 import os
-# from os.path import splitext
 import sys
-# from datetime import datetime
-# import validators
 import matplotlib.pyplot as plt
 import seaborn as sns
-# from PIL import Image
 from configparser import ConfigParser, ExtendedInterpolation
 
 from src.Inference2 import enc_label, check_pred, transf_data, load_saved_weights
 from src.utils import keep_only_words, make_list_from_string, get_choreography
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
-from src.VideoProcessing  import  check_path, stop_if_no_path 
+
+from src.utils  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
-# from src.VideoProcessing  import load_video_run_openpose
+# from src.VideoProcessing  import load_video_run_openpose  
+# !FFMPEG needs to be wrapped in.
 # from src.VideoProcessing import resize_video, delete_outputs, rename_json  
 
 
