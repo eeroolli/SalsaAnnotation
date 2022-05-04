@@ -51,9 +51,7 @@ def manual_click_frame(VIDEO_FILE ,
     )
 
     # Check if the number of clicks is correct for the choreography.
-    #TODO: this should be a function of the choregraphy used and not a fixed number.
-
-    # sometimes we use videos with only one repetition of the choreography - like vier from left.
+    # sometimes we use videos with only one repetition of the choreography - like just view from left.
     # therefore the correct number is not always multiplied by 4.
     if len(data_annot) % number_of_clicks_per_choreo == 0:
         print("The number of clicks seems correct.")
