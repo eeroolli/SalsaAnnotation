@@ -85,9 +85,9 @@ def load_video_run_openpose(video):
     !mkdir $op_json
   
   if skeleton_on_black_background==True: 
-    !cd openpose && ./build/examples/openpose/openpose.bin --video $video --write_json --number_people_max 1 $op_json --display 0 --disable_blending  --write_video $op_video
+    !cd openpose && ./build/examples/openpose/openpose.bin --video $video --write_json $op_json --number_people_max 1  --display 0 --disable_blending  --write_video $op_video
   elif skeleton_on_black_background==False: 
-    !cd openpose && ./build/examples/openpose/openpose.bin --video $video --write_json --number_people_max 1 $op_json --display 0  --write_video $op_video
+    !cd openpose && ./build/examples/openpose/openpose.bin --video $video --write_json $op_json --number_people_max 1  --display 0  --write_video $op_video
   else:
     raise Exception("You need to set the variable skeleton_on_black_background") 
 
