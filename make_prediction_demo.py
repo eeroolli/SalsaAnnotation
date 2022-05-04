@@ -77,7 +77,7 @@ col1, col2, col3 = st.columns([2,1,4])
 with st.sidebar:
     with st.form("video-info", clear_on_submit=False):      
         person = st.radio("Whose video do you want to use for seeing the predictions?",
-                                        ("Ana"),
+                                        ("Ana",),
                                         key="person"
                                         )
         submitted = st.form_submit_button(label="Submit answers", 
