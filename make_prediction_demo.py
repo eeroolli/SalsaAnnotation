@@ -13,12 +13,11 @@ from src.Inference2 import enc_label, check_pred, transf_data, load_saved_weight
 from src.utils import keep_only_words, make_list_from_string, get_choreography
 # Streamlit requires that streamlit run collect_and_process_videos is run from the Repo root!
 
-from src.utils  import  check_path, stop_if_no_path 
+# from src.utils  import  check_path, stop_if_no_path 
 # check also load_video_run_openpose(), which still has some bugs.
 # from src.VideoProcessing  import load_video_run_openpose  
-# !FFMPEG needs to be wrapped in.
+# FFMPEG needs to be wrapped in.
 # from src.VideoProcessing import resize_video, delete_outputs, rename_json  
-
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
