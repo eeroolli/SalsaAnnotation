@@ -44,7 +44,7 @@ print(f"  the correct number of clicks per choreo is {number_of_clicks_per_chore
 
 file_name = cfg.get('output_data', 'click_data')
 #PATH_OUTPUT = os.path.join(input_video_resized_dir, video_id)
-PATH_OUTPUT = os.path.join(cfg.get('click_frame', 'output_dir'), video_id)
+PATH_OUTPUT = cfg.get('click_frame', 'output_dir')
 PATH_ANNOT = os.path.join(PATH_OUTPUT, file_name)
 
 ############################### 
