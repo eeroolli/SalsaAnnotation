@@ -1,4 +1,7 @@
 
+from ast import Break
+
+
 def manual_click_frame(VIDEO_FILE , 
                        OUTPUT_CSV_FILE, 
                        video_id,
@@ -7,6 +10,7 @@ def manual_click_frame(VIDEO_FILE ,
     import cv2
     import time
     import pandas as pd
+    import os
     
     # Functions to get the state of the mouse
     def print_frame(event, x, y, flags, *userdata):
@@ -24,7 +28,11 @@ def manual_click_frame(VIDEO_FILE ,
     print("  press q to quit. \n")
     time.sleep(1)
 
-
+    if os.path.isfile(VIDEO_FILE):
+        print("  OK. The videofile exists.")
+    else:
+        return print(f"  Can'f find {VIDEO_FILE}. Execution stops.")
+            
     # Extracting the frames of a video to feed MediaPipe
     cap = cv2.VideoCapture(VIDEO_FILE)
     time_list = []
@@ -56,15 +64,17 @@ def manual_click_frame(VIDEO_FILE ,
     if len(data_annot) % number_of_clicks_per_choreo == 0:
         print("The number of clicks seems correct.")
         data_annot.to_csv(OUTPUT_CSV_FILE, index=False)   #overwrites existing csv file.
-        return True
+        # return True
     else:
         print(f"  You did {len(data_annot)} clicks. The number should be divisible by {number_of_clicks_per_choreo}")
         print(f"  your results are NOT saved. Please rerun the script for this file.") 
-        return False
+        cv2.destroyAllWindows()
+        # return False
 
 
 
 def check_path(x):
+  import os  
   if os.path.isdir(x):
     print("Using", x )
     return True
@@ -73,6 +83,7 @@ def check_path(x):
     return False
 
 def stop_if_no_path(x):
+  import os
   if os.path.isdir(x):
     print("Using", x )
   else:
@@ -93,13 +104,13 @@ def make_list_from_string(string):
 
 
 def get_choreography(name_of_choreography):
+    import re
     from configparser import ConfigParser, ExtendedInterpolation
     from utils import keep_only_words, make_list_from_string
     cfg = ConfigParser(interpolation=ExtendedInterpolation())
     cfg.read('src/config.ini')
     # picks it up from config.ini
     # names of figures can contain - so a particular replacement is needed.
-    import re
     ch = cfg.get('annotation', name_of_choreography)
     ch = re.sub(r'\[|\]|\"|\'', '', ch)
     ch = re.sub(r'^\s|\s$', '', ch).split(sep=",")

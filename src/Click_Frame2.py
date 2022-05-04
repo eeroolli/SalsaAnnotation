@@ -13,13 +13,14 @@ from utils import manual_click_frame, check_path, get_choreography
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
-wait_ms = 40
 
 ROOT_DIR = cfg.get('installation', 'root_path')
 
 # We could use the openpose.mp4 stickfigure, but it is difficult to be precise.
 # The manual annotation is more precise using the non-stickfigure video.
-#TODO: Add a option to give the file name as 
+#TODO: Add a option to give the file name as a argument "python Click_Frame2.py --file "
+# This should override what ever is in config.ini
+
 video_size =cfg.get('resize_video', 'video_size') 
 video_id = cfg.get("click_frame", 'video_id')
 video_name = video_id + "_" + video_size + ".mp4"
@@ -42,17 +43,20 @@ print(f"\n  Based on the choreo saved in config.ini")
 print(f"  the correct number of clicks per choreo is {number_of_clicks_per_choreo}.")
 
 
-file_name = cfg.get('output_data', 'click_data')
+csv_file_name = cfg.get('output_data', 'click_data')
 #PATH_OUTPUT = os.path.join(input_video_resized_dir, video_id)
 PATH_OUTPUT = cfg.get('click_frame', 'output_dir')
-PATH_ANNOT = os.path.join(PATH_OUTPUT, file_name)
+PATH_ANNOT = os.path.join(PATH_OUTPUT, csv_file_name)
 
+check_path(PATH_OUTPUT)
 ############################### 
 
 
 manual_click_frame(VIDEO_FILE = VIDEO_FILE,
+                   video_id = video_id,
                    OUTPUT_CSV_FILE= PATH_ANNOT,
-                   video_id = video_id)
+                   number_of_clicks_per_choreo = number_of_clicks_per_choreo,
+                   wait_ms=35)
 
 
 
