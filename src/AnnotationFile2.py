@@ -14,9 +14,7 @@ DATA = os.path.join(PATH_DATA, cfg.get('output_data', 'click_data'))
 data_t = pd.read_csv(DATA)
 frame_number = data_t["Frame"].tolist()
 
-#TODO: this should use utils.get_choreography()
 # coreo = ["basic", "right-turn", "side", "cuban-basic", "suzie-q"]
-
 coreo = get_choreography()
 
 #TODO: calculate ind coreo from len(data_t) / len(coreo). better to use data than manually fed value
