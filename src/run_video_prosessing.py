@@ -119,4 +119,4 @@ for i in range(len(video_list)):
   # Parsing JSON and adding information from annotation
   # Anot_file = output_op_dir + "/Annotation.json"
   # !cp $script_path/Parsing-Openpose-Annotation.py .
-  # !python Parsing-Openpose-Annotation.py $video_id $output_op_dir $Anot_file
+  # !python Parsing-Openpose-Annotation.py $video_id $output_op_dir $output_op_dir $Anot_file
