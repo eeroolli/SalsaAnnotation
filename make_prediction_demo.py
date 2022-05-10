@@ -62,7 +62,7 @@ choreography = get_choreography(name_of_choreography="coreo")
 st.title('Salsa Annotation')
 
 st.write('''For this demo uses Machine Learning to identify salsa figures. 
-         We use n preprosessed video file, 
+         We use a preprosessed video file, 
          where the beginning of each figure is marked, without labels.  
          The predictions are made while you are wathcing, using our trained model.
          The purpose is to see where the predictions are correct and where they are wrong.''')
