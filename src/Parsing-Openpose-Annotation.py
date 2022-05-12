@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas import concat
 import numpy as np
 import json
 import os
@@ -6,12 +7,20 @@ from os.path import exists, join, basename, splitext
 import glob
 import datetime
 import sys
+from VideoProcessing import get_video_fps
+
 
 # Input arguments
-video_id = sys.argv[1]
-output_op = sys.argv[2]
-output_analysis = sys.argv[3]
-Anot_file = sys.argv[4]
+# video_id = sys.argv[1]
+# output_op = sys.argv[2]
+# output_analysis = sys.argv[3]
+# Anot_file = sys.argv[4]
+
+video_id = "1p_ThomasW_girl_right"
+output_op = "output_op_1p/1p_ThomasW_girl_right"
+output_analysis = "output_op_1p/1p_ThomasW_girl_right"
+Anot_file = "output_op_1p/1p_ThomasW_girl_right/Annotation.json"
+
 
 clip_name = video_id
 
@@ -112,6 +121,7 @@ def cut_frame(df_to_cut):
 
 # Parse all json files
 def json_dframe(openpose_df):
+ print("----------------------")
  print(f"Parsing {output_op}")
  json_path = os.path.join(output_op, "json")
  json_files = glob.glob(json_path + '/frame*.json')
@@ -124,7 +134,7 @@ def json_dframe(openpose_df):
   json_text = pd.read_json(file_name)
   n_of_people = json_text["people"].count()
 
-  assert n_of_people <= 1, "With OpenPose 1p, n persaon should be 0 or 1"
+  assert n_of_people <= 1, "With OpenPose 1p, n of persons should be 0 or 1"
 
   if (n_of_people != 1):
       # print(f'Number of people {n_of_people} Frame {frame_nr}')
@@ -269,7 +279,7 @@ def json_dframe(openpose_df):
        # converting dict to a series
        pose_series = pd.Series(posedata)
        # data_json = {'clip_name': [clip_name] , 'frame_nr': [frame_nr], 'json_content': [json_text]}
-       openpose_df = openpose_df.append(pose_series, ignore_index=True)
+       openpose_df = pd.concat([openpose_df, pose_series], ignore_index=True)
 
    else:
        # print(f"No detected skeleton, empty json {frame_nr}")
@@ -278,7 +288,7 @@ def json_dframe(openpose_df):
        # converting dict to a series
        pose_series = pd.Series(posedata)
        # data_json = {'clip_name': [clip_name] , 'frame_nr': [frame_nr], 'json_content': [json_text]}
-       openpose_df = openpose_df.append(pose_series, ignore_index=True)
+       openpose_df = pd.concat([openpose_df, pose_series], ignore_index=True)
 
  # these belong to the loop through each frame
  print(openpose_df.shape)
@@ -293,9 +303,13 @@ def convert_time(date_time):
 
  return datetime_str
 
+
+### TODO: the next 18 lines should be part of a function!! find the right place for these.
+# the error messages I am getting is because the convert_time is not run.
+def add_annot_2(df):
  # create the new columns in the data frame
  df = df.assign(label='', start='', duration='')
-
+ frames_per_s = get_video_fps()
  # for every element of the json file, get: frame, duration, label
  for i in data.keys():
   for ind_j, j in enumerate(data[i]):
@@ -303,8 +317,8 @@ def convert_time(date_time):
       print(f'ind_j {ind_j}')
       start_t = convert_time(j[0])
       end_t = convert_time(j[1])
-      duration = (end_t - start_t).seconds * dfs  # duration in frames
-      frame_ind = start_t.second * dfs  # start in frames
+      duration = (end_t - start_t).seconds * frames_per_s  # duration in frames
+      frame_ind = start_t.second * frames_per_s  # start in frames
       df.loc[frame_ind, "label"] = i
       df.loc[frame_ind, "start"] = "S"
       df.loc[frame_ind, "duration"] = duration
@@ -325,14 +339,19 @@ def add_annot_1(df):
 
      return df
 
+########################
 # Calling the functions
+#######################
+
 pose_df, value_0 = json_dframe(pose_df)
+print(pose_df.columns)
+pose_df.to_csv("openpose_parsed.csv")
 
 with open(Anot_file) as f:
   data = json.load(f)
 
 # TODO: move the names of the file to config init
-new_df = add_annot_1(pose_df)
+new_df = add_annot_2(pose_df)
 csv_file = os.path.join(output_analysis) + "/Data.csv"
 new_df.to_csv(csv_file , index=False)
 
