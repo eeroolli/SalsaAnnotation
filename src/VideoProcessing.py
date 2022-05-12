@@ -17,8 +17,9 @@ if cfg.getboolean('installation', 'running_app_on_streamlit'):
   cfg.read('deployment/config_streamlit.ini')
 
 def cut_video(input_video, output_video, start_mmss, duration_s):
+  import subprocess
   # cut the parts of video that we cannot use
-  !ffmpeg -y -loglevel info -i $input_video -ss $start_mmss -t $duration $output_video
+  subprocess.check_output("ffmpeg -y -loglevel info -i $input_video -ss $start_mmss -t $duration $output_video")
   return output_video
 
 def resize_video(new_height, video_in, clip_name, src_folder):
