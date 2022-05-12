@@ -7,6 +7,8 @@ def manual_click_frame(VIDEO_FILE ,
                        video_id,
                        number_of_clicks_per_choreo=11,
                        wait_ms = 40):
+    # number_of_clicks_per_choreo = number of figure units + 1 marking the end.
+    # wait_ms slows down the playback speed of the video.
     import cv2
     import time
     import pandas as pd
