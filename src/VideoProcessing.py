@@ -65,6 +65,34 @@ def resize_video(new_height, video_in, clip_name, src_folder):
     return video_out
 
 
+
+def get_video_fps(video):
+  # Check for the speed of the video
+  import os
+  import subprocess
+  from configparser import ConfigParser, ExtendedInterpolation
+  
+  cfg= ConfigParser(interpolation=ExtendedInterpolation())
+  cfg.read('src/config.ini')
+  default_fps = cfg.get('openpose', 'default_fps')
+  print(f"The default_fps is {default_fps}")
+  frames_per_s = default_fps            # if everything fails there is a default value
+  
+  if not os.path.isfile(video):
+    print("There video is missing: \n ", video)
+  else:
+    print(f"ffprobe is checking fps in {video}")
+
+  print(os.getcwd())
+  command = f"/usr/bin/ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=r_frame_rate {video}"
+  print(command)
+  text = subprocess.getoutput(command)
+  print(f"The ffprobe r_frame_rate is {text}")
+  frames, seconds = text.split("/")
+#   frames, seconds = text[0].split("/", 2)
+  frames_per_s = round(int(frames)/int(seconds), ndigits=2) 
+  return frames_per_s
+
 def load_video_run_openpose(video):
   #requires that video_id and connected variables are set.   
   print("\n ################################ \n")
