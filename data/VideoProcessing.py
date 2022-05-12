@@ -47,11 +47,7 @@ def resize_video(new_height, video_in, clip_name, src_folder):
       !ffmpeg -i $video_in -vf scale=-2:$new_height $video_out    # the -2 ensures that width is a even number as required
     return video_out
 
-
-def load_video_run_openpose(video):
-  #requires that video_id and connected variables are set.   
-  print("\n ################################ \n")
-  print("#     Run OpenPose:     ")
+def get_video_fps(video):
   # Check for the speed of the video
   frames_per_s = default_fps            # if everything fails there is a default value
   if not os.path.isfile(video):
@@ -65,6 +61,14 @@ def load_video_run_openpose(video):
   #frames, seconds = text.split("/")
   frames, seconds = text[0].split("/")
   frames_per_s = int(frames) / int(seconds)
+  return frames_per_s
+
+def load_video_run_openpose(video):
+  #requires that video_id and connected variables are set.   
+  print("\n ################################ \n")
+  print("#     Run OpenPose:     ")
+ 
+  frames_per_s = get_video_fps(video) 
   
   print("Number of frames per second: ", frames_per_s)
   print("\n")
