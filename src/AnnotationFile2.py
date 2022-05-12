@@ -19,8 +19,10 @@ coreo = get_choreography()
 
 #TODO: calculate ind coreo from len(data_t) / len(coreo). better to use data than manually fed value
 right_number_of_clicks_in_choreo = len(coreo)+1
-if len(data_t) % right_number_of_clicks_in_choreo == 0:
+
+if len(data_t) % right_number_of_clicks_in_choreo == 0:  # it does matter how many times the choreo is repeated.
     print(f"The number of clicks, {right_number_of_clicks_in_choreo} seems correct.")
+    coreo_repetitions = len(data_t) // right_number_of_clicks_in_choreo 
 else: 
     print("The number of clicks, {right_number_of_clicks_in_choreo} does not match the choreography.")
 
@@ -41,13 +43,12 @@ unique_items_in_choreo = ((coreo))
 print(f'Length of Choreo {unique_items_in_choreo}')
 print(f'Length Tuples {len(tuples_f)}')
 
-breakpoint
 
 lab_dic = dict.fromkeys(coreo)
 
 for i in lab_dic.keys():
     lab_dic[i] = []
-for j in range(ind_coreo):
+for j in range(coreo_repetitions):
     for ind, i in enumerate(lab_dic.keys()):
         lab_dic[i].append(tuples_f[2 * ind + j * 10])
         lab_dic[i].append(tuples_f[2 * ind + 1 + j * 10])
