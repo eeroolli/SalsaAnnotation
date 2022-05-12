@@ -1,5 +1,5 @@
 """
-Make the manual annotation of the video, to get the start and end of each figure
+Makes the manual annotation of the video, to get the start and end of each figure
 run this file from Repo root with command 
 $ python ./src/Click_Frame2.py
 
