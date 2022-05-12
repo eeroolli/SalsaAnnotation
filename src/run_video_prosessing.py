@@ -114,7 +114,7 @@ for i in range(len(video_list)):
   # Creating the annotation file
   # TODO: make os independent. use shutil.copy(src, dst) and os.path()
   # !cp $script_path/AnnotationFile.py .
-  # !python AnnotationFile.py $output_op_dir
+  # !python AnnotationFile2.py $output_op_dir
 
   # Parsing JSON and adding information from annotation
   # Anot_file = output_op_dir + "/Annotation.json"
