@@ -12,6 +12,7 @@ import utils
 
 from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
+cfg.read('config.ini')
 cfg.read('src/config.ini')
 if cfg.getboolean('installation', 'running_app_on_streamlit'):
   cfg.read('deployment/config_streamlit.ini')
@@ -19,7 +20,7 @@ if cfg.getboolean('installation', 'running_app_on_streamlit'):
 def cut_video(input_video, output_video, start_mmss, duration_s):
   import subprocess
   # cut the parts of video that we cannot use
-  subprocess.check_output("ffmpeg -y -loglevel info -i $input_video -ss $start_mmss -t $duration $output_video")
+  subprocess.check_output(["ffmpeg", "-y -loglevel info -i", input_video, "-ss", start_mmss, "-t", duration_s, output_video])
   return output_video
 
 def resize_video(new_height, video_in, clip_name, src_folder):
@@ -66,7 +67,7 @@ def resize_video(new_height, video_in, clip_name, src_folder):
 
 
 
-def get_video_fps(video):
+def get_video_fps(video, video_id):
   # Check for the speed of the video
   import os
   import subprocess
@@ -93,39 +94,30 @@ def get_video_fps(video):
   frames_per_s = round(int(frames)/int(seconds), ndigits=2) 
   return frames_per_s
 
-def load_video_run_openpose(video):
-  #requires that video_id and connected variables are set.   
+def load_video_run_openpose(video, video_id):
+  #requires that video_id and connected variables are set.
+  from configparser import ConfigParser, ExtendedInterpolation
+  cfg = ConfigParser(interpolation=ExtendedInterpolation())
+  #cfg.read('config.ini')
+  cfg.read('src/config.ini')
+  #print('config.ini has these sections:', cfg.sections(), "\n")   
   print("\n ################################ \n")
   print("#     Run OpenPose:     ")
-  # Check for the speed of the video
-  # if everything fails there is a default value
-  default_fps = cfg.getint('openpose', 'default_fps')
+  # # Check for the speed of the video
+  # # if everything fails there is a default value
+  # default_fps = cfg.getint('openpose', 'default_fps')
+  
   if not os.path.isfile(video):
     print("There video is missing: \n ", video)
   else:
-    print("OpenPose will now analyse \n", video)
+    print(f"The Video input to Openpose is: \n {video}") 
 
-  print(os.getcwd())
-  # TODO: using !ffprobe gives correct output. but os.system(ffprobe) not. Perhaps using subprocess is necessary
-  # text = os.system("ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=r_frame_rate "+video) 
-  # print(text)
-  # #frames, seconds = text.split("/")
-  # frames, seconds = text[0].split("/")
-  # frames_per_s = int(frames) / int(seconds)
-  
-  # print("Number of frames per second: ", frames_per_s)
-  # print("\n")
-  # save_frames_per_second = cfg.getint('openpose', 'save_frames_per_second')
-  # if frames_per_s > 20:
-  #   multiplikator_for_images_per_second = frames_per_s / save_frames_per_second
-  # else:
-  #   multiplikator_for_images_per_second = default_fps / save_frames_per_second
+  # print(f"Working directory is: {os.getcwd()}")
   
   # # cut the parts of video that we cannot use
   # !ffmpeg -y -loglevel info -i "input_original/youtube.mp4" -ss $start_mmss -t $duration "input_original/video.mp4"
   
   # detect poses
-  print(f"Video for Openpose {video}") 
   output_op_dir = cfg.get('folders', 'output_dir')
   op_video = output_op_dir + "/openpose.avi"
   op_json = output_op_dir + "/" + video_id + "/json"  # video_id is a global variable calculated in a loop.
@@ -133,8 +125,9 @@ def load_video_run_openpose(video):
   if not os.path.exists(op_json): 
     os.makedirs(op_json)
 
-  skeleton_on_black_background = cfg.get(
-      'openpose', 'skeleton_on_black_background')
+  skeleton_on_black_background = cfg.getboolean('openpose', 'skeleton_on_black_background')
+  print(f"Skeleton on black ground is: {skeleton_on_black_background}")
+  print(" ")  
   if skeleton_on_black_background==True: 
     os.system("cd openpose && ./build/examples/openpose/openpose.bin --video "+video+" --write_json --number_people_max 1 "+op_json+" --display 0 --disable_blending  --write_video "+op_video)
   elif skeleton_on_black_background==False: 
