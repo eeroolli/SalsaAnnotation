@@ -51,7 +51,7 @@ def transf_data(data):
     y = []
     info = []
 
-    for i in range(len(ind_start) - 1):
+    for i in range(len(ind_start)):
         X.append(data.loc[ind_start[i]: ind_end[i], feat_cols])  # - 3 the last 25 (visibility ) + 2
         y.append(data.loc[ind_start[i], 'label'])
         info.append(data.loc[ind_start[i], ['clip_name', 'frame_nr']])
@@ -59,7 +59,7 @@ def transf_data(data):
     # select frames from the interval
     ind_samp = []
 
-    for i in range(len(ind_start) - 1):
+    for i in range(len(ind_start)):
         # Take frames that are evenlly distributed
         aux = np.linspace(ind_start[i]
                           , ind_end[i]
@@ -74,7 +74,7 @@ def transf_data(data):
     # Changing format of the data to be compatible with Tensor Flow
     X = [x.loc[ind_samp[ind], :].to_numpy() for (ind, x) in enumerate(X)]
     X = np.array(X)
-    X = X.reshape(len(ind_start) - 1, MAX_SEQ_LENGTH, NUM_FEATURES).astype("float32")
+    X = X.reshape(len(ind_start), MAX_SEQ_LENGTH, NUM_FEATURES).astype("float32")
     y = [enc_label(x) for x in y]
     y = np.array(y).astype("float32")
 
