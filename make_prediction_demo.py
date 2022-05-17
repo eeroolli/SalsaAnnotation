@@ -94,11 +94,11 @@ with st.sidebar:
 if submitted is not None:
     if person == "Ana":
         file_name = "1P-Ana.mp4"
-    elif person == "Girl-front":
+    elif person == "TGirl-front":
         file_name = "openpose-TGirl-front.mp4"    
-    elif person == "Girl-left":
+    elif person == "TGirl-left":
         file_name = "openpose-TGirl-left.mp4"    
-    elif person == "Girl-back":
+    elif person == "TGirl-back":
         file_name = "openpose-TGirl-back.mp4"    
 
     # if person == "Vasil":
