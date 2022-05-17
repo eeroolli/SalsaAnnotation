@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import sys
 from configparser import ConfigParser, ExtendedInterpolation
 
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
@@ -81,6 +82,15 @@ from configparser import ConfigParser, ExtendedInterpolation
 cfg = ConfigParser(interpolation=ExtendedInterpolation())
 cfg.read('src/config.ini')
 cfg.get('openpose', 'default_fps')
+
+
+# Input arguments
+EXECUTION_ARGUMENTS_N = len(sys.argv)-1
+print(f"The number of arguments given is {EXECUTION_ARGUMENTS_N}" )
+if EXECUTION_ARGUMENTS_N == 4:
+  video_id = sys.argv[1]
+
+
 
 def cut_video(input_video, output_video, start_mmss, duration_s):
   import subprocess
