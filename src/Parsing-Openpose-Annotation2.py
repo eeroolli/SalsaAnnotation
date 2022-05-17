@@ -8,20 +8,28 @@ from os.path import exists, join, basename, splitext
 import glob
 import datetime
 import sys
+from configparser import ConfigParser, ExtendedInterpolation
+
+cfg = ConfigParser(interpolation=ExtendedInterpolation())
+cfg.read('src/config.ini')
+
 from VideoProcessing import get_video_fps
 
-
 # Input arguments
-# video_id = sys.argv[1]
-# output_op = sys.argv[2]
-# output_analysis = sys.argv[3]
-# Anot_file = sys.argv[4]
-
-video_id = "1p_ThomasW_girl_right"
-output_op = "output_op_1p/1p_ThomasW_girl_right"
-output_analysis = "output_op_1p/1p_ThomasW_girl_right"
-Anot_file = "output_op_1p/1p_ThomasW_girl_right/Annotation.json"
-
+EXECUTION_ARGUMENTS_N = len(sys.argv)-1
+print(f"The number of arguments given is {EXECUTION_ARGUMENTS_N}" )
+if EXECUTION_ARGUMENTS_N==4:
+  print(f"The given arguments are used to parse the annotation.")
+  video_id = sys.argv[1]
+  output_op = sys.argv[2]
+  output_analysis = sys.argv[3]
+  Anot_file = sys.argv[4]
+elif EXECUTION_ARGUMENTS_N != 4:
+  print(f"There should be 4 arguments. Using the info from config.ini file, instead.")
+  video_id = cfg.get("click_frame", "video_id")
+  output_op = cfg.get("click_frame", "output_dir")
+  output_analysis = cfg.get("click_frame", "output_dir") 
+  Anot_file = os.path.join(output_analysis, "Annotation.json")
 
 clip_name = video_id
 
