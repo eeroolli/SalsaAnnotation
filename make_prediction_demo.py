@@ -108,6 +108,7 @@ if submitted is not None:
     video_file = open(video_path,'rb' )
     video_bytes = video_file.read()
     col1.text('Preprocessed Video')
+    col1.text(person)
     col1.video(video_bytes)
     col1.write("The code and much more information is available at https://github.com/eeroolli/SalsaAnnotation")
     
