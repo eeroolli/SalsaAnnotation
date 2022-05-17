@@ -61,24 +61,28 @@ video_list = ["1p_ThomasW_girl_right.mp4",
 "1p_ThomasW_girl_front.mp4",
 "1p_ThomasW_girl_back.mp4",]
 
-print("\n ################################ \n")
 
 for i in range(len(video_list)):
+  print("\n ################################ ")
+  print(" ################################ \n")
   clip_name = video_list[i]
   video_id = splitext(video_list[i])[0]
   print(f"video_id is {video_id}")
-  print("\n ################################ \n")
+  print("+++++++++++++++++++++++++++++++++++++++")
   output_op_dir = os.path.join(output_main, video_id)
   if not os.path.isdir(output_op_dir):
     os.makedirs(output_op_dir, exist_ok=True)
-
+  
+  print("\n ################################ \n")
   # Creating the annotation file
   subprocess.run(["python", "src/AnnotationFile2.py", output_op_dir])
-
+  
+  print("\n ################################ \n")
   # Parsing JSON and adding information from annotation
   Anot_file = output_op_dir + "/Annotation.json"
   subprocess.run(["python", "src/Parsing-Openpose-Annotation2.py", video_id, output_op_dir, output_op_dir, Anot_file])
-  
+
+  print("\n ################################ \n")
   # reduce jitter and normalize the data
   #!cp $script_path/Data_preparation2.py .
   subprocess.run(["python", "src/Data_preparation2.py", video_id, output_op_dir])

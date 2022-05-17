@@ -25,7 +25,7 @@ def cut_video(input_video, output_video, start_mmss, duration_s):
 
 def resize_video(new_height, video_in, clip_name, src_folder):
     video_name, video_ext = splitext(clip_name)
-    print("\n ################################ \n")
+    print("+++++++++++++++++++++++++++++++++++++++")
     print("#     Resizing the video:     ")
     print("clip_name: ", clip_name)
     print("video_name: ", video_name, " extention: ", video_ext)
@@ -198,7 +198,8 @@ def rename_json(video_id, root_path, output_dir):
       print("All json are now renamed.")
     else:
       print("nothing to be done.")  
-    print("============================== ")
+    
+    print("+++++++++++++++++++++++++++++++++++++++")
 
     # delete old names
     # [os.remove(x) for x in paths_json]

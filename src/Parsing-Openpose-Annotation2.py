@@ -133,7 +133,7 @@ def cut_frame(df_to_cut):
 
 # Parse all json files
 def json_dframe(openpose_df):
- print("----------------------")
+ print("+++++++++++++++++++++++++++++++++++++++")
  print(f"Parsing {output_op}")
  json_path = os.path.join(output_op, "json")
  json_files = glob.glob(json_path + '/frame*.json')
@@ -308,7 +308,7 @@ def json_dframe(openpose_df):
  # these belong to the loop through each frame
  print(f"The shape of the openpose_df is {openpose_df.shape}")
  print("\n")
- print("+++++++++++++++++++++++++++++++++++++++++")
+ print("+++++++++++++++++++++++++++++++++++++++")
  return openpose_df, count_0
 
 # Function to transform time
@@ -364,18 +364,27 @@ print(pose_df.columns)
 openpose_output = os.path.join(output_op, "openpose_parsed.csv")
 pose_df.to_csv(openpose_output)
 
-with open(Anot_file) as f:
-  manual_annotation = json.load(f)
+if os.path.exists(Anot_file):
+  with open(Anot_file) as f:
+    manual_annotation = json.load(f)
+else:
+  sys.exit(f"{Anot_file} is missing. Aborting operation.")
+  
+    
 
-# TODO: get the names of the file from config init
+# TODO: get the names of the files from config init
+
+print("+++++++++++++++++++++++++++++++++++++++")
 new_df = add_annot_1(pose_df, manual_annotation=manual_annotation)
 csv_file = os.path.join(output_analysis) + "/Data.csv"
 new_df.to_csv(csv_file , index=False)
 
+print("+++++++++++++++++++++++++++++++++++++++")
 new_df_cut = cut_frame(new_df)
 csv_file_cut = os.path.join(output_analysis) + "/Data_concat_cut.csv"
 new_df_cut.to_csv(csv_file_cut , index=False)
 
+print("+++++++++++++++++++++++++++++++++++++++")
 csv_file_0 = os.path.join(output_analysis) + "/Person0.csv"
 f = open(csv_file_0, "w")
 f.write(str(value_0))
