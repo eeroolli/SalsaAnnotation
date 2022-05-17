@@ -79,9 +79,9 @@ with st.sidebar:
     with st.form("video-info", clear_on_submit=False):      
         person = st.radio("Whose video do you want to use for seeing the predictions?",
                                         ("Ana", 
-                                         "Girl front",
-                                         "Girl left",
-                                         "Girl back"),
+                                         "TGirl-front",
+                                         "TGirl-left",
+                                         "TGirl-back"),
                                         key="person"
                                         )
         submitted = st.form_submit_button(label="Submit answers", 
@@ -94,11 +94,11 @@ with st.sidebar:
 if submitted is not None:
     if person == "Ana":
         file_name = "1P-Ana.mp4"
-    elif person == "Girl front":
+    elif person == "Girl-front":
         file_name = "openpose-TGirl-front.mp4"    
-    elif person == "Girl left":
+    elif person == "Girl-left":
         file_name = "openpose-TGirl-left.mp4"    
-    elif person == "Girl back":
+    elif person == "Girl-back":
         file_name = "openpose-TGirl-back.mp4"    
 
     # if person == "Vasil":
