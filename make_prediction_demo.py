@@ -84,7 +84,7 @@ with st.sidebar:
                                          "TGirl-back"),
                                         key="person"
                                         )
-        submitted = st.form_submit_button(label="Submit answers", 
+        submitted = st.form_submit_button(label="Submit", 
                             help="Prediction starts after you submit."
                             )
         
@@ -155,7 +155,7 @@ if submitted is not None:
         col3.pyplot(fig=fig, clear_figure=True) 
         if (keep_only_words(label)==keep_only_words(str(choreography[i]))):
             correct += 1
-    accuracy_score = round(correct/n_of_figures*100 , ndigits=1)
+    accuracy_score = round(correct/n_of_figures*100 , ndigits=0)
     col3.write(f"Accuracy for this video is {accuracy_score}%")    
     # os.remove('video-test/' + uploaded_file.name)
     
