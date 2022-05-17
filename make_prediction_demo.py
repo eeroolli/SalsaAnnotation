@@ -127,7 +127,6 @@ if submitted is not None:
     def get_csv_data(person):
         data_file_name= 'Data_norm_' + person + ".csv"
         PATH_DATA_VAL = os.path.join("deployment", "static", data_file_name)
-        print(PATH_DATA_VAL)
         data_val = pd.read_csv(PATH_DATA_VAL)
         return data_val
     
