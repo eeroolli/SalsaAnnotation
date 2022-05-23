@@ -95,6 +95,7 @@ classes = {0.: "basic",
 # not just use the loaded_model in make_prediction_demo
 # loaded_model = pickle.load(open("deployment/weights/GRU_model.pkl", 'rb'))
 # This avoids loading the model again, if it is already cached in Streamlit. only works with functions
+
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def load_saved_weights():
     loaded_model = pickle.load(open(cfg.get('prediction', 'model_weights'), 'rb'))
