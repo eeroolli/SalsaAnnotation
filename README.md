@@ -11,7 +11,7 @@ each dancer repeats each figure a total of 8 times.
 We made a video with the choreography for the people who made us salsa videos.
 https://drive.google.com/file/d/1tX5dczXymc4EjAB0A9-5mkPx-pvV412n/view?usp=sharing 
 
-There is a FAQ for people making videos at http://salsa.eero.no 
+There is a presentation on Youtube at https://youtu.be/n96vY72kABs?t=304 of our project.
 
 ## PreProcessing
 
@@ -81,7 +81,8 @@ streamlit run make_prediction_demo.py
 
 
 ### Cloud Streamlit
-just go to https://share.streamlit.io/eeroolli/salsaannotation/development/make_prediction_demo.py 
+Unfortunately this does not work in November 2024 anymore because Streamlit does not support the Python version we used anymore.
+just go to https://share.streamlit.io/eeroolli/salsaannotation/development/make_prediction_demo.py
 
 ## References
 <a id="1">[1]</a> 
